@@ -17,12 +17,19 @@ public class Decor {
 	private int compteur;
 	private ArrayList<SkyElements> listSkyElements;
 	private boolean endTown=false;
-	
+	private Image star;
 	public Decor()
 	{
 		this.height=0;
 		this.compteur=0;
 		this.listSkyElements=new ArrayList<SkyElements>();
+		 try {
+			star= new Image("./Images/TowerBlocks/SkyElements/star.png");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 	
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException 
@@ -116,7 +123,6 @@ public class Decor {
 			if(se instanceof Star)
 			{
 				g.setColor(Color.yellow);
-				Image star= new Image("./Images/TowerBlocks/SkyElements/star.png");
 				star = star.getScaledCopy(se.getWidth(), se.getHeight());
 				g.drawImage(star, se.getPosX(), se.getPosY(), null);
 			}

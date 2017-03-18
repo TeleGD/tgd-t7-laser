@@ -4,6 +4,7 @@ package game3.world;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Transform;
 import org.newdawn.slick.state.BasicGameState;
@@ -20,21 +21,39 @@ public class Pendulum extends BasicGameState{
 	private float initialAngle;
 	private double omega;
 	private Block block;
+	private Image corde;
 	
 	public Pendulum(){
 		x=Main.longueur/2;
-		y=-100;
+		y=-200;
 		speed=2000;
-		length=400;
+		length=600;
 		initialAngle=(float) (-Math.PI/4);
 		omega=World3.GRAVITY/length;
-		block=new Block(0,0,100,100);
-		
+		addBlock();
+		try {
+			corde=new Image("Images/TowerBlocks/corde.png").getScaledCopy(10, (int) length);
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
 	
 	
+	private void addBlock() {
+		try {
+			block=new Block(0,0,100,100,new Image("Images/TowerBlocks/Blocs/"+World3.colorImage+" Normal.png"));
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
+
+
+
+
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		theta=0;
@@ -46,6 +65,9 @@ public class Pendulum extends BasicGameState{
 		
 		if(!block.isRealeased()){
 			block.render(container, game, g);
+			corde.rotate(theta);
+			corde.setCenterOfRotation(0, 0);
+			g.drawImage(corde,x,y);
 			g.drawLine((float)(Main.longueur/2), y,block.getCenterX(), block.getCenterY());
 		}
 	}
@@ -58,8 +80,8 @@ public class Pendulum extends BasicGameState{
 			block.setCenterY(y+ (float)(length*Math.cos(theta)));
 			block.setAngle(theta);
 		}
-		//System.out.println(theta);
-		//System.out.println("Time="+World3.getTime());
+		System.out.println(theta);
+		System.out.println("Time="+World3.getTime());
 	}
 
 	private float calculateTheta() {
@@ -81,7 +103,6 @@ public class Pendulum extends BasicGameState{
 		System.out.println("thetaDot="+thetaDot);
 		//blockDropped.drop(-(float)(length*thetaDot*Math.sin(theta))/100,(float) (thetaDot*length*Math.cos(theta))/100);
 		block.drop(0,0);
-
 		return block;
 	}
 
@@ -105,8 +126,7 @@ public class Pendulum extends BasicGameState{
 
 
 	public void notifyStackedBlock() {
-		// TODO Auto-generated method stub
-		
+		addBlock();
 	}
 
 }
