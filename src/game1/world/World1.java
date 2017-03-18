@@ -27,7 +27,7 @@ public class World1 extends BasicGameState{
 	@Override
 	public void enter(GameContainer arg0, StateBasedGame arg1){
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
-		player = new Player(17,0);
+		
 		cellTest = new ArrayList<Cell>();
 		cellTest.add(new Cell(17,0));
 		cellTest.add(new Cell(18,0));
@@ -63,6 +63,7 @@ public class World1 extends BasicGameState{
 		cellTest.get(2).setWestWall(false);
 		cellTest.get(2).setNorthWall(false);
 		
+		player = new Player(17,0);
 	}
 	
 
