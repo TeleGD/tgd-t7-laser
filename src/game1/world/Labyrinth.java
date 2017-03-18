@@ -64,7 +64,7 @@ public class Labyrinth {
 		{
 			for (int j = 0 ; i<this.getRows() ; i++)
 				{
-					this.getCell(i, j).autoset();
+					this.getCell(i, j).autoSetSprite();
 				}
 		}
 	}
