@@ -7,21 +7,30 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class Grid2 {
 	private int rows;
-	private int colums;
-	public int grid[][];
+	private int columns;
+	public Cell grid[][];
 	
 
 	public Grid2(int r, int c){
-		grid = new int[r][c];
+		rows = r;
+		columns = c;
+		grid = new Cell[r][c];
+		for(int i = 0; i<r; i++)//init row
+			for(int j=0;j<c;j++) //init cologne
+				grid[i][j] = new Cell(i,j,false,false);
 	}
 
 	
-	public int[][] getGrid() {
+	public Cell[][] getGrid() {
 		return grid;
 	}
 
-	public void setGrid(int[][] grid) {
+	public void setGrid(Cell[][] grid) {
 		this.grid = grid;
+	}
+	
+	public Cell getCell(int x, int y){
+		return grid[x][y];
 	}
 
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
@@ -40,6 +49,17 @@ public class Grid2 {
 		return grid[0].length;
 	}
 	
-	
+	//x y new position
+	public boolean MovePlayer(int x,int y, Player2 p){
+		if(x < rows && y < columns && x >= 0 && y >= 0){
+			//set new cell true
+			grid[x][y].setContains(false);
+			//set old cell false
+			grid[p.getX()][p.getY()].setContains(false);
+			
+			return true;
+		}
+		return  false;
+	}
 
 }
