@@ -1,5 +1,6 @@
 package game3.world;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -8,24 +9,32 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class Block extends Rectangle {
 
-	float speedX;
-	float speedY;
+	private float speedX;
+	private float speedY;
 	
 	public Block(float x, float y, float width, float height) {
 		super(x, y, width, height);
 	}
 	
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
-		//Affichage
+		// Rendering
+		arg2.setColor(Color.cyan);
 		arg2.drawRect(x, y, width, height);
-
 	}
 	
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		x++;
-		y++;
+		// Updating
+		x += speedX;
+		y += speedY;
 	}
 
+	// Methods =================================================================================
+
+	public void drop(){
+		speedY = World3.GRAVITY;
+		speedX = 5;
+	}
+	
 	// Getters and Setters =====================================================================
 	
 	public float getSpeedX() {
