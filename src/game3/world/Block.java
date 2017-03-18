@@ -17,6 +17,8 @@ public class Block extends Rectangle {
 	private float successY;
 	private float accelY;
 	
+	private boolean isDroping = false;
+	
 	public Block(float x, float y, float width, float height) {
 		super(x, y, width, height);
 	}
@@ -38,16 +40,16 @@ public class Block extends Rectangle {
 		
 		speedY+=accelY;
 	}
-
 	// Methods =================================================================================
 
 	public void drop(float speedX,float speedY){
-		//successY = World3.getTower().gettopY();
+		successY = World3.getTower().getTopY();
 		this.speedY = speedY;
 		this.speedX = speedX;
 		this.accelY= World3.GRAVITY;
+		isDroping = true;
+
 	}
-	
 	// Getters and Setters =====================================================================
 	
 	public float getSpeedX() {

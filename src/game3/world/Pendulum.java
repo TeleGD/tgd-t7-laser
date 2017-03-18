@@ -97,4 +97,11 @@ public class Pendulum extends BasicGameState{
 		return 0;
 	}
 
+	public float getX() {
+		return this.x;
+	}
+	public float getY() {
+		return this.y;
+	}
+
 }
