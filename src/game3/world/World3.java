@@ -6,32 +6,44 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class World3 extends BasicGameState{
+import general.Main;
 
-	public static int ID=3;
+public class World3 extends BasicGameState{
+	public final static float GRAVITY= 0.3f;
+	public final static int ID=3;
+	
+	public static Pendulum pendulum;
+	public static long timeInitial;
+	public static Tower tower;
+
 	
 	@Override
-	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
-		//Ici ne mettre que des initialisations de variables 
+	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+		pendulum=new Pendulum();
+		pendulum.init(container, game);
+		
+		//tower=new Tower(Main.longueur/2,Main.hauteur,new Block(Main.longueur/2,Main.hauteur,100,100));
 	}
 	
 	@Override
-	public void enter(GameContainer arg0, StateBasedGame arg1){
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
+		pendulum.enter(container, game);
+		timeInitial=System.currentTimeMillis(); // on reinitialise le temps
+		
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 	}
 	
 
 	@Override
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
-		//Affichage
-		arg2.drawString("Bonjour 3", 500, 400);
+	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+		pendulum.render(container, game,g);
+
 
 	}
 
 	@Override
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		// TODO Auto-generated method stub
-
+	public void update(GameContainer container, StateBasedGame game, int compt) throws SlickException {
+		pendulum.update(container, game,compt);
 	}
 
 	@Override
@@ -41,6 +53,19 @@ public class World3 extends BasicGameState{
 
 	public static void reset() {
 		// TODO Auto-generated method stub
-		
+	}
+	
+	public static long getTime(){
+		return (System.currentTimeMillis()-timeInitial)/1000;
+	}
+
+	public static double getTimeInMillis() {
+		// TODO Auto-generated method stub
+		return (System.currentTimeMillis()-timeInitial);
+	}
+
+	public static Tower getTower() {
+		// TODO Auto-generated method stub
+		return tower;
 	}
 }
