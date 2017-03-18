@@ -1,18 +1,22 @@
 package game3.world;
 
+import org.newdawn.slick.Image;
+
 public class SkyElements {
 
 	private int posX;
 	private int posY;
 	private int width;
 	private int height;
+	private Image image;
 	
-	public SkyElements(int posX, int posY, int width, int height)
+	public SkyElements(int posX, int posY, int width, int height,Image image)
 	{
 		this.posX = posX;
 		this.posY = posY;
 		this.width=width;
 		this.height=height;
+		this.image=image;
 	}
 	
 	public int getPosX() {
@@ -39,5 +43,14 @@ public class SkyElements {
 	public void setHeight(int height) {
 		this.height = height;
 	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
+	
 	
 }
