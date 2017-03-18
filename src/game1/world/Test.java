@@ -11,10 +11,7 @@ public class Test {
 		System.out.println(0+1 < labyrinth.getRows());
 		System.out.println(mazeGenerator.getNeighbor(0, 0)[3]);
 		System.out.println(mazeGenerator.hasAnUnvisitedNeighbor(0,0));
-		if (mazeGenerator.hasAnUnvisitedNeighbor(0, 0))
-		{
-			mazeGenerator.getRandomUnvisitedCell(0, 0);
-		}
+		mazeGenerator.mazeGenrator();
 	}
 
 }
