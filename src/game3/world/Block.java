@@ -12,6 +12,8 @@ public class Block extends Rectangle {
 	private float speedX;
 	private float speedY;
 	
+	private float successY;
+	
 	public Block(float x, float y, float width, float height) {
 		super(x, y, width, height);
 	}
@@ -31,6 +33,7 @@ public class Block extends Rectangle {
 	// Methods =================================================================================
 
 	public void drop(){
+		successY = World3.getTower().gettopY();
 		speedY = World3.GRAVITY;
 		speedX = 5;
 	}
