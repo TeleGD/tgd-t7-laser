@@ -1,5 +1,6 @@
 package game1.world;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -136,6 +137,7 @@ public class Cell{
 	{
 		arg2.fillRect(i*64,j*64,63,63);
 		if (itsATrap){
+			arg2.setColor(Color.red);
 			arg2.fillRect(i*62, j*62, 60, 60);
 		}
 	}
