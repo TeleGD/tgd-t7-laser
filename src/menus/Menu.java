@@ -30,7 +30,7 @@ import general.utils.FontUtils;
 		super.setCouleurClignote(Color.red);
 		super.setTempsClignote(400);
  *
- *@author Jérôme
+ *@author Jï¿½rï¿½me
  */
 public abstract class Menu extends BasicGameState {
 	
@@ -38,13 +38,13 @@ public abstract class Menu extends BasicGameState {
 	public static int ID;
 	private String titrePrincipal="";
 	private String titreSecondaire="";
-	private String[] items;
+	protected String[] items;
 	
 	private TrueTypeFont fontTitrePrincipal;
 	private TrueTypeFont fontTitreSecondaire;
-	private TrueTypeFont fontItem;
+	protected TrueTypeFont fontItem;
 
-	private int selection;
+	protected int selection;
 	protected long tempsClignote=400;
 	protected Color couleurClignote=Color.red;
 	private boolean enableClignote=false;
@@ -55,7 +55,7 @@ public abstract class Menu extends BasicGameState {
 
 	protected TrueTypeFont fontConfirmText;
 
-	private int indexItemPlusGrand;
+	protected int indexItemPlusGrand;
 
 	public Menu(){
 		setFontTitrePrincipal("font/PressStart2P.ttf",Font.BOLD,40,false);

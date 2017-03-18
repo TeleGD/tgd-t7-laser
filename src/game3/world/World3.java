@@ -2,6 +2,7 @@ package game3.world;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -18,21 +19,27 @@ public class World3 extends BasicGameState{
 	public static Tower tower;
 	public static Block currentBlock;
 	public static Decor decor;
+	public static int difficulty;
+	public static String colorImage;
 
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
-		this.decor=new Decor();
-		pendulum=new Pendulum();
-		pendulum.init(container, game);
-		tower=new Tower(Main.longueur/2,Main.hauteur,new Block(pendulum.getX() - 50, Main.hauteur-101,100,100));
+	
 	}
 	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
+		if(difficulty==0)colorImage="Rouge";
+		else if(difficulty==1)colorImage="Bleu";
+		else if(difficulty==2)colorImage="Vert";
+
+		this.decor=new Decor();
+		pendulum=new Pendulum();
 		pendulum.enter(container, game);
 		timeInitial=System.currentTimeMillis(); // on reinitialise le temps
-		
+		tower=new Tower(Main.longueur/2,Main.hauteur,new Block(pendulum.getX() - 50, Main.hauteur-101,100,100,new Image("Images/TowerBlocks/Blocs/"+World3.colorImage+" Porte.png")));
+
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 	}
 	
