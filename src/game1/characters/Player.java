@@ -1,5 +1,6 @@
 package game1.characters;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -15,7 +16,14 @@ public class Player {
 	private Cell cell;
 	private double speedX,speedY;
 	
+	public Player(){
+		x = 100;
+		y = 100;
+		this.getCell();
+	}
+	
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
+		arg2.setColor(Color.magenta);
 		arg2.fillRect((float)x,(float) y, (float)50, (float)50);
 
 	}
@@ -72,20 +80,20 @@ public class Player {
 	private void move() {
 		speedX = 0;
 		speedY = 0;
-		if(((up && !down) || (up && down && !updown)) && this.cell.isSouthWall())
+		if(((up && !down) || (up && down && !updown)) && !(this.cell.isSouthWall()))
 		{
 				speedY=-0.5;
 			
 		}
-		if(((down && !up) || (up && down && updown)) && this.cell.isNorthWall()){
+		if(((down && !up) || (up && down && updown)) && !(this.cell.isNorthWall())){
 				speedY=0.5;
 		}
-		if(((left && !right)|| (left && right && !rightLeft)) && this.cell.isWestWall())
+		if(((left && !right)|| (left && right && !rightLeft)) && !(this.cell.isWestWall()))
 		{
 				speedX = -0.5;
 			
 		}
-		if(((!left && right)|| (left && right && rightLeft)) && this.cell.isEstWall())
+		if(((!left && right)|| (left && right && rightLeft)) && !(this.cell.isEstWall()))
 		{
 
 				speedX = 0.5;
