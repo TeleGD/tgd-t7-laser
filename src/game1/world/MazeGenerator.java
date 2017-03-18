@@ -2,6 +2,8 @@ package game1.world;
 
 import java.util.Stack;
 
+import org.newdawn.slick.SlickException;
+
 public class MazeGenerator 
 {
 	private Labyrinth labyrinth;
@@ -80,7 +82,7 @@ public class MazeGenerator
 	}
 	
 	
-	public void mazeGenrator()
+	public void mazeGenrator() throws SlickException
 	{
 		//Make the initial cell the current cell and mark it as visited 
 		currentCell = labyrinth.getCell(0, 0);

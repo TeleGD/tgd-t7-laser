@@ -79,9 +79,6 @@ public class World1 extends BasicGameState{
 		labyrinth.render(arg0, arg1, arg2);
 		arg2.drawString("Bonjour 1", 500, 400);
 		
-		for(Cell c: cellTest){
-			c.render(arg0, arg1, arg2);
-		}
 		
 		player.render(arg0, arg1, arg2);
 

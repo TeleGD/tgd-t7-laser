@@ -58,7 +58,7 @@ public class Labyrinth {
 		}
 	}
 	
-	public void autoset()
+	public void autoset() throws SlickException
 	{
 		for (int i = 0 ; i<this.getLines() ; i++)
 		{
