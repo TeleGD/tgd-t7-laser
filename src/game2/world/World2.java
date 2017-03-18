@@ -14,6 +14,7 @@ public class World2 extends BasicGameState{
 	private static Player2 player;
 	private static Grid2 grid;
 	
+	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
@@ -37,6 +38,11 @@ public class World2 extends BasicGameState{
 
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		player.update(arg0,arg1,arg2);
+		grid.update(arg0, arg1, arg2);
+		
+		if(player.isDead()){
+			arg0.exit();
+		}
 
 	}
 	
@@ -55,6 +61,10 @@ public class World2 extends BasicGameState{
 	
 	public static Grid2 getGrid(){
 		return grid;
+	}
+	
+	public static Player2 getPlayer(){
+		return player;
 	}
 
 	public static void reset() {

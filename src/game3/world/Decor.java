@@ -25,7 +25,6 @@ public class Decor {
 		this.compteur=0;
 		this.listSkyElements=new ArrayList<SkyElements>();
 		this.background =new Image("./Images/TowerBlocks/DecorBase.png");
-
 	}
 	
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException 
