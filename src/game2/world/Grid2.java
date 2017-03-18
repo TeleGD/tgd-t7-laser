@@ -11,7 +11,7 @@ public class Grid2 {
 	public Cell grid[][];
 	
 
-	public Grid2(int r, int c){
+	public Grid2(int r, int c) throws SlickException{
 		rows = r;
 		columns = c;
 		grid = new Cell[r][c];
@@ -34,7 +34,9 @@ public class Grid2 {
 	}
 
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
-		
+		for(int i = 0; i<this.rows; i++)//init row
+			for(int j=0;j<this.columns;j++) //init cologne
+				grid[i][j].getImage().draw(0+i*100,0+j*100,100,100);
 	}
 
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {

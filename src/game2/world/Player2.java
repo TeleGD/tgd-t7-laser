@@ -12,8 +12,8 @@ public class Player2{
 	
 	private int x = 0;
 	private int y = 0;
-	private float width = 50;
-	private float height = 50;
+	private float width = 100;
+	private float height = 100;
 	
 	private int lives = 1;
 	
@@ -30,13 +30,12 @@ public class Player2{
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		//Affichage
 		g.setColor(Color.green);
-		g.fillRect((float)x*50, (float)y*50, (float)width, (float)height);
+		g.fillRect((float)x*100, (float)y*100, (float)width, (float)height);
 
 	}
 
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		callMove();
-		System.out.println(""+x+y);
 	}
 	
 	public void callMove(){
