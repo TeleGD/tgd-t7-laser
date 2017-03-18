@@ -15,29 +15,32 @@ public class World1 extends BasicGameState{
 
 	public static int ID=1;
 	private static Labyrinth labyrinth;
+	private MazeGenerator mazeGenerator;
 	private static Player player;
 	private ArrayList<Cell> cellTest;
+	private static int score;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
 		labyrinth = new Labyrinth(16,16);
+		
 	}
 	
 	@Override
 	public void enter(GameContainer arg0, StateBasedGame arg1){
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
-		player = new Player(5,5);
-		cellTest = new ArrayList<Cell>();
-		cellTest.add(new Cell(17,0));
-		cellTest.add(new Cell(18,0));
-		cellTest.add(new Cell(19,0));
-		cellTest.add(new Cell(17,1));
-		cellTest.add(new Cell(17,2));
-		cellTest.add(new Cell(18,2));
-		cellTest.add(new Cell(19,1));
-		cellTest.add(new Cell(19,2));
 		
+		player = new Player(15,0);
+		mazeGenerator = new MazeGenerator(labyrinth);
+		try {
+			mazeGenerator.mazeGenrator();
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			System.out.println("erreur mazeGenerator");
+			e.printStackTrace();
+		}
+		System.out.println("fin genration");
 	}
 	
 
@@ -47,11 +50,6 @@ public class World1 extends BasicGameState{
 		arg2.setColor(Color.white);
 		labyrinth.render(arg0, arg1, arg2);
 		arg2.drawString("Bonjour 1", 500, 400);
-		
-		for(Cell c: cellTest){
-			c.render(arg0, arg1, arg2);
-		}
-		
 		player.render(arg0, arg1, arg2);
 
 	}
@@ -87,4 +85,14 @@ public class World1 extends BasicGameState{
 	public static Player getPlayer(){
 		return player;
 	}
+
+	public static int  getScore() {
+		return score;
+	}
+
+	public static void setScore(int score) {
+		World1.score = score;
+	}
+	
+	
 }

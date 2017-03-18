@@ -58,9 +58,15 @@ public class Labyrinth {
 		}
 	}
 	
-	public void mazeGenrator()
+	public void autoset() throws SlickException
 	{
-		
+		for (int i = 0 ; i<this.getLines() ; i++)
+		{
+			for (int j = 0 ; i<this.getRows() ; i++)
+				{
+					this.getCell(i, j).autoSetSprite();
+				}
+		}
 	}
 
 }

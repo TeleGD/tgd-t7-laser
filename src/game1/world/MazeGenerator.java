@@ -1,6 +1,8 @@
 package game1.world;
 
-import java.util.ArrayList;
+import java.util.Stack;
+
+import org.newdawn.slick.SlickException;
 
 public class MazeGenerator 
 {
@@ -8,6 +10,7 @@ public class MazeGenerator
 	private Cell[][] unvisitedCell;
 	private Cell currentCell;
 	private Cell choosenCell;
+	private Stack<Cell> stack;
 	
 	public MazeGenerator (Labyrinth labyrinth)
 	{
@@ -20,19 +23,6 @@ public class MazeGenerator
 				this.unvisitedCell[i][j] = labyrinth.getCell(i, j);
 			}
 		}
-	}
-	
-	public Cell getRandomCell()
-	{
-		int i = (int)Math.random()*this.labyrinth.getLines();
-		int j = (int)Math.random()*this.labyrinth.getRows();
-		return labyrinth.getCell(i, j);
-	}
-	
-	public Cell getStart()
-	{
-		
-		return labyrinth.getCell(0,0);
 	}
 	
 	/*
@@ -78,34 +68,79 @@ public class MazeGenerator
 			return false;
 	}
 	
-	public void getRandomUnvisitedCell (int i, int j)
+	public boolean stillUnvisitedCell()
 	{
-		Cell [] neighbor = this.getNeighbor(i, j);
-		int random = (int)Math.random()*3;
-		while (neighbor[random] == null)
-			random = (int)Math.random()*4;
-		this.choosenCell = neighbor[random];
-		if (random == 0)
+		for (int i=0 ; i<labyrinth.getLines();i++ )
 		{
-			this.currentCell.setEstWall(false);
-			this.choosenCell.setWestWall(false);
+			for (int j =0 ; j<labyrinth.getRows();j++)
+			{
+				if (this.unvisitedCell[i][j] !=null)
+					return true;
+			}
 		}
-		else if (random == 1)
-		{
-			this.currentCell.setNorthWall(false);
-			this.choosenCell.setSouthWall(false);
-		}
-		else if (random == 2)
-		{
-			this.currentCell.setWestWall(false);
-			this.choosenCell.setEstWall(false);
-		}
-		else if (random == 3)
-		{
-			this.currentCell.setSouthWall(false);
-			this.choosenCell.setNorthWall(false);
-		}
+		return false;
 	}
 	
+	
+	public void mazeGenrator() throws SlickException
+	{
+		//Make the initial cell the current cell and mark it as visited 
+		currentCell = labyrinth.getCell(0, 0);
+		unvisitedCell[0][0] = null;
+		
+		//While there are unvisited cells
+		while(this.stillUnvisitedCell())
+		{
+			
+			//If the current cell has any neighbours which have not been visited
+			if (this.hasAnUnvisitedNeighbor(this.currentCell.getI(),this.currentCell.getJ()))
+			{
+				
+				//Choose randomly one of the unvisited neighbours
+				Cell [] neighbor = this.getNeighbor(this.currentCell.getI(), this.currentCell.getJ());
+				int random = (int)Math.random()*3;
+				while (neighbor[random] == null)
+					random = (int)Math.random()*4;
+				this.choosenCell = neighbor[random];
+				
+				//Push the current cell to the stack
+				stack.push(this.currentCell);
+				
+				//Remove the wall between the current cell and the chosen cell
+				if (random == 0)
+				{
+					this.currentCell.setEastWall(false);
+					this.choosenCell.setWestWall(false);
+				}
+				else if (random == 1)
+				{
+					this.currentCell.setNorthWall(false);
+					this.choosenCell.setSouthWall(false);
+				}
+				else if (random == 2)
+				{
+					this.currentCell.setWestWall(false);
+					this.choosenCell.setEastWall(false);
+				}
+				else if (random == 3)
+				{
+					this.currentCell.setSouthWall(false);
+					this.choosenCell.setNorthWall(false);
+				}
+				
+				//Make the chosen cell the current cell and mark it as visited
+				this.currentCell = this.choosenCell;
+				unvisitedCell[this.currentCell.getI()][this.currentCell.getJ()] = null;
+			}
+			
+			//Else if stack is not empty
+			else if (!stack.isEmpty())
+			{
+				//Pop a cell from the stack and make it the current cell
+				this.currentCell = stack.pop();
+			}
+		}
+		//labyrinth.autoset();
+	}
 	
 }

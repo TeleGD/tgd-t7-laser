@@ -7,6 +7,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Tower extends Rectangle{
@@ -21,15 +22,15 @@ public class Tower extends Rectangle{
 	
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		// Rendering
-		for (Block block : blocks) {
-			block.render(arg0, arg1, arg2);
+		for(int i = 0; i < blocks.size(); i++){
+			blocks.get(i).render(arg0, arg1, arg2);
 		}
 	}
 	
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		// Updating
-		for (Block block : blocks) {
-			block.update(arg0, arg1, arg2);
+		for(int i = 0; i < blocks.size(); i++){
+			blocks.get(i).update(arg0, arg1, arg2);
 		}
 	}
 	
@@ -40,9 +41,24 @@ public class Tower extends Rectangle{
 	public float getTopY(){
 		return(blocks.get(blocks.size()-1).getY());
 	}
+	public Block getTop(){
+		return(blocks.get(blocks.size()-1));
+	}
 	
-	public void success(Block block){
-		
+	public void isSuccess(Block block){
+			block.setSpeedX(0);
+			block.setSpeedY(0);
+			block.setAccelY(0);
+			blocks.add(block);
+			block.setY(getTopY()-5);
+			block.setIsDroping(false);
+			World3.getPendulum().notifyStackedBlock();
 	}
 
+	
+	public boolean intersects(Shape shape){
+		System.out.println(getTop().intersects(shape));
+		return getTop().intersects(shape);
+	}
+	
 }
