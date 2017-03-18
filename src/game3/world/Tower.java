@@ -19,8 +19,6 @@ public class Tower extends Rectangle{
 		addBlock(initialBlock);
 	}
 	
-
-
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		// Rendering
 		for (Block block : blocks) {

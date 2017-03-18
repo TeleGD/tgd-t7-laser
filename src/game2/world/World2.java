@@ -10,6 +10,7 @@ public class World2 extends BasicGameState{
 
 	public static int ID=2;
 	private static Player2 player;
+	private static Grid2 grid;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
@@ -18,6 +19,7 @@ public class World2 extends BasicGameState{
 	
 	public void enter(GameContainer arg0, StateBasedGame arg1){
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
+		grid =  new Grid2(4,4);
 		player = new Player2();
 	}
 	
@@ -44,6 +46,10 @@ public class World2 extends BasicGameState{
 
 	public int getID() {
 		return ID;
+	}
+	
+	public static Grid2 getGrid(){
+		return grid;
 	}
 
 	public static void reset() {

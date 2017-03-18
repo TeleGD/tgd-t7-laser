@@ -1,7 +1,5 @@
 package game2.world;
 
-import java.awt.event.KeyEvent;
-
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -22,36 +20,68 @@ public class Player2{
 	private boolean moveLeft,moveRight,moveUp,moveDown  =false;
 	
 	public Player2(){
-		
+		//position initiale
+		World2.getGrid().getCell(0, 0).setContains(true);
+		x = 0;
+		y = 0;
 	}
 	
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		//Affichage
 		g.setColor(Color.green);
-		g.fillRect((float)x, (float)y, (float)width, (float)height);
+		g.fillRect((float)x*50, (float)y*50, (float)width, (float)height);
 
 	}
 
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		// TODO Auto-generated method stub
-
+		callMove();
+		System.out.println(""+x+y);
+	}
+	
+	public void callMove(){
+		if(moveUp && !moveDown){ //haut
+			move(x,y-1);
+			moveUp = false;
+		}
+		if(moveDown && !moveUp){ //bas
+			move(x,y+1);
+			moveDown = false;
+		}
+		if(moveLeft && !moveRight){ //gauche
+			move(x-1,y);
+			moveLeft = false;
+		}
+		if(moveRight && !moveLeft){ //droite
+			move(x+1,y);
+			moveRight = false;
+		}
+	}
+	
+	public void move(int x,int y){
+		
+		if(World2.getGrid().MovePlayer(x, y, this)){
+			//if move worked
+			this.x = x;
+			this.y =y;
+		}
+			
 	}
 	
 	public void keyReleased(int key, char c) {
 		switch (key) {
 		//mouvement
 			case Input.KEY_UP: //haut
-				System.out.println("1");
+				moveUp = false;
 				break;
 			case Input.KEY_DOWN: //bas
-				System.out.println("1");
+				moveDown = false;
 				break;
 			case Input.KEY_LEFT: //gauche
-				System.out.println("1");
+				moveLeft = false;
 				break;
 			case Input.KEY_RIGHT: //droite
-				System.out.println("1");
+				moveRight = false;
 				break;
 			}
 		
@@ -61,16 +91,16 @@ public class Player2{
 		switch (key) {
 		//mouvement
 		case Input.KEY_UP: //haut
-			System.out.println("1");
+			moveUp = true;
 			break;
 		case Input.KEY_DOWN: //bas
-			System.out.println("1");
+			moveDown = true;
 			break;
 		case Input.KEY_LEFT: //gauche
-			System.out.println("1");
+			moveLeft = true;
 			break;
 		case Input.KEY_RIGHT: //droite
-			System.out.println("1");
+			moveRight = true;
 			break;
 		}
 		

@@ -16,6 +16,8 @@ public class Block extends Rectangle {
 	private float angle;
 	private float successY;
 	
+	private boolean isDroping = false;
+	
 	public Block(float x, float y, float width, float height) {
 		super(x, y, width, height);
 	}
@@ -32,8 +34,8 @@ public class Block extends Rectangle {
 	
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		// Updating
-		x += speedX;
-		y += speedY;
+		//x += speedX;
+		//y += speedY;
 	}
 
 	// Methods =================================================================================
@@ -42,6 +44,7 @@ public class Block extends Rectangle {
 		successY = World3.getTower().getTopY();
 		speedY = World3.GRAVITY;
 		speedX = 5;
+		isDroping = true;
 	}
 	
 	// Getters and Setters =====================================================================
