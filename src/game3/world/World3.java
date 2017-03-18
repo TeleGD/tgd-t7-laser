@@ -6,17 +6,23 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import general.Main;
+
 public class World3 extends BasicGameState{
 	public final static float GRAVITY= 0.3f;
 	public final static int ID=3;
 	
 	public static Pendulum pendulum;
 	public static long timeInitial;
+	public static Tower tower;
+
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		pendulum=new Pendulum();
 		pendulum.init(container, game);
+		
+		//tower=new Tower(Main.longueur/2,Main.hauteur,new Block(Main.longueur/2,Main.hauteur,100,100));
 	}
 	
 	@Override
@@ -51,5 +57,15 @@ public class World3 extends BasicGameState{
 	
 	public static long getTime(){
 		return (System.currentTimeMillis()-timeInitial)/1000;
+	}
+
+	public static double getTimeInMillis() {
+		// TODO Auto-generated method stub
+		return (System.currentTimeMillis()-timeInitial);
+	}
+
+	public static Tower getTower() {
+		// TODO Auto-generated method stub
+		return tower;
 	}
 }
