@@ -1,5 +1,7 @@
 package game1.world;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -14,6 +16,7 @@ public class World1 extends BasicGameState{
 	public static int ID=1;
 	private static Labyrinth labyrinth;
 	private Player player;
+	private ArrayList<Cell> cellTest;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
@@ -24,7 +27,16 @@ public class World1 extends BasicGameState{
 	@Override
 	public void enter(GameContainer arg0, StateBasedGame arg1){
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
-		player = new Player();
+		player = new Player(5,5);
+		cellTest = new ArrayList<Cell>();
+		cellTest.add(new Cell(17,0));
+		cellTest.add(new Cell(18,0));
+		cellTest.add(new Cell(19,0));
+		cellTest.add(new Cell(20,0));
+		cellTest.add(new Cell(21,0));
+		cellTest.add(new Cell(22,0));
+		cellTest.add(new Cell(23,0));
+		cellTest.add(new Cell(24,0));
 		
 	}
 	
@@ -65,5 +77,9 @@ public class World1 extends BasicGameState{
 	
 	public void keyReleased(int key, char c) {
 		player.keyReleased(key, c);
+	}
+
+	public Player getPlayer(){
+		return player;
 	}
 }

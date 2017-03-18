@@ -12,13 +12,19 @@ import game1.world.Cell;
 public class Player {
 	private double x,y;
 	private boolean up,down,right,left,updown,rightLeft;
-	private int cellSize=10;
+	private int cellSize=64;
 	private Cell cell;
 	private double speedX,speedY;
 	
 	public Player(){
 		x = 100;
 		y = 100;
+		this.getCell();
+	}
+	
+	public Player(int i, int j){
+		x = i*cellSize + 32 - 25;
+		y = j*cellSize + 32 - 25;
 		this.getCell();
 	}
 	
@@ -29,6 +35,7 @@ public class Player {
 	}
 
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
+		this.getCell();
 		move();
 		x+=speedX*arg2;
 		y+=speedY*arg2;
@@ -93,7 +100,7 @@ public class Player {
 				speedX = -0.5;
 			
 		}
-		if(((!left && right)|| (left && right && rightLeft)) && !(this.cell.isEstWall()))
+		if(((!left && right)|| (left && right && rightLeft)) && !(this.cell.isEastWall()))
 		{
 
 				speedX = 0.5;
