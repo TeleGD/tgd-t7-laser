@@ -28,7 +28,7 @@ public class Cell{
 		this.giveScore=false;
 		//TODO LIGNE A CORRIGER PLUS TARD
 		try {
-			this.sprite = new Image("Images/Labyrinth/noWall.png");
+			this.sprite = new Image("Images/Labyrinth/noWalls.png");
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -88,7 +88,7 @@ public class Cell{
 				}
 				else{
 					if(southWall) sprite = new Image("Images/Labyrinth/tJunction_down.png");
-					else sprite = new Image("Images/Labyrinth/noWall.png");
+					else sprite = new Image("Images/Labyrinth/noWalls.png");
 				}
 			}
 		}		
