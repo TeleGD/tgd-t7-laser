@@ -7,10 +7,13 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import game1.characters.Player;
+
 public class World1 extends BasicGameState{
 
 	public static int ID=1;
 	private static Labyrinth labyrinth;
+	private Player player;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
@@ -21,6 +24,7 @@ public class World1 extends BasicGameState{
 	@Override
 	public void enter(GameContainer arg0, StateBasedGame arg1){
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
+		player = new Player();
 		
 	}
 	
@@ -31,13 +35,14 @@ public class World1 extends BasicGameState{
 		arg2.setColor(Color.white);
 		labyrinth.render(arg0, arg1, arg2);
 		arg2.drawString("Bonjour 1", 500, 400);
+		player.render(arg0, arg1, arg2);
 
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		// TODO Auto-generated method stub
-
+		player.update(arg0, arg1, arg2);
 	}
 
 	@Override
@@ -52,5 +57,13 @@ public class World1 extends BasicGameState{
 	
 	public static Labyrinth getLabyrinth(){
 		return labyrinth;
+	}
+	
+	public void keyPressed(int key, char c) {
+		player.keyPressed(key, c);
+	}
+	
+	public void keyReleased(int key, char c) {
+		player.keyReleased(key, c);
 	}
 }
