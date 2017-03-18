@@ -44,7 +44,7 @@ public class Pendulum extends BasicGameState{
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.setColor(Color.white);
 		
-		if(block!=null){
+		if(!block.isRealeased()){
 			block.render(container, game, g);
 			g.drawLine((float)(Main.longueur/2), y,block.getCenterX(), block.getCenterY());
 		}
@@ -53,13 +53,13 @@ public class Pendulum extends BasicGameState{
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int arg2) throws SlickException {
 		theta=calculateTheta(); //theta=theta0cos(wt)
-		if(block!=null){
+		if(!block.isRealeased()){
 			block.setCenterX(x+ (float)(length*Math.sin(theta)));
 			block.setCenterY(y+ (float)(length*Math.cos(theta)));
 			block.setAngle(theta);
 		}
-		System.out.println(theta);
-		System.out.println("Time="+World3.getTime());
+		//System.out.println(theta);
+		//System.out.println("Time="+World3.getTime());
 	}
 
 	private float calculateTheta() {
@@ -79,13 +79,10 @@ public class Pendulum extends BasicGameState{
 	public Block releaseBlock() {
 		float thetaDot=calculateThetaDot();
 		System.out.println("thetaDot="+thetaDot);
-		Block blockDropped=block.cloneBlock();
-		
 		//blockDropped.drop(-(float)(length*thetaDot*Math.sin(theta))/100,(float) (thetaDot*length*Math.cos(theta))/100);
-		blockDropped.drop(0,0);
+		block.drop(0,0);
 
-		block=null;
-		return blockDropped;
+		return block;
 	}
 
 
@@ -102,6 +99,14 @@ public class Pendulum extends BasicGameState{
 	}
 	public float getY() {
 		return this.y;
+	}
+
+
+
+
+	public void notifyStackedBlock() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
