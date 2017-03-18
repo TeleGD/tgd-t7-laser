@@ -1,7 +1,9 @@
 package game2.world;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -17,7 +19,7 @@ public class World2 extends BasicGameState{
 		//Ici ne mettre que des initialisations de variables 
 	}
 	
-	public void enter(GameContainer arg0, StateBasedGame arg1){
+	public void enter(GameContainer arg0, StateBasedGame arg1) throws SlickException{
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 		grid =  new Grid2(4,4);
 		player = new Player2();
@@ -26,6 +28,9 @@ public class World2 extends BasicGameState{
 
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		//Affichage
+		arg2.setColor(Color.white);
+		arg2.fillRect(0,0,1280,720);
+		grid.render(arg0,arg1,arg2);
 		player.render(arg0,arg1,arg2);
 
 	}
