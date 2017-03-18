@@ -6,8 +6,15 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Grid2 {
-	
+	private int rows;
+	private int colums;
 	public int grid[][];
+	
+
+	public Grid2(int r, int c){
+		grid = new int[r][c];
+	}
+
 	
 	public int[][] getGrid() {
 		return grid;
@@ -15,10 +22,6 @@ public class Grid2 {
 
 	public void setGrid(int[][] grid) {
 		this.grid = grid;
-	}
-
-	public Grid2(){
-		grid = new int[4][4];
 	}
 
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
