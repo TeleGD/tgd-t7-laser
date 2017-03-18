@@ -15,14 +15,13 @@ public class World3 extends BasicGameState{
 	public static Pendulum pendulum;
 	public static long timeInitial;
 	public static Tower tower;
-
+	public Decor decor;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+		this.decor=new Decor();
 		pendulum=new Pendulum();
 		pendulum.init(container, game);
-		
-		//tower=new Tower(Main.longueur/2,Main.hauteur,new Block(Main.longueur/2,Main.hauteur,100,100));
 	}
 	
 	@Override
@@ -36,13 +35,14 @@ public class World3 extends BasicGameState{
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+		//Affichage
+		decor.render(container, game, g);
 		pendulum.render(container, game,g);
-
-
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int compt) throws SlickException {
+		decor.update(container, game, compt);
 		pendulum.update(container, game,compt);
 	}
 

@@ -15,6 +15,7 @@ public class Tower extends Rectangle{
 	
 	public Tower(float x, float y, Block initialBlock) {
 		super(x, y, 0, 0);
+		blocks = new ArrayList<Block>();
 		addBlock(initialBlock);
 	}
 	
@@ -38,7 +39,7 @@ public class Tower extends Rectangle{
 		blocks.add(initialBlock);		
 	}
 
-	public float gettopY(){
+	public float getTopY(){
 		return(blocks.get(blocks.size()).getY());
 	}
 	

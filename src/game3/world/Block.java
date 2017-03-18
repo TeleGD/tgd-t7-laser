@@ -7,6 +7,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
+import general.Main;
+
 public class Block extends Rectangle {
 
 	private float speedX;
@@ -22,7 +24,7 @@ public class Block extends Rectangle {
 		// Rendering
 		g.setColor(Color.cyan);
 		
-		//g.rotate(getCenterY(), getCenterY(), -(float) (angle*180/Math.PI));
+		//g.rotate(Main.longueur/2, -100, -(float) (angle*180/Math.PI));
 		g.drawRect(x, y, width, height);
 		//g.rotate(getCenterY(), getCenterY(), (float) (angle*180/Math.PI));
 
@@ -37,7 +39,7 @@ public class Block extends Rectangle {
 	// Methods =================================================================================
 
 	public void drop(){
-		successY = World3.getTower().gettopY();
+		successY = World3.getTower().getTopY();
 		speedY = World3.GRAVITY;
 		speedX = 5;
 	}
