@@ -39,7 +39,7 @@ public class Block extends Rectangle {
 	// Methods =================================================================================
 
 	public void drop(){
-		successY = World3.getTower().gettopY();
+		successY = World3.getTower().getTopY();
 		speedY = World3.GRAVITY;
 		speedX = 5;
 	}
