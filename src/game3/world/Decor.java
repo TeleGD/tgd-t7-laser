@@ -16,6 +16,7 @@ public class Decor {
 	private int height;
 	private int compteur;
 	private ArrayList<SkyElements> listSkyElements;
+	private boolean endTown=false;
 	
 	public Decor()
 	{
@@ -28,19 +29,22 @@ public class Decor {
 	{
 		this.height+=1;
 		this.compteur+=1;
+		if(this.height>=arg0.getHeight()){
+			this.endTown=true;
+		}
 		Random r = new Random();
 		if((compteur==1 || compteur%100==0))
 		{
 			
 			this.listSkyElements=new ArrayList<SkyElements>();
-			if(height<=128){
+			if(height<=128+arg0.getHeight()){
 				
 				int numberCloud= 2 + r.nextInt(8-2);
 				for(int i =0;i<=numberCloud;i++){
 					int posX=0 + r.nextInt(arg0.getWidth() - 0);
 					int posY;
 					if(arg0.getHeight()/2+height<arg0.getHeight()){
-						posY=0 + r.nextInt(arg0.getHeight()/2+height - 0);
+						posY=0 + r.nextInt(arg0.getHeight()/10+height - 0);
 					}
 					else
 					{
@@ -75,26 +79,34 @@ public class Decor {
 	}
 
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
-		int red= 169-height;
-		if(red<0)
+		int red;
+		int blue;
+		int green;
+		if(!this.endTown)
 		{
 			red=0;
+			green=217;
+			blue=198;
+			
 		}
-		int green=217-height;
-		if(green<0)
-		{
-			green=0;
+		else{
+			red= 0-height+arg0.getHeight();
+			if(red<0)
+			{
+				red=0;
+			}
+			green=217-height+arg0.getHeight();
+			if(green<0)
+			{
+				green=0;
+			}
+			blue=198-height+arg0.getHeight();
+			if(blue<0)
+			{
+				blue=0;
+			}
 		}
-		int blue=169-height;
-		if(blue<0)
-		{
-			blue=0;
-		}
-		if(height<255)
-		{
-			g.setBackground(new Color(red,green,blue));
-		}
-		
+		g.setBackground(new Color(red,green,blue));
 		Image backGround= new Image("./Images/TowerBlocks/DecorBase.png");
 		backGround = backGround.getScaledCopy(arg0.getWidth(),arg0.getHeight() );
 		g.drawImage(backGround, 0,0+height, null);
