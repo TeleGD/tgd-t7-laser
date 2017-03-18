@@ -14,6 +14,7 @@ public class Cell{
 	private boolean partOfTheMaze;
 	private boolean itsATrap;
 	private boolean isFinalCell;
+	private boolean giveScore;
 	private Image sprite;
 	
 	public Cell (int i, int j)
@@ -24,6 +25,7 @@ public class Cell{
 		this.setSouthWall(true);
 		this.setEastWall(true);
 		this.setWestWall(true);
+		this.giveScore=false;
 		//TODO LIGNE A CORRIGER PLUS TARD
 		try {
 			this.sprite = new Image("Images/Labyrinth/noWall.png");
@@ -40,6 +42,7 @@ public class Cell{
 		this.setSouthWall(south);
 		this.setEastWall(east);
 		this.setWestWall(west);
+		this.giveScore=false;
 		try {
 			autoSetSprite();
 		} catch (SlickException e) {
@@ -48,7 +51,7 @@ public class Cell{
 		}
 	}
 
-	private void autoSetSprite() throws SlickException {
+	public void autoSetSprite() throws SlickException {
 	// Automatically selects the right sprite 
 		if(eastWall){
 			if(northWall){
@@ -157,6 +160,10 @@ public class Cell{
 	
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		if (this.equals(World1.getPlayer())){
+			if (giveScore){
+				giveScore=false;
+				World1.setScore(World1.getScore()+1);
+			}
 			if (isFinalCell){
 				System.exit(0);
 			}
@@ -206,7 +213,14 @@ public class Cell{
 	public void setFinalCell(boolean isFinalCell) {
 		this.isFinalCell = isFinalCell;
 	}
-	
+
+	public boolean isGiveScore() {
+		return giveScore;
+	}
+
+	public void setGiveScore(boolean giveScore) {
+		this.giveScore = giveScore;
+	}
 	
 
 }

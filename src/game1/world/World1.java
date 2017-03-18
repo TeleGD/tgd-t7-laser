@@ -17,6 +17,7 @@ public class World1 extends BasicGameState{
 	private static Labyrinth labyrinth;
 	private static Player player;
 	private ArrayList<Cell> cellTest;
+	private static int score;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
@@ -62,7 +63,7 @@ public class World1 extends BasicGameState{
 
 		cellTest.get(2).setWestWall(false);
 		cellTest.get(2).setNorthWall(false);
-		
+		this.score=0;
 	}
 	
 
@@ -112,4 +113,14 @@ public class World1 extends BasicGameState{
 	public static Player getPlayer(){
 		return player;
 	}
+
+	public static int  getScore() {
+		return score;
+	}
+
+	public static void setScore(int score) {
+		World1.score = score;
+	}
+	
+	
 }
