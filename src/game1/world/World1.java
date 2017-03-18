@@ -15,7 +15,7 @@ public class World1 extends BasicGameState{
 
 	public static int ID=1;
 	private static Labyrinth labyrinth;
-	private Player player;
+	private static Player player;
 	private ArrayList<Cell> cellTest;
 	
 	@Override
@@ -32,11 +32,11 @@ public class World1 extends BasicGameState{
 		cellTest.add(new Cell(17,0));
 		cellTest.add(new Cell(18,0));
 		cellTest.add(new Cell(19,0));
-		cellTest.add(new Cell(20,0));
-		cellTest.add(new Cell(21,0));
-		cellTest.add(new Cell(22,0));
-		cellTest.add(new Cell(23,0));
-		cellTest.add(new Cell(24,0));
+		cellTest.add(new Cell(17,1));
+		cellTest.add(new Cell(17,2));
+		cellTest.add(new Cell(18,2));
+		cellTest.add(new Cell(19,1));
+		cellTest.add(new Cell(19,2));
 		
 	}
 	
@@ -47,13 +47,18 @@ public class World1 extends BasicGameState{
 		arg2.setColor(Color.white);
 		labyrinth.render(arg0, arg1, arg2);
 		arg2.drawString("Bonjour 1", 500, 400);
+		
+		for(Cell c: cellTest){
+			c.render(arg0, arg1, arg2);
+		}
+		
 		player.render(arg0, arg1, arg2);
 
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub		
 		player.update(arg0, arg1, arg2);
 	}
 
@@ -79,7 +84,7 @@ public class World1 extends BasicGameState{
 		player.keyReleased(key, c);
 	}
 
-	public Player getPlayer(){
+	public static Player getPlayer(){
 		return player;
 	}
 }
