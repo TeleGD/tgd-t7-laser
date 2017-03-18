@@ -3,6 +3,7 @@ package game3.world;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
@@ -19,9 +20,14 @@ public class Block extends Rectangle {
 	
 	private boolean isDroping = false;
 	private boolean isRealeased = false;
+	private Image image;
 	
 
-
+	public Block(float x, float y, float width, float height,Image image) {
+		super(x, y, width, height);
+		this.image=image.getScaledCopy((int)width, (int)height);
+	}
+	
 	public Block(float x, float y, float width, float height) {
 		super(x, y, width, height);
 	}
@@ -33,7 +39,7 @@ public class Block extends Rectangle {
 		//g.rotate(Main.longueur/2, -100, -(float) (angle*180/Math.PI));
 		g.drawRect(x, y, width, height);
 		//g.rotate(getCenterY(), getCenterY(), (float) (angle*180/Math.PI));
-
+		g.drawImage(image,x,y);
 	}
 	
 	public void update(GameContainer arg0, StateBasedGame arg1, int delta) throws SlickException {
