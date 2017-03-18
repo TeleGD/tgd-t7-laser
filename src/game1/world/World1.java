@@ -28,7 +28,9 @@ public class World1 extends BasicGameState{
 	@Override
 	public void enter(GameContainer arg0, StateBasedGame arg1){
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
-		player = new Player(17,0);
+		
+		//TODO (by P-A) fouetter Nicolas
+		/*
 		cellTest = new ArrayList<Cell>();
 		cellTest.add(new Cell(17,0));
 		cellTest.add(new Cell(18,0));
@@ -63,7 +65,10 @@ public class World1 extends BasicGameState{
 
 		cellTest.get(2).setWestWall(false);
 		cellTest.get(2).setNorthWall(false);
-		this.score=0;
+		*/
+		
+		player = new Player(15,0);
+		
 	}
 	
 
@@ -74,9 +79,6 @@ public class World1 extends BasicGameState{
 		labyrinth.render(arg0, arg1, arg2);
 		arg2.drawString("Bonjour 1", 500, 400);
 		
-		for(Cell c: cellTest){
-			c.render(arg0, arg1, arg2);
-		}
 		
 		player.render(arg0, arg1, arg2);
 

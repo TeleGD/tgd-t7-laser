@@ -18,7 +18,10 @@ public class Block extends Rectangle {
 	private float accelY;
 	
 	private boolean isDroping = false;
+	private boolean isRealeased = false;
 	
+
+
 	public Block(float x, float y, float width, float height) {
 		super(x, y, width, height);
 	}
@@ -35,10 +38,19 @@ public class Block extends Rectangle {
 	
 	public void update(GameContainer arg0, StateBasedGame arg1, int delta) throws SlickException {
 		// Updating
+
 		x += speedX*delta;
 		y += speedY*delta;
 		
 		speedY+=accelY;
+		
+		System.out.println(this.y  +" / "+ this.accelY + " / " + this.speedY );
+		if(isDroping){
+			if( World3.getTower().intersects(this)){
+				World3.getTower().isSuccess(this);
+			}
+		}
+		
 	}
 	// Methods =================================================================================
 
@@ -48,6 +60,7 @@ public class Block extends Rectangle {
 		this.speedX = speedX;
 		this.accelY= World3.GRAVITY;
 		isDroping = true;
+		isRealeased = true;
 
 	}
 	// Getters and Setters =====================================================================
@@ -71,6 +84,10 @@ public class Block extends Rectangle {
 	public void setAngle(float angle) {
 		this.angle=angle;
 	}
+	
+	public void setAccelY(float accelY) {
+		this.accelY=accelY;
+	}
 
 	public Block cloneBlock() {
 		Block block=new Block(x,y,width,height);
@@ -79,6 +96,22 @@ public class Block extends Rectangle {
 		return block;
 	}
 
-	
+	public boolean isDroping() {
+		// TODO Auto-generated method stub
+		return isDroping;
+	}
+
+	public void setIsDroping(boolean b) {
+		// TODO Auto-generated method stub
+		this.isDroping = b;
+	}
+
+	public boolean isRealeased() {
+		return isRealeased;
+	}
+
+	public void setRealeased(boolean isRealeased) {
+		this.isRealeased = isRealeased;
+	}
 	
 }
