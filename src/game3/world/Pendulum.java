@@ -43,19 +43,53 @@ public class Pendulum extends BasicGameState{
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.setColor(Color.white);
-		g.drawLine((float)(Main.longueur/2), y,block.getCenterX(), block.getCenterY());
-		block.render(container, game, g);
+		
+		if(block!=null){
+			block.render(container, game, g);
+			g.drawLine((float)(Main.longueur/2), y,block.getCenterX(), block.getCenterY());
+		}
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int arg2) throws SlickException {
-		theta=(float) (initialAngle*Math.cos(speed*(double)(omega*World3.getTimeInMillis()/1000.0))); //theta=theta0cos(wt)
-		block.setCenterX(x+ (float)(length*Math.sin(theta)));
-		block.setCenterY(y+ (float)(length*Math.cos(theta)));
-		block.setAngle(theta);
+		theta=calculateTheta(); //theta=theta0cos(wt)
+		if(block!=null){
+			block.setCenterX(x+ (float)(length*Math.sin(theta)));
+			block.setCenterY(y+ (float)(length*Math.cos(theta)));
+			block.setAngle(theta);
+		}
 		System.out.println(theta);
 		System.out.println("Time="+World3.getTime());
 	}
+
+	private float calculateTheta() {
+		return (float) (initialAngle*Math.cos(speed*(double)(omega*World3.getTimeInMillis()/1000.0)));
+	}
+	private float calculateThetaDot() {
+		return (float) (initialAngle*-1*omega*speed*Math.sin(speed*(double)(omega*World3.getTimeInMillis()/1000.0)));
+	}
+
+
+
+
+
+
+
+
+	public Block releaseBlock() {
+		float thetaDot=calculateThetaDot();
+		System.out.println("thetaDot="+thetaDot);
+		Block blockDropped=block.cloneBlock();
+		
+		//blockDropped.drop(-(float)(length*thetaDot*Math.sin(theta))/100,(float) (thetaDot*length*Math.cos(theta))/100);
+		blockDropped.drop(0,0);
+
+		block=null;
+		return blockDropped;
+	}
+
+
+
 
 	@Override
 	public int getID() {

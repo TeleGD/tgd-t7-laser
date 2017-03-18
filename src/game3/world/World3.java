@@ -2,6 +2,7 @@ package game3.world;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -15,6 +16,7 @@ public class World3 extends BasicGameState{
 	public static Pendulum pendulum;
 	public static long timeInitial;
 	public static Tower tower;
+	public static Block currentBlock;
 
 	
 	@Override
@@ -37,13 +39,25 @@ public class World3 extends BasicGameState{
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		pendulum.render(container, game,g);
-
-
+		if(currentBlock!=null){
+			currentBlock.render(container, game, g);
+		}
 	}
+	
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int compt) throws SlickException {
 		pendulum.update(container, game,compt);
+		if(currentBlock!=null){
+			currentBlock.update(container, game, compt);
+		}
+	}
+	
+	@Override
+	public void keyPressed(int key, char  c){
+		if(key==Input.KEY_SPACE){
+			currentBlock=pendulum.releaseBlock();
+		}
 	}
 
 	@Override

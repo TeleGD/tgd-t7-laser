@@ -15,6 +15,7 @@ public class Block extends Rectangle {
 	private float speedY;
 	private float angle;
 	private float successY;
+	private float accelY;
 	
 	public Block(float x, float y, float width, float height) {
 		super(x, y, width, height);
@@ -30,18 +31,21 @@ public class Block extends Rectangle {
 
 	}
 	
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
+	public void update(GameContainer arg0, StateBasedGame arg1, int delta) throws SlickException {
 		// Updating
-		x += speedX;
-		y += speedY;
+		x += speedX*delta;
+		y += speedY*delta;
+		
+		speedY+=accelY;
 	}
 
 	// Methods =================================================================================
 
-	public void drop(){
-		successY = World3.getTower().gettopY();
-		speedY = World3.GRAVITY;
-		speedX = 5;
+	public void drop(float speedX,float speedY){
+		//successY = World3.getTower().gettopY();
+		this.speedY = speedY;
+		this.speedX = speedX;
+		this.accelY= World3.GRAVITY;
 	}
 	
 	// Getters and Setters =====================================================================
@@ -65,5 +69,14 @@ public class Block extends Rectangle {
 	public void setAngle(float angle) {
 		this.angle=angle;
 	}
+
+	public Block cloneBlock() {
+		Block block=new Block(x,y,width,height);
+		block.setSpeedX(speedX);
+		block.setSpeedY(speedY);
+		return block;
+	}
+
+	
 	
 }
