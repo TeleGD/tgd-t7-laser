@@ -43,4 +43,8 @@ public class World1 extends BasicGameState{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public Labyrinth getLabyrinth(){
+		return labyrinth;
+	}
 }
