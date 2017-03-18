@@ -72,20 +72,20 @@ public class Player {
 	private void move() {
 		speedX = 0;
 		speedY = 0;
-		if((up && !down) || (up && down && !updown)) 
+		if(((up && !down) || (up && down && !updown)) && this.cell.isSouthWall())
 		{
 				speedY=-0.5;
 			
 		}
-		if((down && !up) || (up && down && updown)){
+		if(((down && !up) || (up && down && updown)) && this.cell.isNorthWall()){
 				speedY=0.5;
 		}
-		if((left && !right)|| (left && right && !rightLeft))
+		if(((left && !right)|| (left && right && !rightLeft)) && this.cell.isWestWall())
 		{
 				speedX = -0.5;
 			
 		}
-		if((!left && right)|| (left && right && rightLeft))
+		if(((!left && right)|| (left && right && rightLeft)) && this.cell.isEstWall())
 		{
 
 				speedX = 0.5;
