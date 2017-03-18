@@ -22,7 +22,7 @@ public class World3 extends BasicGameState{
 		pendulum=new Pendulum();
 		pendulum.init(container, game);
 		
-		//tower=new Tower(Main.longueur/2,Main.hauteur,new Block(Main.longueur/2,Main.hauteur,100,100));
+		tower=new Tower(Main.longueur/2,Main.hauteur,new Block(pendulum.getX() - 50, Main.hauteur-101,100,100));
 	}
 	
 	@Override
@@ -37,13 +37,14 @@ public class World3 extends BasicGameState{
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		pendulum.render(container, game,g);
-
+		tower.render(container, game, g);
 
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int compt) throws SlickException {
 		pendulum.update(container, game,compt);
+		tower.update(container, game, compt);
 	}
 
 	@Override
