@@ -9,6 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class World2 extends BasicGameState{
 
 	public static int ID=2;
+	private static Player2 player;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
@@ -18,18 +19,20 @@ public class World2 extends BasicGameState{
 	@Override
 	public void enter(GameContainer arg0, StateBasedGame arg1){
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
+		player = new Player2();
 	}
 	
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		//Affichage
-		arg2.drawString("Bonjour 2", 500, 400);
+		player.render(arg0,arg1,arg2);
 
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
+		player.update(arg0,arg1,arg2);
 		// TODO Auto-generated method stub
 
 	}
@@ -41,6 +44,5 @@ public class World2 extends BasicGameState{
 
 	public static void reset() {
 		// TODO Auto-generated method stub
-		
 	}
 }
