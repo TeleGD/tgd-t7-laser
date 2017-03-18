@@ -10,7 +10,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class World1 extends BasicGameState{
 
 	public static int ID=1;
-	private Labyrinth labyrinth;
+	private static Labyrinth labyrinth;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
@@ -50,7 +50,7 @@ public class World1 extends BasicGameState{
 		
 	}
 	
-	public Labyrinth getLabyrinth(){
+	public static Labyrinth getLabyrinth(){
 		return labyrinth;
 	}
 }
