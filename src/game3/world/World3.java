@@ -88,4 +88,18 @@ public class World3 extends BasicGameState{
 		// TODO Auto-generated method stub
 		return tower;
 	}
+
+	public static Block getCurrentBlock() {
+		// TODO Auto-generated method stub
+		return currentBlock;
+	}
+	public static void setCurrentBlock(Block block) {
+		// TODO Auto-generated method stub
+		currentBlock = block;
+	}
+
+	public static Pendulum getPendulum() {
+		// TODO Auto-generated method stub
+		return pendulum;
+	}
 }

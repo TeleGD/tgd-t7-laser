@@ -16,6 +16,7 @@ public class Decor {
 	private int height;
 	private int compteur;
 	private ArrayList<SkyElements> listSkyElements;
+	private boolean endTown=false;
 	
 	public Decor()
 	{
@@ -28,17 +29,27 @@ public class Decor {
 	{
 		this.height+=1;
 		this.compteur+=1;
+		if(this.height>=arg0.getHeight()){
+			this.endTown=true;
+		}
 		Random r = new Random();
 		if((compteur==1 || compteur%100==0))
 		{
 			
 			this.listSkyElements=new ArrayList<SkyElements>();
-			if(height<=128){
+			if(height<=128+arg0.getHeight()){
 				
 				int numberCloud= 2 + r.nextInt(8-2);
 				for(int i =0;i<=numberCloud;i++){
 					int posX=0 + r.nextInt(arg0.getWidth() - 0);
-					int posY=0 + r.nextInt(arg0.getHeight()/2+height - 0);
+					int posY;
+					if(arg0.getHeight()/2+height<arg0.getHeight()){
+						posY=0 + r.nextInt(arg0.getHeight()/10+height - 0);
+					}
+					else
+					{
+						posY=0 + r.nextInt(arg0.getHeight() - 0);
+					}
 					int width=5 + r.nextInt(200 - 5);
 					int heigth=5 + r.nextInt(200 - 5);
 					int numberImageCloud=1 + r.nextInt(5 - 1);
@@ -52,7 +63,14 @@ public class Decor {
 				int numberStar= 30 + r.nextInt(50-30);
 				for(int i =0;i<=numberStar;i++){
 					int posX=0 + r.nextInt(arg0.getWidth() - 0);
-					int posY=0 + r.nextInt(arg0.getHeight()/2+height - 0);
+					int posY;
+					if(arg0.getHeight()/2+height<arg0.getHeight()){
+						posY=0 + r.nextInt(arg0.getHeight()/2+height - 0);
+					}
+					else
+					{
+						posY=0 + r.nextInt(arg0.getHeight() - 0);
+					}
 					this.listSkyElements.add(new Star(posX,posY));
 				}
 			}
@@ -61,13 +79,37 @@ public class Decor {
 	}
 
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
-		if(height<255)
+		int red;
+		int blue;
+		int green;
+		if(!this.endTown)
 		{
-			g.setBackground(new Color(0,0,255-height));
+			red=0;
+			green=217;
+			blue=198;
+			
 		}
-		
-		g.setColor(Color.green);
-		g.fillRect(0, arg0.getHeight()-20+this.height, arg0.getWidth(),20 );
+		else{
+			red= 0-height+arg0.getHeight();
+			if(red<0)
+			{
+				red=0;
+			}
+			green=217-height+arg0.getHeight();
+			if(green<0)
+			{
+				green=0;
+			}
+			blue=198-height+arg0.getHeight();
+			if(blue<0)
+			{
+				blue=0;
+			}
+		}
+		g.setBackground(new Color(red,green,blue));
+		Image backGround= new Image("./Images/TowerBlocks/DecorBase.png");
+		backGround = backGround.getScaledCopy(arg0.getWidth(),arg0.getHeight() );
+		g.drawImage(backGround, 0,0+height, null);
 
 		for(SkyElements se : listSkyElements)
 		{
@@ -89,4 +131,14 @@ public class Decor {
 			}
 		}
 	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	
+	
 }
