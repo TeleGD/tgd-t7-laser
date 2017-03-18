@@ -15,11 +15,10 @@ public class Tower extends Rectangle{
 	
 	public Tower(float x, float y, Block initialBlock) {
 		super(x, y, 0, 0);
+		blocks = new ArrayList<Block>();
 		addBlock(initialBlock);
 	}
 	
-
-
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		// Rendering
 		for (Block block : blocks) {
@@ -38,8 +37,8 @@ public class Tower extends Rectangle{
 		blocks.add(initialBlock);		
 	}
 
-	public float gettopY(){
-		return(blocks.get(blocks.size()).getY());
+	public float getTopY(){
+		return(blocks.get(blocks.size()-1).getY());
 	}
 	
 	public void success(Block block){

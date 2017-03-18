@@ -7,37 +7,49 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
+import general.Main;
+
 public class Block extends Rectangle {
 
 	private float speedX;
 	private float speedY;
-	
+	private float angle;
 	private float successY;
+	private float accelY;
+	
+	private boolean isDroping = false;
 	
 	public Block(float x, float y, float width, float height) {
 		super(x, y, width, height);
 	}
 	
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
+	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
 		// Rendering
-		arg2.setColor(Color.cyan);
-		arg2.drawRect(x, y, width, height);
+		g.setColor(Color.cyan);
+		
+		//g.rotate(Main.longueur/2, -100, -(float) (angle*180/Math.PI));
+		g.drawRect(x, y, width, height);
+		//g.rotate(getCenterY(), getCenterY(), (float) (angle*180/Math.PI));
+
 	}
 	
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
+	public void update(GameContainer arg0, StateBasedGame arg1, int delta) throws SlickException {
 		// Updating
-		x += speedX;
-		y += speedY;
+		x += speedX*delta;
+		y += speedY*delta;
+		
+		speedY+=accelY;
 	}
-
 	// Methods =================================================================================
 
-	public void drop(){
-		successY = World3.getTower().gettopY();
-		speedY = World3.GRAVITY;
-		speedX = 5;
+	public void drop(float speedX,float speedY){
+		successY = World3.getTower().getTopY();
+		this.speedY = speedY;
+		this.speedX = speedX;
+		this.accelY= World3.GRAVITY;
+		isDroping = true;
+
 	}
-	
 	// Getters and Setters =====================================================================
 	
 	public float getSpeedX() {
@@ -55,5 +67,18 @@ public class Block extends Rectangle {
 	public void setSpeedY(float speedY) {
 		this.speedY = speedY;
 	}
+
+	public void setAngle(float angle) {
+		this.angle=angle;
+	}
+
+	public Block cloneBlock() {
+		Block block=new Block(x,y,width,height);
+		block.setSpeedX(speedX);
+		block.setSpeedY(speedY);
+		return block;
+	}
+
+	
 	
 }

@@ -1,5 +1,7 @@
 package game1.world;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -7,10 +9,14 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import game1.characters.Player;
+
 public class World1 extends BasicGameState{
 
 	public static int ID=1;
-	private Labyrinth labyrinth;
+	private static Labyrinth labyrinth;
+	private static Player player;
+	private ArrayList<Cell> cellTest;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
@@ -21,6 +27,16 @@ public class World1 extends BasicGameState{
 	@Override
 	public void enter(GameContainer arg0, StateBasedGame arg1){
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
+		player = new Player(5,5);
+		cellTest = new ArrayList<Cell>();
+		cellTest.add(new Cell(17,0));
+		cellTest.add(new Cell(18,0));
+		cellTest.add(new Cell(19,0));
+		cellTest.add(new Cell(17,1));
+		cellTest.add(new Cell(17,2));
+		cellTest.add(new Cell(18,2));
+		cellTest.add(new Cell(19,1));
+		cellTest.add(new Cell(19,2));
 		
 	}
 	
@@ -31,13 +47,19 @@ public class World1 extends BasicGameState{
 		arg2.setColor(Color.white);
 		labyrinth.render(arg0, arg1, arg2);
 		arg2.drawString("Bonjour 1", 500, 400);
+		
+		for(Cell c: cellTest){
+			c.render(arg0, arg1, arg2);
+		}
+		
+		player.render(arg0, arg1, arg2);
 
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		// TODO Auto-generated method stub
-
+		// TODO Auto-generated method stub		
+		player.update(arg0, arg1, arg2);
 	}
 
 	@Override
@@ -50,7 +72,19 @@ public class World1 extends BasicGameState{
 		
 	}
 	
-	public Labyrinth getLabyrinth(){
+	public static Labyrinth getLabyrinth(){
 		return labyrinth;
+	}
+	
+	public void keyPressed(int key, char c) {
+		player.keyPressed(key, c);
+	}
+	
+	public void keyReleased(int key, char c) {
+		player.keyReleased(key, c);
+	}
+
+	public static Player getPlayer(){
+		return player;
 	}
 }

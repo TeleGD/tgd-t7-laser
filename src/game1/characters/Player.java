@@ -1,5 +1,6 @@
 package game1.characters;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -10,39 +11,60 @@ import game1.world.Cell;
 
 public class Player {
 	private double x,y;
-	private boolean up,down,right,left;
-	private int cellSize=10;
+	private boolean up,down,right,left,updown,rightLeft;
+	private int cellSize=64;
 	private Cell cell;
+	private double speedX,speedY;
+	
+	public Player(){
+		x = 100;
+		y = 100;
+		this.getCell();
+	}
+	
+	public Player(int i, int j){
+		x = i*cellSize + 32 - 25;
+		y = j*cellSize + 32 - 25;
+		this.getCell();
+	}
 	
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
-		//Affichage
-		arg2.drawString("Bonjour 1", 500, 400);
+		arg2.setColor(Color.magenta);
+		arg2.fillRect((float)x,(float) y, (float)50, (float)50);
 
 	}
 
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		// TODO Auto-generated method stub
-
-		
-		
+		this.getCell();
+		move();
+		x+=speedX*arg2;
+		y+=speedY*arg2;
 	}
 	
 	
 	public void keyPressed(int key, char c) {
-		switch (key) {
+		switch (key){
+		
 		case Input.KEY_UP:
 			up=true;
-			break;
-		case Input.KEY_RIGHT:
-			right=true;
-			break;
-		case Input.KEY_LEFT:
-			left=true;
-			break;
+			updown=false;
+		break;
+		
 		case Input.KEY_DOWN:
 			down=true;
-			break;
+			updown=true;
+		break;
+		
+		case Input.KEY_LEFT:
+			left=true;
+			rightLeft=false;
+		break;
+		case Input.KEY_RIGHT:
+			right=true;
+			rightLeft=true;
+		break;
 		}
+		
 	}
 	
 	public void keyReleased(int key, char c) {
@@ -62,14 +84,32 @@ public class Player {
 		}
 	}
 	
-	public void move(){
-		
+	private void move() {
+		speedX = 0;
+		speedY = 0;
+		if(((up && !down) || (up && down && !updown)) && !(this.cell.isSouthWall()))
+		{
+				speedY=-0.5;
+			
+		}
+		if(((down && !up) || (up && down && updown)) && !(this.cell.isNorthWall())){
+				speedY=0.5;
+		}
+		if(((left && !right)|| (left && right && !rightLeft)) && !(this.cell.isWestWall()))
+		{
+				speedX = -0.5;
+			
+		}
+		if(((!left && right)|| (left && right && rightLeft)) && !(this.cell.isEastWall()))
+		{
+
+				speedX = 0.5;
+		}
 	}
 	
-	public Cell getCell(){
+	public void getCell(){
 		int i=(int) Math.floor(x/cellSize);
 		int j=(int) Math.floor(y/cellSize);
-		this.cellSize=game1.world.World1.getLabyrinth().getCell(i,j);
-		
+		this.cell=game1.world.World1.getLabyrinth().getCell(i,j);
 	}
 }
