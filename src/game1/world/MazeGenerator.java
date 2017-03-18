@@ -138,6 +138,7 @@ public class MazeGenerator
 				this.currentCell = stack.pop();
 			}
 		}
+		labyrinth.autoset();
 	}
 	
 }
