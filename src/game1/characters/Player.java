@@ -16,8 +16,7 @@ public class Player {
 	private double speedX,speedY;
 	
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
-		//Affichage
-		arg2.drawString("Bonjour 1", 500, 400);
+		arg2.fillRect((float)x,(float) y, (float)50, (float)50);
 
 	}
 
