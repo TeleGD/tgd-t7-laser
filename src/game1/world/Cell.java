@@ -1,5 +1,6 @@
 package game1.world;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -11,6 +12,7 @@ public class Cell{
 	private boolean northWall,southWall,westWall,eastWall;
 	private int i,j;
 	private boolean partOfTheMaze;
+	private boolean itsATrap;
 	private Image sprite;
 	
 	public Cell (int i, int j)
@@ -122,9 +124,46 @@ public class Cell{
 		this.eastWall = eastWall;
 	}
 	
+	public boolean isItsATrap() {
+		return itsATrap;
+	}
+
+	public void setItsATrap(boolean itsATrap) {
+		this.itsATrap = itsATrap;
+	}
+
+	
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException 
 	{
 		arg2.fillRect(i*64,j*64,63,63);
+		if (itsATrap){
+			arg2.setColor(Color.red);
+			arg2.fillRect(i*62, j*62, 60, 60);
+		}
+	}
+
+	
+	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
+		if (this.equals(World1.getPlayer())){
+			System.exit(0);
+		}
+	}
+	
+	
+	public int getI() {
+		return i;
+	}
+
+	public int getJ() {
+		return j;
+	}
+
+	public void setI(int i) {
+		this.i = i;
+	}
+
+	public void setJ(int j) {
+		this.j = j;
 	}
 
 	public boolean isPartOfTheMaze() {
