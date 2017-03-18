@@ -12,19 +12,21 @@ import game1.world.Cell;
 public class Labyrinth {
 	
 	private int lines,rows;
-	private ArrayList<Cell> cells;
+	private Cell[][] cells;
 	
 	
 	public Labyrinth (int lines,int rows) 
 	{
-		cells = new ArrayList<Cell>();
+		this.lines = lines;
+		this.rows = rows;
+		cells = new Cell[lines][rows];
 		Cell cell;
 		for(int i=0 ; i<lines;i++ )
 		{
 			for (int j=0;j<lines;j++)
 			{
 				cell = new Cell(i,j);
-				cells.add(cell);
+				cells[i][j]=cell;
 			}
 		}
 		
@@ -42,14 +44,17 @@ public class Labyrinth {
 	
 	public Cell getCell(int i,int j)
 	{
-		return cells.get(i*this.rows + j);
+		return cells[i][j];
 	}
 	
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		arg2.drawString("str", 500, 500);
-		for (Cell c : cells)
+		for (Cell[] cells2 : cells)
 		{
-			c.render(arg0, arg1, arg2);
+			for(Cell cell : cells2)
+			{
+				cell.render(arg0, arg1, arg2);
+			}
 		}
 	}
 	
