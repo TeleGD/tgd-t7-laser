@@ -6,6 +6,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import game1.world.World1;
 import game2.world.World2;
+import game3.world.MainMenu3;
 import game3.world.World3;
 
 public class MainMenu extends Menu{
@@ -42,7 +43,7 @@ public class MainMenu extends Menu{
 			break;
 		case 2:
 			World3.reset();
-			game.enterState(World3.ID, new FadeOutTransition(),
+			game.enterState(MainMenu3.ID, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
 		case 3:
