@@ -51,7 +51,11 @@ public class Labyrinth {
 		{
 			c.render(arg0, arg1, arg2);
 		}
-
+	}
+	
+	public void mazeGenrator()
+	{
+		
 	}
 
 }

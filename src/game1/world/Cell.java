@@ -9,6 +9,7 @@ public class Cell{
 	
 	private boolean northWall,southWall,westWall,estWall;
 	private int i,j;
+	private boolean partOfTheMaze;
 	
 	public Cell (int i, int j)
 	{
@@ -62,7 +63,15 @@ public class Cell{
 	
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException 
 	{
-		arg2.fillRect(i*11,j*11,10,10);
+		arg2.fillRect(i*64,j*64,63,63);
+	}
+
+	public boolean isPartOfTheMaze() {
+		return partOfTheMaze;
+	}
+
+	public void setPartOfTheMaze(boolean partOfTheMaze) {
+		this.partOfTheMaze = partOfTheMaze;
 	}
 
 }
