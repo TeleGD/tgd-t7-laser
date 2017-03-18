@@ -1,6 +1,7 @@
 package game3.world;
 
 
+import org.newdawn.slick.Image;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -40,7 +41,8 @@ public class Decor {
 					int posY=0 + r.nextInt(arg0.getHeight()/2+height - 0);
 					int width=5 + r.nextInt(200 - 5);
 					int heigth=5 + r.nextInt(200 - 5);
-					this.listSkyElements.add(new Cloud(posX,posY,width,heigth));
+					int numberImageCloud=1 + r.nextInt(5 - 1);
+					this.listSkyElements.add(new Cloud(posX,posY,width,heigth,numberImageCloud));
 
 				}
 			}
@@ -58,10 +60,10 @@ public class Decor {
 		
 	}
 
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) {
+	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
 		if(height<255)
 		{
-			g.setBackground(new Color(0,255-height,255-height));
+			g.setBackground(new Color(0,0,255-height));
 		}
 		
 		g.setColor(Color.green);
@@ -72,12 +74,19 @@ public class Decor {
 			if(se instanceof Star)
 			{
 				g.setColor(Color.yellow);
+				Image star= new Image("./Images/TowerBlocks/SkyElements/star.png");
+				star = star.getScaledCopy(se.getWidth(), se.getHeight());
+				g.drawImage(star, se.getPosX(), se.getPosY(), null);
 			}
+			
+			
 			else if(se instanceof Cloud)
 			{
 				g.setColor(Color.white);
+				Image star= new Image("./Images/TowerBlocks/SkyElements/cloud"+((Cloud)se).getNumberImageCloud()+".png");
+				star = star.getScaledCopy(se.getWidth(), se.getHeight());
+				g.drawImage(star, se.getPosX(), se.getPosY(), null);
 			}
-			g.fillRect(se.getPosX(), se.getPosY(), se.getWidth(), se.getHeight());
 		}
 	}
 }
