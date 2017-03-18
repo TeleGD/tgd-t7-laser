@@ -57,10 +57,5 @@ public class Labyrinth {
 			}
 		}
 	}
-	
-	public void mazeGenrator()
-	{
-		
-	}
 
 }
