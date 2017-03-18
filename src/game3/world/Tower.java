@@ -38,7 +38,7 @@ public class Tower extends Rectangle{
 	}
 
 	public float getTopY(){
-		return(blocks.get(blocks.size()).getY());
+		return(blocks.get(blocks.size()-1).getY());
 	}
 	
 	public void success(Block block){

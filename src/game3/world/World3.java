@@ -25,7 +25,7 @@ public class World3 extends BasicGameState{
 		this.decor=new Decor();
 		pendulum=new Pendulum();
 		pendulum.init(container, game);
-		//tower=new Tower(Main.longueur/2,Main.hauteur,new Block(pendulum.getX() - 50, Main.hauteur-101,100,100));
+		tower=new Tower(Main.longueur/2,Main.hauteur,new Block(pendulum.getX() - 50, Main.hauteur-101,100,100));
 	}
 	
 	@Override
