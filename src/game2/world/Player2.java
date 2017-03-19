@@ -41,7 +41,7 @@ public class Player2{
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		//Affichage
-		image.draw(250+(x*100*World2.getRenderScale()),y*100*World2.getRenderScale(),100*World2.getRenderScale(),100*World2.getRenderScale());
+		image.draw(280+(x*100*World2.getRenderScale())+360-World2.getGrid().getColumns()*100*World2.getRenderScale()/2,y*100*World2.getRenderScale()+360-World2.getGrid().getColumns()*100*World2.getRenderScale()/2,100*World2.getRenderScale(),100*World2.getRenderScale());
 
 	}
 

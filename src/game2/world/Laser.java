@@ -77,11 +77,11 @@ public class Laser {
 		//Affichage
 		if(axe == 0) {
 			//horizontal
-			g.fillRect((float)250, (float)(pos*100+25)*World2.getRenderScale(), (float)100*World2.getGrid().getRows()*World2.getRenderScale(), (float)50*World2.getRenderScale());
+			g.fillRect((float)280+360-World2.getGrid().getColumns()*100*World2.getRenderScale()/2, (float)(pos*100+25)*World2.getRenderScale()+360-World2.getGrid().getColumns()*100*World2.getRenderScale()/2, (float)100*World2.getGrid().getRows()*World2.getRenderScale(), (float)50*World2.getRenderScale());
 		}
 		else {
 			//vertical
-			g.fillRect((float)(pos*100+25)*World2.getRenderScale()+250, (float)0, (float)50*World2.getRenderScale(), (float)100*World2.getGrid().getColumns()*World2.getRenderScale());
+			g.fillRect((float)(pos*100+25)*World2.getRenderScale()+280+360-World2.getGrid().getColumns()*100*World2.getRenderScale()/2, (float)+360-World2.getGrid().getColumns()*100*World2.getRenderScale()/2, (float)50*World2.getRenderScale(), (float)100*World2.getGrid().getColumns()*World2.getRenderScale());
 		}
 		
 	}
