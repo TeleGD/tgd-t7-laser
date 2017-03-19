@@ -15,7 +15,7 @@ public class World1 extends BasicGameState{
 
 	public static int ID=1;
 	private static Labyrinth labyrinth;
-	private MazeGenerator2 mazeGenerator;
+	private MazeGenerator mazeGenerator;
 	private static Player player;
 	private ArrayList<Cell> cellTest;
 	private static int score;
@@ -23,7 +23,7 @@ public class World1 extends BasicGameState{
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
-		labyrinth = new Labyrinth(10,10);
+		labyrinth = new Labyrinth(20,20);
 		
 	}
 	
@@ -32,9 +32,9 @@ public class World1 extends BasicGameState{
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 		
 		player = new Player(0,0);
-		mazeGenerator = new MazeGenerator2(labyrinth);
+		mazeGenerator = new MazeGenerator(labyrinth);
 		try {
-			mazeGenerator.mazeGenerate();
+			mazeGenerator.mazeGenrator();
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

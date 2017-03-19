@@ -25,6 +25,7 @@ public class Player2{
 	private int lives = 1;
 	
 	private boolean moveLeft,moveRight,moveUp,moveDown  =false;
+	private boolean pressEnter = false;
 	
 	public Player2() throws SlickException{
 		//position initiale
@@ -81,6 +82,13 @@ public class Player2{
 		return moveDown;
 	}
 
+	public void setMoveUp(boolean b){
+		moveUp = b;
+	}
+	
+	public void setMoveDown(boolean b){
+		moveDown = b;
+	}
 
 	public void move(int x,int y){
 		
@@ -107,6 +115,9 @@ public class Player2{
 			case Input.KEY_RIGHT: //droite
 				moveRight = false;
 				break;
+			case Input.KEY_ENTER: //entrer
+				setPressEnter(false);
+				break;
 			}
 		
 	}
@@ -125,6 +136,9 @@ public class Player2{
 			break;
 		case Input.KEY_RIGHT: //droite
 			moveRight = true;
+			break;
+		case Input.KEY_ENTER: //entrer
+			setPressEnter(true);
 			break;
 		}
 		
@@ -183,6 +197,16 @@ public class Player2{
 
 	public void setImage(Image image) {
 		this.image = image;
+	}
+
+
+	public boolean isPressEnter() {
+		return pressEnter;
+	}
+
+
+	public void setPressEnter(boolean pressEnter) {
+		this.pressEnter = pressEnter;
 	}
 
 

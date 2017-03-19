@@ -14,8 +14,10 @@ public class Cell {
 	private Boolean contains;
 	private Boolean deadly;
 	private boolean hasEnnemy;
-	
 	private Image image;
+	protected Image normal;
+	protected Image mine;
+	protected Image bonus;
 	
 	
 	//Constructeur
@@ -24,7 +26,10 @@ public class Cell {
 		this.y=y;
 		this.contains=c;
 		this.deadly=d;
-		this.image= new Image("Images/T7Laser/Cell.png");
+		this.normal= new Image("Images/T7Laser/Cell.png");
+		this.mine=new Image("Images/T7Laser/Mine.png");
+		this.bonus=new Image("Images/T7Laser/Bonus.png");
+		this.image=(normal);
 		this.hasEnnemy = false;
 	}
 	
@@ -56,6 +61,9 @@ public class Cell {
 	}
 	public Image getImage(){
 		return image;
+	}
+	public void setImage(Image i){
+		this.image=i;
 	}
 	
 	//render et update
