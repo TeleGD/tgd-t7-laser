@@ -58,6 +58,8 @@ public class Cell {
 	}
 	public void setDeadly(Boolean deadly) {
 		this.deadly = deadly;
+		if(this.image == mine)
+			this.deadly = true;
 	}
 	public Image getImage(){
 		return image;
