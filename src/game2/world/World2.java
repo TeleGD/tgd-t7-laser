@@ -47,6 +47,7 @@ public class World2 extends BasicGameState{
 		player = new Player2();
 		setScore(0);
 		selec = 0;
+		renderScale = (float)1;
 	}
 	
 
