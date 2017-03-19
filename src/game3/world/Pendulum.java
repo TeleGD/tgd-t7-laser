@@ -62,12 +62,13 @@ public class Pendulum extends BasicGameState{
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.setColor(Color.white);
 		
+		g.drawImage(corde,x,y);
 		if(!block.isRealeased()){
-			block.render(container, game, g);
 			corde.setRotation((float) ( -theta*180/Math.PI));
 			corde.setCenterOfRotation(0, 0);
+			block.render(container, game, g);
+
 		}
-		g.drawImage(corde,x,y);
 
 	}
 
