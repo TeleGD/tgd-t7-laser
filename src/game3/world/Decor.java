@@ -35,7 +35,9 @@ public class Decor {
 		for(int i=0;i<cloudImages.length;i++){
 			cloudImages[i]=new Image("./Images/TowerBlocks/SkyElements/cloud"+(i+1)+".png");
 		}
+
 		imageStar=new Image("Images/TowerBlocks/SkyElements/star2.png");
+
 		red=169;
 		green=217;
 		blue=199;

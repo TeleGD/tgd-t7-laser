@@ -1,7 +1,6 @@
 package game3.world;
 
 import java.awt.Font;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -31,7 +30,7 @@ public class World3 extends BasicGameState{
 	public static String colorImage;
 	private Image toitImage;
 	private TrueTypeFont fontPerdu;
-	private static boolean perdu;
+	private static boolean perdu=false;
 	private Music soundLose,soundMusicBackground;
 	
 	@Override
@@ -39,18 +38,34 @@ public class World3 extends BasicGameState{
 	
 	}
 	
+	public static void setDifficulty(int difficulty){
+		if(difficulty==0){
+			colorImage="Rouge";
+			pendulum=new Pendulum();
+		}
+		else if(difficulty==1){
+			colorImage="Bleu";
+			pendulum=new Pendulum();
+			pendulum.setSpeed(pendulum.getSpeed()*2);
+			pendulum.setLength(1650);
+		}
+		else if(difficulty==2){
+			colorImage="Vert";
+			pendulum=new Pendulum();
+			pendulum.setSpeed(pendulum.getSpeed()*4);
+			pendulum.setLength(1500);
+		}
+	}
+	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
-		if(difficulty==0)colorImage="Rouge";
-		else if(difficulty==1)colorImage="Bleu";
-		else if(difficulty==2)colorImage="Vert";
+		//pendulum.enter(container, game);
+		setDifficulty(difficulty);
 
 		fontPerdu=FontUtils.chargerFont("font/PressStart2P.ttf",Font.BOLD,40,false);
 		toitImage=new Image("Images/TowerBlocks/Blocs/"+World3.colorImage+" Toit.png");
 		
 		 decor=new Decor();
-		pendulum=new Pendulum();
-		pendulum.enter(container, game);
 		timeInitial=System.currentTimeMillis(); // on reinitialise le temps
 		tower=new Tower(Main.longueur/2,Main.hauteur,new Block(pendulum.getX() - 50, Main.hauteur-101,100,100,new Image("Images/TowerBlocks/Blocs/"+World3.colorImage+" Porte.png")));
 
@@ -83,7 +98,7 @@ public class World3 extends BasicGameState{
         g.setFont(fontPerdu);
         g.setColor(Color.cyan);
         g.drawString("Score :"+score, Main.longueur/2-200, Main.hauteur/2-100);
-        
+
         if(currentBlock!=null){
                 currentBlock.render(container, game, g);
         }
@@ -114,18 +129,19 @@ public class World3 extends BasicGameState{
 	
 	@Override
 	public void keyPressed(int key, char  c){
-		if(key==Input.KEY_SPACE){
-			if(perdu){
-				reset();
-			}else{
-				currentBlock=pendulum.releaseBlock();
-			}
-		}else if(key==Input.KEY_ENTER){
-			if(perdu){
-				reset();
-			}
-		}
-	}
+  		if(key==Input.KEY_SPACE){
+ 			currentBlock=pendulum.releaseBlock();
+ 			if(perdu){
+ 				reset();
+ 			}else{
+ 				currentBlock=pendulum.releaseBlock();
+ 			}
+ 		}else if(key==Input.KEY_ENTER){
+ 			if(perdu){
+ 				reset();
+ 			}
+  		}
+  	}
 
 	@Override
 	public int getID() {
@@ -133,19 +149,21 @@ public class World3 extends BasicGameState{
 	}
 
 	public static void reset() {
-		perdu=false;
-		try {
-			decor=new Decor();
-			pendulum=new Pendulum();
-			timeInitial=System.currentTimeMillis(); // on reinitialise le temps
-			tower=new Tower(Main.longueur/2,Main.hauteur,new Block(pendulum.getX() - 50, Main.hauteur-101,100,100,new Image("Images/TowerBlocks/Blocs/"+World3.colorImage+" Porte.png")));
-			currentBlock=null;
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
+		 		// TODO Auto-generated method stub
+		 		perdu=false;
+		 		try {
+		 			decor=new Decor();
+		 			score=0;
+		 			setDifficulty(difficulty);
+		 			timeInitial=System.currentTimeMillis(); // on reinitialise le temps
+		 			tower=new Tower(Main.longueur/2,Main.hauteur,new Block(pendulum.getX() - 50, Main.hauteur-101,100,100,new Image("Images/TowerBlocks/Blocs/"+World3.colorImage+" Porte.png")));
+		 			currentBlock=null;
+		 		} catch (SlickException e) {
+		 			// TODO Auto-generated catch block
+		 			e.printStackTrace();
+		 		}
+		 		
+		  	}
 	
 	public static long getTime(){
 		return (System.currentTimeMillis()-timeInitial)/1000;
