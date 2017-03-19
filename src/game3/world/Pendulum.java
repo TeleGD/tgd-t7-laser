@@ -60,6 +60,8 @@ public class Pendulum extends BasicGameState{
 	private double omega;
 	private Block block;
 	private Image corde;
+	private int speedX;
+	private int compt;
 	
 	public Pendulum(){
 		x=Main.longueur/2;
@@ -104,9 +106,10 @@ public class Pendulum extends BasicGameState{
 		g.setColor(Color.white);
 		
 		g.drawImage(corde,x,y);
+		corde.setRotation((float) ( -theta*180/Math.PI));
+		corde.setCenterOfRotation(0, 0);
+		
 		if(!block.isRealeased()){
-			corde.setRotation((float) ( -theta*180/Math.PI));
-			corde.setCenterOfRotation(0, 0);
 			block.render(container, game, g);
 
 		}
@@ -123,6 +126,10 @@ public class Pendulum extends BasicGameState{
 		}
 		System.out.println(theta);
 		System.out.println("Time="+World3.getTime());
+		
+		speed+=1;
+		speed=Math.max(speed,18000);
+
 	}
 
 	private float calculateTheta() {
@@ -142,8 +149,10 @@ public class Pendulum extends BasicGameState{
 	public Block releaseBlock() {
 		float thetaDot=calculateThetaDot();
 		System.out.println("thetaDot="+thetaDot);
-		//blockDropped.drop(-(float)(length*thetaDot*Math.sin(theta))/100,(float) (thetaDot*length*Math.cos(theta))/100);
-		block.drop(0,0);
+		block.drop((float)(length*thetaDot*1+Math.pow(Math.tan(theta),2))/2000,0);
+		//block.drop(0,0);
+		speed=speed*2;
+		compt=0;
 		return block;
 	}
 
@@ -170,8 +179,6 @@ public class Pendulum extends BasicGameState{
 	public void setX(int x) {
 		this.x=x;
 	}
-
-
 
 
 	public void notifyStackedBlock() {
