@@ -29,32 +29,36 @@ public class Map {
 			if(b>0 && b<taille-1){
 				if(!cells[a][b-1].isRoad() && !cells[a][b+1].isRoad()){
 					double c=Math.random();
-					if(a>0.15 && c<=0.3){
+					if(a>0.2 && c<=0.4){
 						b+=1;
-					}else if(c<0.15){
+					}else if(c<0.2){
 						b-=1;
 					}else{
 						a-=1;
 					}
 				}else if(!cells[a][b-1].isRoad()){
 					double c=Math.random();
-					if(c>0.85){
+					if(c>0.5){
 						b-=1;
 					}else{
 						a-=1;
 					}
 				}else{
 					double c=Math.random();
-					if(c>0.85){
+					if(c>0.5){
 						b+=1;
 					}else{
 						a-=1;
 					}
 				}
-			}else if (b<taille-1){
+			}else{
+				a-=1;
+			}
+				/*else if (b<taille-1){
+			}
 				if(!cells[a][b+1].isRoad()){
 					double c=Math.random();
-					if(c>0.85){
+					if(c>0.9){
 						b+=1;
 					}else{
 						a-=1;
@@ -63,11 +67,11 @@ public class Map {
 			}else {
 				if(!cells[a][b-1].isRoad()){
 					double c=Math.random();
-					if(c>0.85){
+					if(c>0.9){
 						b-=1;
 					}else{a-=1;}
 				}
-			}
+			}*/
 		}
 	}
 
