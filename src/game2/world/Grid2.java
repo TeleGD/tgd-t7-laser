@@ -88,6 +88,13 @@ public class Grid2 {
 		if(waveNumber % 5 == 2 && waveTimer == 1)
 			addEnnemy();
 		
+		
+	
+		laserTimer--;
+		if(laserTimer <= 0){
+			addLaser();
+			laserTimer = Math.max(50-waveNumber*5, 0)+20;
+		}
 		try{
 			for(Laser l : laserList)
 				l.update(arg0, arg1, arg2);
@@ -99,32 +106,34 @@ public class Grid2 {
 			//System.out.println(e.getMessage());
 		}
 		
+		
 		for(int i = 0; i<this.rows; i++)//init row
 			for(int j=0;j<this.columns;j++) //init cologne
 				grid[i][j].update(arg0, arg1, arg2);
 		
-		laserTimer--;
-		if(laserTimer <= 0){
-			
-			addLaser();
-			addMine();
-			laserTimer = Math.max(50-waveNumber*5, 0)+20;
-		}
-	
-		
-		
-		
-		
 		waveTimer--;
 		if(waveTimer == 0){
-			
 			if(rows+1 < maxRows)
 				rows++;
 			if(columns+1 < maxCols)
 				columns++;
 			waveNumber++;
+			if(rows==maxRows){
+				for(int i=0; i<5; i++){
+					addMine();
+				}
+			}
+			else{
+				addMine();
+			}
 			waveTimer = 100;
-			
+			Random b1 = new Random();
+			Random b2 = new Random();
+			int rowB = b1.nextInt(this.rows);
+			int columnB = b2.nextInt(this.columns);
+			if(grid[rowB][columnB].getImage()!=Cell.mine)
+					addBonus(rowB,columnB);
+				
 			if(rows > 7)
 				World2.setRenderScale((float)720.0/(100*rows));
 		}
@@ -208,6 +217,11 @@ public class Grid2 {
 		int column = r2.nextInt(this.columns);
 		this.grid[row][column].setDeadly(true);
 		this.grid[row][column].setImage(this.grid[row][column].mine);
+	}
+	
+	public void addBonus(int row, int column){
+		this.grid[row][column].setDeadly(false);
+		this.grid[row][column].setImage(this.grid[row][column].bonus);
 	}
 
 }

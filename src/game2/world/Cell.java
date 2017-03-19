@@ -16,7 +16,7 @@ public class Cell {
 	private boolean hasEnnemy;
 	private Image image;
 	protected Image normal;
-	protected Image mine;
+	protected static Image mine;
 	protected Image bonus;
 	
 	
