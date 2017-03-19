@@ -1,14 +1,18 @@
 package game3.world;
 
+import java.awt.Font;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import general.Main;
+import general.utils.FontUtils;
 
 public class World3 extends BasicGameState{
 	public final static float GRAVITY= 0.3f;
@@ -24,6 +28,7 @@ public class World3 extends BasicGameState{
 	private boolean perdu=false;
 
 	private Image toitImage;
+	private TrueTypeFont fontPerdu;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -36,6 +41,7 @@ public class World3 extends BasicGameState{
 		else if(difficulty==1)colorImage="Bleu";
 		else if(difficulty==2)colorImage="Vert";
 
+		fontPerdu=FontUtils.chargerFont("font/PressStart2P.ttf",Font.BOLD,40,false);
 		toitImage=new Image("Images/TowerBlocks/Blocs/"+World3.colorImage+" Toit.png");
 		
 		this.decor=new Decor();
@@ -53,10 +59,16 @@ public class World3 extends BasicGameState{
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		//Affichage
 		
-
 		decor.render(container, game, g);
 		pendulum.render(container, game,g);
-		tower.render(container, game, g);
+
+		if(!perdu){
+			tower.render(container, game, g);
+
+		}else{
+			g.setFont(fontPerdu);
+			g.drawString("PERDU !", Main.longueur/2-200, Main.hauteur/2-100);
+		}
 		
 		if(currentBlock!=null){
 			currentBlock.render(container, game, g);
@@ -69,8 +81,11 @@ public class World3 extends BasicGameState{
 	public void update(GameContainer container, StateBasedGame game, int compt) throws SlickException {
 		
 		decor.update(container, game, compt);
-		pendulum.update(container, game,compt);
-		tower.update(container, game, compt);
+		if(!perdu){
+			pendulum.update(container, game,compt);
+			tower.update(container, game, compt);
+
+		}
 		
 		if(currentBlock!=null){
 			currentBlock.update(container, game, compt);

@@ -73,7 +73,11 @@ public class Tower extends Rectangle{
 
 	
 	public boolean intersects(Shape shape){
-		System.out.println(getTop().intersects(shape));
+		if(getTop().intersects(shape)){
+			System.out.println("block top= "+getTop().getX()+ "-"+getTop().getY());
+			System.out.println("block shape = "+shape.getX()+ "-"+shape.getY());
+
+		}
 		return getTop().intersects(shape);
 	}
 	
