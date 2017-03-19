@@ -17,6 +17,9 @@ public class World2 extends BasicGameState{
 	private static int score;
 	private Music music;
 	private int selec;
+	private int cpt=-30;
+	private boolean start = false;
+	private boolean disp = false;
 	
 	private static float renderScale = (float)1;
 	
@@ -42,51 +45,68 @@ public class World2 extends BasicGameState{
 		arg2.setColor(Color.white);
 		
 		arg2.fillRect(0,0,1280,720);
-		grid.render(arg0,arg1,arg2);
-		player.render(arg0,arg1,arg2);
-		
-		arg2.setColor(Color.black);
-		arg2.drawString("Score : "+score, 88, 100);
-		arg2.drawString("Waves : "+grid.getWaveNumber(), 95, 150);
-		
-		if (player.isDead()){
+		if (!start){
 			arg2.setColor(Color.black);
-			arg2.drawString("Rejouer", 100,400);
-			arg2.drawString("Quitter", 100,450);
+			if (disp) arg2.drawString("Press Enter", 600, 355);
+		} else {
+			grid.render(arg0,arg1,arg2);
+			player.render(arg0,arg1,arg2);
+		
+			arg2.setColor(Color.black);
+			arg2.drawString("Score : "+score, 88, 100);
+			arg2.drawString("Waves : "+grid.getWaveNumber(), 95, 150);
+		
+			if (player.isDead()){
+				arg2.setColor(Color.black);
+				arg2.drawString("Rejouer", 100,400);
+				arg2.drawString("Quitter", 100,450);
 			arg2.drawString(">>>", 50, 400+selec*50);
+			}
 		}
 	}
 
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		if (!player.isDead()){
-			player.update(arg0,arg1,arg2);
-			grid.update(arg0, arg1, arg2);
-			score++;
-		}
-		
-		if(player.isDead()){
-			music.stop();
-			if ((player.isMoveUp() && selec == 0) || (player.isMoveDown() && selec == 0)){
-				selec = 1;
-				player.setMoveUp(false);
-				player.setMoveDown(false);
-			} else if ((player.isMoveUp() && selec == 1) || (player.isMoveDown() && selec == 1)){
-				selec = 0;
-				player.setMoveUp(false);
-				player.setMoveDown(false);
+		if (!start){
+			if (cpt > 60) {
+				cpt = 0;
+				disp = !disp;
 			}
-			if (player.isPressEnter()){
-				if (selec == 1){
-					arg0.exit();
-				} else {
-					music.loop();
-					grid =  new Grid2(4,4);
-					player = new Player2();
-					score = 0;
+			cpt++;
+			if( player.isPressEnter()){
+				start = true;
+			}
+		}
+		if (start){
+			if (!player.isDead()){
+				player.update(arg0,arg1,arg2);
+				grid.update(arg0, arg1, arg2);
+				score++;
+			}
+			
+			if(player.isDead()){
+				music.stop();
+				if ((player.isMoveUp() && selec == 0) || (player.isMoveDown() && selec == 0)){
+					selec = 1;
+					player.setMoveUp(false);
+					player.setMoveDown(false);
+				} else if ((player.isMoveUp() && selec == 1) || (player.isMoveDown() && selec == 1)){
 					selec = 0;
+					player.setMoveUp(false);
+					player.setMoveDown(false);
+				}
+				if (player.isPressEnter()){
+					if (selec == 1){
+						arg0.exit();
+					} else {
+						music.loop();
+						grid =  new Grid2(4,4);
+						player = new Player2();
+						score = 0;
+						selec = 0;
+						renderScale = (float)1;
+					}
 				}
 			}
-			System.out.println(score);
 		}
 	}
 	

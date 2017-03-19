@@ -2,6 +2,7 @@ package game3.world;
 
 import java.awt.Font;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -30,7 +31,7 @@ public class World3 extends BasicGameState{
 	public static String colorImage;
 	private Image toitImage;
 	private TrueTypeFont fontPerdu;
-	private boolean perdu;
+	private static boolean perdu;
 	private Music soundLose,soundMusicBackground;
 	
 	@Override
@@ -47,7 +48,7 @@ public class World3 extends BasicGameState{
 		fontPerdu=FontUtils.chargerFont("font/PressStart2P.ttf",Font.BOLD,40,false);
 		toitImage=new Image("Images/TowerBlocks/Blocs/"+World3.colorImage+" Toit.png");
 		
-		this.decor=new Decor();
+		 decor=new Decor();
 		pendulum=new Pendulum();
 		pendulum.enter(container, game);
 		timeInitial=System.currentTimeMillis(); // on reinitialise le temps
@@ -73,10 +74,14 @@ public class World3 extends BasicGameState{
                 tower.render(container, game, g);
 
         }else{
+        	g.setColor(new Color(80,80,20));
+        	g.fillRoundRect(Main.longueur/2-250,  Main.hauteur/2-150, 470, 300,25,25);
                 g.setFont(fontPerdu);
-                g.drawString("PERDU !", Main.longueur/2-200, Main.hauteur/2-100);
+                g.setColor(Color.white);
+                g.drawString("PERDU !", Main.longueur/2-200, Main.hauteur/2);
         }
         g.setFont(fontPerdu);
+        g.setColor(Color.cyan);
         g.drawString("Score :"+score, Main.longueur/2-200, Main.hauteur/2-100);
         
         if(currentBlock!=null){
@@ -110,7 +115,15 @@ public class World3 extends BasicGameState{
 	@Override
 	public void keyPressed(int key, char  c){
 		if(key==Input.KEY_SPACE){
-			currentBlock=pendulum.releaseBlock();
+			if(perdu){
+				reset();
+			}else{
+				currentBlock=pendulum.releaseBlock();
+			}
+		}else if(key==Input.KEY_ENTER){
+			if(perdu){
+				reset();
+			}
 		}
 	}
 
@@ -120,7 +133,18 @@ public class World3 extends BasicGameState{
 	}
 
 	public static void reset() {
-		// TODO Auto-generated method stub
+		perdu=false;
+		try {
+			decor=new Decor();
+			pendulum=new Pendulum();
+			timeInitial=System.currentTimeMillis(); // on reinitialise le temps
+			tower=new Tower(Main.longueur/2,Main.hauteur,new Block(pendulum.getX() - 50, Main.hauteur-101,100,100,new Image("Images/TowerBlocks/Blocs/"+World3.colorImage+" Porte.png")));
+			currentBlock=null;
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public static long getTime(){

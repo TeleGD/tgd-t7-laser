@@ -16,7 +16,7 @@ public class Cell {
 	private boolean hasEnnemy;
 	private Image image;
 	protected Image normal;
-	protected Image mine;
+	protected static Image mine;
 	protected Image bonus;
 	
 	
@@ -58,6 +58,8 @@ public class Cell {
 	}
 	public void setDeadly(Boolean deadly) {
 		this.deadly = deadly;
+		if(this.image == mine)
+			this.deadly = true;
 	}
 	public Image getImage(){
 		return image;

@@ -66,25 +66,6 @@ public class Tower extends Rectangle{
 	public Block getTop(){
 		return(blocks.get(blocks.size()-1));
 	}
-	
-	public void isSuccess(Block block){
-			block.setSpeedX(0);
-			block.setSpeedY(0);
-			block.setAccelY(0);
-			comb=combo(getTopX(), block.getX());
-			blocks.add(block);
-			block.setY(getTopY()-5);
-			block.setIsDroping(false);
-			if(comb){
-				mult+=1;
-			}else{
-				mult=1;
-			}
-			World3.setScore(World3.getScore()+mult*100);
-			World3.getPendulum().notifyStackedBlock();
-			cpt=0;
-			this.needDefile=true;
-	}
 
 	
 	private boolean combo(float topX, float x) {
@@ -97,5 +78,28 @@ public class Tower extends Rectangle{
 	public boolean intersects(Shape shape){
 		System.out.println(getTop().intersects(shape));
 		return getTop().intersects(shape);
+	}
+
+	public void blockCollidedWithTower(Block block) {
+		block.setSpeedX(0);
+		block.setSpeedY(0);
+		block.setAccelY(0);
+		block.setY(getTopY()-getTop().getHeight());
+		block.setIsDroping(false);
+		
+		comb=combo(getTopX(), block.getX());
+		blocks.add(block);
+		
+		if(comb){
+			mult+=1;
+		}else{
+			mult=1;
+		}
+		
+		World3.setScore(World3.getScore()+mult*100);
+		World3.getPendulum().notifyStackedBlock();
+		
+		cpt=0;
+		this.needDefile=true;		
 	}
 }
