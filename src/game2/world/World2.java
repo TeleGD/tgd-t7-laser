@@ -22,7 +22,7 @@ public class World2 extends BasicGameState{
 	
 	public void enter(GameContainer arg0, StateBasedGame arg1) throws SlickException{
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
-		grid =  new Grid2(4,4);
+		grid =  new Grid2(8,8);
 		player = new Player2();
 	}
 	
