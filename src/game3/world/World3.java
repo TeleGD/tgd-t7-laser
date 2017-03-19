@@ -6,12 +6,14 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import game1.world.World1;
 import general.Main;
 import general.utils.FontUtils;
 
@@ -29,7 +31,11 @@ public class World3 extends BasicGameState{
 	private Image toitImage;
 	private TrueTypeFont fontPerdu;
 	private boolean perdu;
-	private Sound soundLose;
+<<<<<<< HEAD
+	public static int score=0;
+=======
+	private Music soundLose,soundMusicBackground;
+>>>>>>> f100bc01c946d149c9ff21cc8b2e95fd7000b58d
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -51,7 +57,10 @@ public class World3 extends BasicGameState{
 		timeInitial=System.currentTimeMillis(); // on reinitialise le temps
 		tower=new Tower(Main.longueur/2,Main.hauteur,new Block(pendulum.getX() - 50, Main.hauteur-101,100,100,new Image("Images/TowerBlocks/Blocs/"+World3.colorImage+" Porte.png")));
 
-		soundLose=new Sound("son/game_over.wav");
+		soundLose=new Music("son/gameOver.wav");
+		
+		soundMusicBackground=new Music("son/what_is_love.wav");
+		soundMusicBackground.play(1, 0.5f);
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 	}
 	
@@ -69,8 +78,9 @@ public class World3 extends BasicGameState{
 		}else{
 			g.setFont(fontPerdu);
 			g.drawString("PERDU !", Main.longueur/2-200, Main.hauteur/2-100);
-			soundLose.play();
 		}
+		g.setFont(fontPerdu);
+		g.drawString("Score :"+score, Main.longueur/2-200, Main.hauteur/2-100);
 		
 		if(currentBlock!=null){
 			currentBlock.render(container, game, g);
@@ -90,7 +100,14 @@ public class World3 extends BasicGameState{
 		tower.update(container, game, compt);
 		if(currentBlock!=null){
 			currentBlock.update(container, game, compt);
+			if(currentBlock.getY()>Main.hauteur){
+				currentBlock=new Block(Main.longueur/2-50,0,100,100, new Image("Images/TowerBlocks/Blocs/"+World3.colorImage+" Toit.png"));
+				currentBlock.setIsDroping(true);
+				currentBlock.setRealeased(true);
+				soundLose.play();
+			}
 		}
+		System.out.println("Score :"+score);
 	}
 	
 	@Override
@@ -145,4 +162,14 @@ public class World3 extends BasicGameState{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public static int  getScore() {
+		return score;
+	}
+
+	public static void setScore(int score) {
+		World3.score = score;
+	}
+
+	
 }

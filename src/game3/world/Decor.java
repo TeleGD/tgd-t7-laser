@@ -24,6 +24,7 @@ public class Decor {
 	private int green;
 	private Image[] cloudImages=new Image[4];
 	private Image imageStar;
+	private ArrayList<Copter> copters=new ArrayList<>();
 	public Decor() throws SlickException
 	{
 		this.height=0;
@@ -34,7 +35,7 @@ public class Decor {
 		for(int i=0;i<cloudImages.length;i++){
 			cloudImages[i]=new Image("./Images/TowerBlocks/SkyElements/cloud"+(i+1)+".png");
 		}
-		imageStar=new Image("./Images/TowerBlocks/SkyElements/star.png");
+		imageStar=new Image("./Images/TowerBlocks/SkyElements/star2.png");
 		red=169;
 		green=217;
 		blue=199;
@@ -89,6 +90,15 @@ public class Decor {
 			}
 		}
 		listSkyElements.removeAll(listSkyElementsToRemove);
+		
+		if(compteur %180==0 && r.nextInt(5)==1){
+			copters.add(new Copter());
+			copters.get(copters.size()-1).start();
+		}
+		
+		for(int i=0;i<copters.size();i++){
+			copters.get(i).update(arg0, arg1,arg2);
+		}
 	}
 		
 	
@@ -128,6 +138,10 @@ public class Decor {
 				g.setColor(Color.yellow);
 			}
 			g.drawImage(se.getImage(), se.getPosX(), se.getPosY(), null);
+		}
+		
+		for(int i=0;i<copters.size();i++){
+			copters.get(i).render(arg0, arg1, g);
 		}
 	}
 

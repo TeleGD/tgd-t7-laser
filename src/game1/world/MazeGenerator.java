@@ -72,10 +72,12 @@ public class MazeGenerator
 	{
 		for (int i=0 ; i<labyrinth.getLines();i++ )
 		{
-			for (int j =0 ; j<labyrinth.getRows();j++)
+			for (int j = 0 ; j<labyrinth.getRows();j++)
 			{
 				if (this.unvisitedCell[i][j] !=null)
+				{
 					return true;
+				}
 			}
 		}
 		return false;
@@ -85,23 +87,28 @@ public class MazeGenerator
 	public void mazeGenrator() throws SlickException
 	{
 		//Make the initial cell the current cell and mark it as visited 
+		stack = new Stack<Cell>();
 		currentCell = labyrinth.getCell(0, 0);
 		unvisitedCell[0][0] = null;
+		boolean stillUnvisitedCell = this.stillUnvisitedCell();
 		
 		//While there are unvisited cells
-		while(this.stillUnvisitedCell())
+		while(stillUnvisitedCell)
 		{
+			unvisitedCell[this.currentCell.getI()][this.currentCell.getJ()] = null;
 			
 			//If the current cell has any neighbours which have not been visited
+			//System.out.println("i : "+this.currentCell.getI()+ " j : "+this.currentCell.getJ());
 			if (this.hasAnUnvisitedNeighbor(this.currentCell.getI(),this.currentCell.getJ()))
 			{
-				
 				//Choose randomly one of the unvisited neighbours
 				Cell [] neighbor = this.getNeighbor(this.currentCell.getI(), this.currentCell.getJ());
-				int random = (int)Math.random()*3;
-				while (neighbor[random] == null)
-					random = (int)Math.random()*4;
+				int random = (int)Math.random()*4;
+				while (neighbor[random] == null){
+					random = (int)Math.floor((Math.random()*4));
+				}
 				this.choosenCell = neighbor[random];
+				System.out.println("has not visited nei... i next : "+this.choosenCell.getI()+ " j next : "+this.choosenCell.getJ());
 				
 				//Push the current cell to the stack
 				stack.push(this.currentCell);
@@ -130,16 +137,20 @@ public class MazeGenerator
 				
 				//Make the chosen cell the current cell and mark it as visited
 				this.currentCell = this.choosenCell;
-				unvisitedCell[this.currentCell.getI()][this.currentCell.getJ()] = null;
+				System.out.println("i : "+this.currentCell.getI()+ " j : "+this.currentCell.getJ());
 			}
 			
 			//Else if stack is not empty
 			else if (!stack.isEmpty())
 			{
+				System.out.println("! stack empty i : "+this.currentCell.getI()+ " j : "+this.currentCell.getJ());
 				//Pop a cell from the stack and make it the current cell
 				this.currentCell = stack.pop();
+				System.out.println(stack.isEmpty());
 			}
+			stillUnvisitedCell = this.stillUnvisitedCell();
 		}
+		System.out.println("fin");
 		//labyrinth.autoset();
 	}
 	

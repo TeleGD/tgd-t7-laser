@@ -18,6 +18,7 @@ public class Grid2 {
 	private int maxCols;
 	
 	public List<Laser> laserList;
+	public List<Ennemy> ennemyList;
 	private int laserTimer;
 	
 	private int waveTimer;
@@ -42,6 +43,9 @@ public class Grid2 {
 		laserTimer = 1;
 		waveTimer = 200;
 		waveNumber = 0;
+		
+		ennemyList = new LinkedList<Ennemy>();
+		
 	}
 
 	
@@ -64,6 +68,9 @@ public class Grid2 {
 		
 		for(Laser l : laserList)
 			l.render(arg0, arg1, arg2);
+		
+		for(Ennemy e : ennemyList)
+			e.render(arg0, arg1, arg2);
 			
 	}
 
@@ -78,14 +85,20 @@ public class Grid2 {
 
 
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
+		if(waveNumber % 5 == 2 && waveTimer == 1)
+			addEnnemy();
+		
 		laserTimer--;
 		if(laserTimer <= 0){
 			addLaser();
-			laserTimer = Math.max(80-waveNumber*10, 0)+10;
+			laserTimer = Math.max(50-waveNumber*5, 0)+20;
 		}
 		try{
 			for(Laser l : laserList)
 				l.update(arg0, arg1, arg2);
+			
+			for(Ennemy e : ennemyList)
+				e.update(arg0, arg1, arg2);
 		}
 		catch(Exception e){
 			//System.out.println(e.getMessage());
@@ -140,12 +153,41 @@ public class Grid2 {
 		return  false;
 	}
 	
+	public boolean MoveEnnemy(int x,int y, Ennemy p){
+		if(x < rows && y < columns && x >= 0 && y >= 0 && !getCell(x, y).isHasEnnemy()){
+			//set new cell true
+			grid[x][y].setDeadly(true);
+			grid[x][y].setHasEnnemy(true);
+			//set old cell false
+			grid[p.getX()][p.getY()].setDeadly(false);
+			grid[p.getX()][p.getY()].setHasEnnemy(false);
+			
+			return true;
+		}
+		return  false;
+	}
+	
+	public void addEnnemy(){
+		Random r = new Random();
+		int x = 0;
+		int y = 0;
+		do{
+			x = r.nextInt(rows);
+			y = r.nextInt(columns);
+		}
+		while(getCell(x, y).getDeadly() || getCell(x, y).getContains());
+		
+		ennemyList.add(new Ennemy(x,y));
+		
+	}
+	
 	public void addLaser(){
 		Random r = new Random();
 		boolean axe = r.nextBoolean();
 		if(axe) //horizontal
 			laserList.add(new Laser(0,r.nextInt(columns)));
 		else //vertical
+	
 			laserList.add(new Laser(1,r.nextInt(rows)));
 	}
 	
