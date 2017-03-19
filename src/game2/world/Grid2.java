@@ -215,8 +215,11 @@ public class Grid2 {
 		Random r2 = new Random();
 		int row = r1.nextInt(this.rows);
 		int column = r2.nextInt(this.columns);
-		this.grid[row][column].setDeadly(true);
-		this.grid[row][column].setImage(this.grid[row][column].mine);
+		if(!getCell(row, column).getContains()){
+			this.grid[row][column].setDeadly(true);
+			this.grid[row][column].setImage(this.grid[row][column].mine);
+		}
+		
 	}
 	
 	public void addBonus(int row, int column){
