@@ -156,17 +156,6 @@ public class Cell{
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException 
 	{
 		arg2.drawImage(sprite,j*64,i*64);
-<<<<<<< HEAD
-		if (itsATrap){
-			arg2.setColor(Color.red);
-			arg2.fillRect(j*62, i*62, 60, 60);
-		}
-		if (isFinalCell){
-			arg2.setColor(Color.cyan);
-			arg2.fillRect(j*64, i*64, 60, 60);
-		}
-=======
->>>>>>> 008ab738fcdd9744ca2565b9ce6fcb8a36ab291b
 	}
 
 	
