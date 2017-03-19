@@ -98,6 +98,7 @@ public class Cell {
 			World2.setScore(World2.getScore()+77);
 			World2.getGrid().getCell(x, y).setHasBonus(false);
 			World2.getGrid().getCell(x,y).setImage(normal);
+			World2.cat.play();
 		}
 			
 	}

@@ -16,7 +16,7 @@ public class MainMenu extends Menu{
 	public MainMenu(){
 		super.setTitrePrincipal("MULTIGAME DESIGN");
 		super.setTitreSecondaire("Menu Principal");
-		super.setItems("Jeu1","Jeu2","Jeu3","Scores", "Quitter");
+		super.setItems("Jeu1","T7Laser","Jeu3","Scores", "Quitter");
 		
 		super.setEnableClignote(false);
 		super.setCouleurClignote(Color.red);
