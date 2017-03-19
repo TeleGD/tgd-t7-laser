@@ -224,6 +224,7 @@ public class Grid2 {
 	
 	public void addBonus(int row, int column){
 		this.grid[row][column].setDeadly(false);
+		this.grid[row][column].setHasBonus(true);
 		this.grid[row][column].setImage(this.grid[row][column].bonus);
 	}
 
