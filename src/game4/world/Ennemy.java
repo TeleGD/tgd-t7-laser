@@ -32,6 +32,43 @@ public class Ennemy {
 		pvDecrease(degat);
 		move();
 	}
+
+	public int getSpeedX() {
+		return speedX;
+	}
+
+	public int getSpeedY() {
+		return speedY;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setSpeedX(int speedX) {
+		this.speedX = speedX;
+	}
+
+	public void setSpeedY(int speedY) {
+		this.speedY = speedY;
+	}
+
+	public void setPv(int pv) {
+		this.pv = pv;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+	
 	
 	
 }

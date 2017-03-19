@@ -60,7 +60,7 @@ public class Grid2 {
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		for(int i = 0; i<this.rows; i++)//init row
 			for(int j=0;j<this.columns;j++) //init cologne
-				grid[i][j].getImage().draw(250+i*100*World2.getRenderScale(),0+j*100*World2.getRenderScale(),100*World2.getRenderScale(),100*World2.getRenderScale());
+				grid[i][j].getImage().draw(280+360-this.getColumns()*100*World2.getRenderScale()/2+i*100*World2.getRenderScale(),0+j*100*World2.getRenderScale()+360-this.getColumns()*100*World2.getRenderScale()/2,100*World2.getRenderScale(),100*World2.getRenderScale());
 		
 		for(Laser l : laserList)
 			l.render(arg0, arg1, arg2);

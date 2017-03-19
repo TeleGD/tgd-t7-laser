@@ -7,6 +7,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -28,6 +29,7 @@ public class World3 extends BasicGameState{
 	private Image toitImage;
 	private TrueTypeFont fontPerdu;
 	private boolean perdu;
+	private Sound soundLose;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -49,6 +51,7 @@ public class World3 extends BasicGameState{
 		timeInitial=System.currentTimeMillis(); // on reinitialise le temps
 		tower=new Tower(Main.longueur/2,Main.hauteur,new Block(pendulum.getX() - 50, Main.hauteur-101,100,100,new Image("Images/TowerBlocks/Blocs/"+World3.colorImage+" Porte.png")));
 
+		soundLose=new Sound("son/game_over.wav");
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 	}
 	
@@ -66,6 +69,7 @@ public class World3 extends BasicGameState{
 		}else{
 			g.setFont(fontPerdu);
 			g.drawString("PERDU !", Main.longueur/2-200, Main.hauteur/2-100);
+			soundLose.play();
 		}
 		
 		if(currentBlock!=null){
@@ -80,7 +84,7 @@ public class World3 extends BasicGameState{
 		if(!perdu){
 			pendulum.update(container, game,compt);
 			tower.update(container, game, compt);
-
+			
 		}
 		
 		tower.update(container, game, compt);
