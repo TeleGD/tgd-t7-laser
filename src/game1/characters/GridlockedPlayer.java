@@ -109,4 +109,14 @@ public class GridlockedPlayer {
 		int i=(int) Math.floor((y-10)/cellSize);
 		this.cell=game1.world.World1.getLabyrinth().getCell(i,j);
 	}
+	
+	public int getI()
+	{
+		return this.cell.getI();
+	}
+	
+	public int getJ()
+	{
+		return this.cell.getJ();
+	}
 }
