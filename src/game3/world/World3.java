@@ -32,10 +32,11 @@ public class World3 extends BasicGameState{
 	private TrueTypeFont fontPerdu;
 	private static boolean perdu=false;
 	private Music soundLose,soundMusicBackground;
+	private StateBasedGame game;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
-	
+		this.game=game;
 	}
 	
 	public static void setDifficulty(int difficulty){
@@ -140,7 +141,11 @@ public class World3 extends BasicGameState{
  			if(perdu){
  				reset();
  			}
-  		}
+  		}else if(key==Input.KEY_ESCAPE){
+			if(perdu){
+				game.enterState(MainMenu3.ID);
+			}
+		}
   	}
 
 	@Override
