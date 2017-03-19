@@ -1,4 +1,4 @@
-package game1.world;
+package game4.world;
 
 import java.util.ArrayList;
 
@@ -89,7 +89,7 @@ public class World extends BasicGameState{
 		ressources = amount;
 	}
 	
-	public int getRessources(){
+	public static int getRessources(){
 		return ressources;
 	}
 	
