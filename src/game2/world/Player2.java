@@ -4,6 +4,7 @@ package game2.world;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
@@ -14,23 +15,33 @@ public class Player2{
 	private int y = 0;
 	private float width = 100;
 	private float height = 100;
+	private Image image;
+	private Image down;
+	private Image up;
+	private Image left;
+	private Image right;
+	
 	
 	private int lives = 1;
 	
 	private boolean moveLeft,moveRight,moveUp,moveDown  =false;
 	
-	public Player2(){
+	public Player2() throws SlickException{
 		//position initiale
 		World2.getGrid().getCell(0, 0).setContains(true);
-		x = 0;
-		y = 0;
+		this.x = 0;
+		this.y = 0;
+		this.setImage(new Image("Images/T7Laser/Char_down.png"));
+		this.down= new Image("Images/T7Laser/Char_down.png");
+		this.up=new Image("Images/T7Laser/Char_up.png");
+		this.right=new Image("Images/T7Laser/Char_right.png");
+		this.left=new Image("Images/T7Laser/Char_left.png");
 	}
 	
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		//Affichage
-		g.setColor(Color.green);
-		g.fillRect((float)x*100, (float)y*100, (float)width, (float)height);
+		image.draw(280+(x*100*World2.getRenderScale())+360-World2.getGrid().getColumns()*100*World2.getRenderScale()/2,y*100*World2.getRenderScale()+360-World2.getGrid().getColumns()*100*World2.getRenderScale()/2,100*World2.getRenderScale(),100*World2.getRenderScale());
 
 	}
 
@@ -38,21 +49,25 @@ public class Player2{
 		callMove();
 	}
 	
-	public void callMove(){
+	public void callMove() throws SlickException{
 		if(moveUp && !moveDown){ //haut
 			move(x,y-1);
+			this.setImage(up);
 			moveUp = false;
 		}
 		if(moveDown && !moveUp){ //bas
 			move(x,y+1);
+			this.setImage(down);
 			moveDown = false;
 		}
 		if(moveLeft && !moveRight){ //gauche
 			move(x-1,y);
+			this.setImage(left);
 			moveLeft = false;
 		}
 		if(moveRight && !moveLeft){ //droite
 			move(x+1,y);
+			this.setImage(right);
 			moveRight = false;
 		}
 	}
@@ -148,6 +163,16 @@ public class Player2{
 
 	public void setLives(int lives) {
 		this.lives = lives;
+	}
+
+
+	public Image getImage() {
+		return image;
+	}
+
+
+	public void setImage(Image image) {
+		this.image = image;
 	}
 
 

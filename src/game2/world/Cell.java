@@ -62,7 +62,9 @@ public class Cell {
 	}
 
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		// TODO Auto-generated method stub
+		if(deadly && contains)
+			World2.getPlayer().setLives(0);
+		
 	}
 	
 }
