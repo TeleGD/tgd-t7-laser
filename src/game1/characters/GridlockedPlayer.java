@@ -65,6 +65,9 @@ public class GridlockedPlayer {
 			right=true;
 			rightLeft=true;
 		break;
+		case Input.KEY_ESCAPE:
+			System.exit(0);
+			break;
 		}
 		
 	}

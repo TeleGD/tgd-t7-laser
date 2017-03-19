@@ -147,7 +147,7 @@ public class MazeGenerator
 			{
 				i = (int)Math.floor(Math.random()*this.labyrinth.getLines());
 				j = (int)Math.floor(Math.random()*this.labyrinth.getRows());
-				System.out.println("i : "+i+" j :"+j);
+				//System.out.println("i : "+i+" j :"+j);
 			}while (i==0 && j==0);
 			this.labyrinth.getCell(i, j).setFinalCell(true);
 			this.labyrinth.getCell(i, j).setGiveScore(false);
