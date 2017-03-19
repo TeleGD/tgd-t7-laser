@@ -65,6 +65,7 @@ public class Tower extends Rectangle{
 			blocks.add(block);
 			block.setY(getTopY()-5);
 			block.setIsDroping(false);
+			World3.notifyStackedBlock();
 			World3.getPendulum().notifyStackedBlock();
 			cpt=0;
 			this.needDefile =true;

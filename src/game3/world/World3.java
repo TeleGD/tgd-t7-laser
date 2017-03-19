@@ -136,4 +136,10 @@ public class World3 extends BasicGameState{
 	public static Decor getDecor() {
 		return decor;
 	}
+	
+	public static void notifyStackedBlock() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

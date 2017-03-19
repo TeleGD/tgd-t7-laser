@@ -17,24 +17,18 @@ public class Decor {
 	private int compteur;
 	private ArrayList<SkyElements> listSkyElements;
 	private boolean endTown=false;
-	private Image star;
-	public Decor()
+	private Image background;
+	
+	public Decor() throws SlickException
 	{
 		this.height=0;
 		this.compteur=0;
 		this.listSkyElements=new ArrayList<SkyElements>();
-		 try {
-			star= new Image("./Images/TowerBlocks/SkyElements/star.png");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		this.background =new Image("./Images/TowerBlocks/DecorBase.png");
 	}
 	
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException 
 	{
-		this.height+=1;
 		this.compteur+=1;
 		if(this.height>=arg0.getHeight()){
 			this.endTown=true;
@@ -60,7 +54,9 @@ public class Decor {
 					int width=5 + r.nextInt(200 - 5);
 					int heigth=5 + r.nextInt(200 - 5);
 					int numberImageCloud=1 + r.nextInt(5 - 1);
-					this.listSkyElements.add(new Cloud(posX,posY,width,heigth,numberImageCloud));
+					Image star= new Image("./Images/TowerBlocks/SkyElements/cloud"+numberImageCloud+".png");
+					star = star.getScaledCopy(width, heigth);
+					this.listSkyElements.add(new Cloud(posX,posY,width,heigth,numberImageCloud,star));
 
 				}
 			}
@@ -78,7 +74,9 @@ public class Decor {
 					{
 						posY=0 + r.nextInt(arg0.getHeight() - 0);
 					}
-					this.listSkyElements.add(new Star(posX,posY));
+					Image star= new Image("./Images/TowerBlocks/SkyElements/star.png");
+					star = star.getScaledCopy(20, 20);
+					this.listSkyElements.add(new Star(posX,posY,star));
 				}
 			}
 		}
@@ -91,13 +89,13 @@ public class Decor {
 		int green;
 		if(!this.endTown)
 		{
-			red=0;
+			red=169;
 			green=217;
-			blue=198;
+			blue=199;
 			
 		}
 		else{
-			red= 0-height+arg0.getHeight();
+			red= 169-height+arg0.getHeight();
 			if(red<0)
 			{
 				red=0;
@@ -107,34 +105,27 @@ public class Decor {
 			{
 				green=0;
 			}
-			blue=198-height+arg0.getHeight();
+			blue=199-height+arg0.getHeight();
 			if(blue<0)
 			{
 				blue=0;
 			}
 		}
 		g.setBackground(new Color(red,green,blue));
-		Image backGround= new Image("./Images/TowerBlocks/DecorBase.png");
-		backGround = backGround.getScaledCopy(arg0.getWidth(),arg0.getHeight() );
-		g.drawImage(backGround, 0,0+height, null);
-
+		this.background = this.background.getScaledCopy(arg0.getWidth(),arg0.getHeight() );
+		g.setColor(Color.white);
+		g.drawImage(this.background, 0,0+height, null);
+		
 		for(SkyElements se : listSkyElements)
 		{
-			if(se instanceof Star)
+			if(se instanceof Cloud){
+				g.setColor(Color.white);
+			}
+			else if(se instanceof Star)
 			{
 				g.setColor(Color.yellow);
-				star = star.getScaledCopy(se.getWidth(), se.getHeight());
-				g.drawImage(star, se.getPosX(), se.getPosY(), null);
 			}
-			
-			
-			else if(se instanceof Cloud)
-			{
-				g.setColor(Color.white);
-				Image star= new Image("./Images/TowerBlocks/SkyElements/cloud"+((Cloud)se).getNumberImageCloud()+".png");
-				star = star.getScaledCopy(se.getWidth(), se.getHeight());
-				g.drawImage(star, se.getPosX(), se.getPosY(), null);
-			}
+			g.drawImage(se.getImage(), se.getPosX(), se.getPosY(), null);
 		}
 	}
 
