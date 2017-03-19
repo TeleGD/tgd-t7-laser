@@ -17,17 +17,19 @@ public class World2 extends BasicGameState{
 	private static int score;
 	private Music music;
 	
+	private static float renderScale = (float)1;
+	
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
 		music = new Music("Music/T7Laser/EpicSaxGuy.ogg");
-        music.loop();
 	}
 	
 	public void enter(GameContainer arg0, StateBasedGame arg1) throws SlickException{
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
-		grid =  new Grid2(8,8);
+        music.loop();
+		grid =  new Grid2(4,4);
 		player = new Player2();
 		score = 0;
 	}
@@ -80,5 +82,13 @@ public class World2 extends BasicGameState{
 
 	public static void reset() {
 		// TODO Auto-generated method stub
+	}
+	
+	public static float  getRenderScale(){
+			return renderScale;
+	}
+		
+	public static void setRenderScale(float d){
+			renderScale = d;
 	}
 }
