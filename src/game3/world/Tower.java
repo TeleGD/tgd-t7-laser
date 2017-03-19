@@ -21,6 +21,7 @@ public class Tower extends Rectangle{
 	private int mult;
 	private boolean comb=false;
 	private TrueTypeFont fontPerdu;
+	public static int difficulty;
 	
 	public Tower(float x, float y, Block initialBlock) {
 		super(x, y, 0, 0);
