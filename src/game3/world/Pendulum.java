@@ -151,7 +151,6 @@ public class Pendulum extends BasicGameState{
 		System.out.println("thetaDot="+thetaDot);
 		block.drop((float)(length*thetaDot*1+Math.pow(Math.tan(theta),2))/2000,0);
 		//block.drop(0,0);
-		speed=speed*2;
 		compt=0;
 		return block;
 	}
