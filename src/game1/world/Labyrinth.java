@@ -16,6 +16,7 @@ public class Labyrinth {
 	
 	public Labyrinth (int lines,int rows) 
 	{
+		int rand;
 		this.lines = lines;
 		this.rows = rows;
 		cells = new Cell[lines][rows];
@@ -26,6 +27,8 @@ public class Labyrinth {
 			{
 				cell = new Cell(i,j);
 				cells[i][j]=cell;
+				rand =(int) (Math.random()*10);
+				if(rand < 3) cells[i][j].setGiveScore(true);
 			}
 		}
 		

@@ -37,7 +37,7 @@ public class GridlockedPlayer {
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		moveTimer = moveTimer - arg2;
 		if(moveTimer <=0){
-			moveTimer = 125;
+			moveTimer = 75;
 			this.getCell();
 			move();
 		}

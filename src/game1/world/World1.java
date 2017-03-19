@@ -15,7 +15,7 @@ public class World1 extends BasicGameState{
 
 	public static int ID=1;
 	private static Labyrinth labyrinth;
-	private MazeGenerator mazeGenerator;
+	private static MazeGenerator mazeGenerator;
 	private static GridlockedPlayer player;
 	private ArrayList<Cell> cellTest;
 	private static int score;
@@ -30,15 +30,7 @@ public class World1 extends BasicGameState{
 	@Override
 	public void enter(GameContainer arg0, StateBasedGame arg1){
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
-		
-		player = new GridlockedPlayer(0,0);
-		mazeGenerator = new MazeGenerator(labyrinth);
-		try {
-			mazeGenerator.mazeGenrator();
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		reset();
 	}
 	
 
@@ -65,8 +57,15 @@ public class World1 extends BasicGameState{
 	}
 
 	public static void reset() {
-		// TODO Auto-generated method stub
-		
+		labyrinth = new Labyrinth(10,15);
+		player = new GridlockedPlayer(0,0);
+		mazeGenerator = new MazeGenerator(labyrinth);
+		try {
+			mazeGenerator.mazeGenrator();
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static Labyrinth getLabyrinth(){

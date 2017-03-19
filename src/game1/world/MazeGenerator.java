@@ -150,6 +150,8 @@ public class MazeGenerator
 				System.out.println("i : "+i+" j :"+j);
 			}while (i==0 && j==0);
 			this.labyrinth.getCell(i, j).setFinalCell(true);
+			this.labyrinth.getCell(i, j).setGiveScore(false);
+			this.labyrinth.getCell(i, j).setItsATrap(false);
 			this.labyrinth.setHaveExit(true);
 		}
 	}

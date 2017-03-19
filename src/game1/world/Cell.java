@@ -159,8 +159,6 @@ public class Cell{
 
 	
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		System.out.println("player i :"+World1.getPlayer().getI()+"player j :"+World1.getPlayer().getJ());
-		System.out.println("i : "+this.getI()+" j : "+this.getJ());
 		if (World1.getPlayer().getI()==this.getI() && World1.getPlayer().getJ()==this.getJ()){
 			if (giveScore){
 				giveScore=false;
@@ -168,8 +166,8 @@ public class Cell{
 				World1.setScore(World1.getScore()+1);
 			}
 			if (isFinalCell){
-				
-				System.out.println("fin");
+				World1.reset();
+				//System.out.println("fin");
 			}
 			if (itsATrap){
 				System.exit(0);
