@@ -1,22 +1,20 @@
 package game4.world;
 
-public class Ennemy {
-	private int speedX;
-	private int speedY;
+public abstract class Ennemy {
+	private int speed;
 	private int pv;
-	private int x;
-	private int y;
-	
-	public Ennemy(){
-		x = 100;
-		y = 100;
-		pv = 100;
+	private Cell cellule;
+	private boolean destroyed;
+
+	public Ennemy(int speed, int pv, Cell cellule) {
+		super();
+		this.speed = speed;
+		this.pv = pv;
+		this.cellule = cellule;
+		this.destroyed=false;
 	}
-	
+
 	public void move(){
-		speedX = 0;
-		speedY = 0;
-		
 		//TODO phase de test pour savoir si il y a des tours pour que l'ennemi s'avance ou pas
 	}
 	
@@ -33,42 +31,32 @@ public class Ennemy {
 		move();
 	}
 
-	public int getSpeedX() {
-		return speedX;
-	}
-
-	public int getSpeedY() {
-		return speedY;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setSpeedX(int speedX) {
-		this.speedX = speedX;
-	}
-
-	public void setSpeedY(int speedY) {
-		this.speedY = speedY;
-	}
-
 	public void setPv(int pv) {
 		this.pv = pv;
 	}
 
-	public void setX(int x) {
-		this.x = x;
+	public int getSpeed() {
+		return speed;
 	}
 
-	public void setY(int y) {
-		this.y = y;
+	public void setSpeed(int speed) {
+		this.speed = speed;
 	}
-	
-	
+
+	public Cell getCellule() {
+		return cellule;
+	}
+
+	public void setCellule(Cell cellule) {
+		this.cellule = cellule;
+	}
+
+	public boolean isDestroyed() {
+		return destroyed;
+	}
+
+	public void setDestroyed(boolean destroyed) {
+		this.destroyed = destroyed;
+	}	
 	
 }

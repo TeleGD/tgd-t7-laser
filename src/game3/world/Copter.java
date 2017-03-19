@@ -5,6 +5,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -29,6 +30,8 @@ public class Copter extends Rectangle{
 	public boolean isFlying() {
 		return isFlying;
 	}
+	
+	public static Sound sound;
 
 	public boolean isToDestroy() {
 		return toDestroy;
@@ -36,7 +39,14 @@ public class Copter extends Rectangle{
 
 	public Copter(){
 		super(50, 50, width, height);
-
+		if(sound==null){
+			try {
+				sound=new Sound("son/Copter.ogg");
+			} catch (SlickException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		leave();
 		
 		timer = (int) ((Math.random() + 1) * 600);
@@ -45,8 +55,8 @@ public class Copter extends Rectangle{
 		this.y = goToY;
 		
 		try {
-			image0=new Image("Images/TowerBlocks/Copter/copter1.png");
-			image1=new Image("Images/TowerBlocks/Copter/copter2.png");
+			image0=new Image("Images/TowerBlocks/Copter/copter1.png").getScaledCopy((int)width, (int)height);
+			image1=new Image("Images/TowerBlocks/Copter/copter2.png").getScaledCopy((int)width, (int)height);
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -56,6 +66,7 @@ public class Copter extends Rectangle{
 	public void start(){
 		majGoTo();
 		isFlying = true;
+		sound.loop();
 	}
 	
 	private void majGoTo() {
@@ -77,7 +88,7 @@ public class Copter extends Rectangle{
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
 		// Rendering
 		nb ++;
-		if(nb%2 == 0){
+		if(nb%10 <= 5){
 			g.drawImage(image0,x,y);
 		} else {
 			g.drawImage(image1,x,y);
@@ -88,11 +99,15 @@ public class Copter extends Rectangle{
 		// Updating
 		x = lerp(x,goToX, alpha);
 		y = lerp(y, goToY, alpha);
-		if( (x - goToX) < 1 && (y - goToY) < 1 ){
+		if( (x - goToX) < 5 && (y - goToY) < 5 ){
 			if(isFlying){
 				majGoTo();
 			}else{
-				toDestroy  = true;
+				if(x>Main.longueur || x<0){
+					Decor.getCopters().remove(this);
+					sound.stop();
+				}
+				
 			}
 		}
 		if(nb > timer){

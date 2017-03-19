@@ -13,7 +13,11 @@ public class Cell {
 	private int y;
 	private Boolean contains;
 	private Boolean deadly;
+	private boolean hasEnnemy;
 	private Image image;
+	protected Image normal;
+	protected Image mine;
+	protected Image bonus;
 	
 	
 	//Constructeur
@@ -22,7 +26,11 @@ public class Cell {
 		this.y=y;
 		this.contains=c;
 		this.deadly=d;
-		this.image= new Image("Images/T7Laser/Cell.png");
+		this.normal= new Image("Images/T7Laser/Cell.png");
+		this.mine=new Image("Images/T7Laser/Mine.png");
+		this.bonus=new Image("Images/T7Laser/Bonus.png");
+		this.image=(normal);
+		this.hasEnnemy = false;
 	}
 	
 	
@@ -54,6 +62,9 @@ public class Cell {
 	public Image getImage(){
 		return image;
 	}
+	public void setImage(Image i){
+		this.image=i;
+	}
 	
 	//render et update
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
@@ -65,6 +76,16 @@ public class Cell {
 		if(deadly && contains)
 			World2.getPlayer().setLives(0);
 		
+	}
+
+
+	public boolean isHasEnnemy() {
+		return hasEnnemy;
+	}
+
+
+	public void setHasEnnemy(boolean hasEnnemy) {
+		this.hasEnnemy = hasEnnemy;
 	}
 	
 }
