@@ -23,7 +23,7 @@ public class World1 extends BasicGameState{
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
-		labyrinth = new Labyrinth(10,10);
+		labyrinth = new Labyrinth(20,20);
 		
 	}
 	

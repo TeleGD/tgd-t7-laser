@@ -29,13 +29,13 @@ public class MazeGenerator
 	{
 		int random = (int)Math.floor(Math.random()*4);
 		System.out.println(random);
-		if (random == 0 && i-1 >=0)
+		if (random == 0 && i-1 >=0 && this.unvisitedCell[i-1][j]!=null)
 			this.choosenCell = this.labyrinth.getCell(i-1, j);
-		else if (random ==1 && i+1<this.labyrinth.getLines())
+		else if (random ==1 && i+1<this.labyrinth.getLines() && this.unvisitedCell[i+1][j]!=null)
 			this.choosenCell = this.labyrinth.getCell(i+1, j);
-		else if (random ==2 && j-1>=0)
+		else if (random ==2 && j-1>=0 && this.unvisitedCell[i][j-1]!=null)
 			this.choosenCell = this.labyrinth.getCell(i, j-1);
-		else if (random == 3 && j+1 < this.labyrinth.getRows())
+		else if (random == 3 && j+1 < this.labyrinth.getRows() &&  this.unvisitedCell[i][j+1]!=null)
 			this.choosenCell = this.labyrinth.getCell(i, j+1);
 		else return getChosenCell(i,j);
 		return random;
