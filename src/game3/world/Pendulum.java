@@ -40,8 +40,7 @@ public class Pendulum extends BasicGameState{
 	}
 	
 	
-	
-	
+
 	private void addBlock() {
 		try {
 			block=new Block(0,0,100,100,new Image("Images/TowerBlocks/Blocs/"+World3.colorImage+" Normal.png"));
@@ -65,11 +64,11 @@ public class Pendulum extends BasicGameState{
 		
 		if(!block.isRealeased()){
 			block.render(container, game, g);
-			corde.rotate(theta);
+			corde.setRotation((float) ( -theta*180/Math.PI));
 			corde.setCenterOfRotation(0, 0);
-			g.drawImage(corde,x,y);
-			g.drawLine((float)(Main.longueur/2), y,block.getCenterX(), block.getCenterY());
 		}
+		g.drawImage(corde,x,y);
+
 	}
 
 	@Override
