@@ -5,13 +5,10 @@ public class Test {
 
 	public static void main(String[] args) 
 	{
-		Labyrinth labyrinth = new Labyrinth(16, 16);
-		MazeGenerator mazeGenerator = new MazeGenerator(labyrinth);
-		try {
-			mazeGenerator.mazeGenrator();
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		int random = (int)Math.random()*4;
+		while (random == 0){
+			System.out.println(random);
+			random = (int)Math.floor((Math.random()*4));
 		}
 		System.out.println("fin");
 	}

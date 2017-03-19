@@ -6,15 +6,21 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.StateBasedGame;
+
+import general.Main;
 
 public class Tower extends Rectangle{
 
 	ArrayList<Block> blocks;
 	private boolean needDefile;
 	private int cpt;
+	private int mult;
+	private boolean comb=false;
+	private TrueTypeFont fontPerdu;
 	
 	public Tower(float x, float y, Block initialBlock) {
 		super(x, y, 0, 0);
@@ -22,10 +28,10 @@ public class Tower extends Rectangle{
 		addBlock(initialBlock);
 	}
 	
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
+	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
 		// Rendering
 		for(int i = 0; i < blocks.size(); i++){
-			blocks.get(i).render(arg0, arg1, arg2);
+			blocks.get(i).render(arg0, arg1, g);
 		}
 	}
 	
@@ -53,6 +59,9 @@ public class Tower extends Rectangle{
 	public float getTopY(){
 		return(blocks.get(blocks.size()-1).getY());
 	}
+	public float getTopX(){
+		return(blocks.get(blocks.size()-1).getX());
+	}
 	public Block getTop(){
 		return(blocks.get(blocks.size()-1));
 	}
@@ -61,19 +70,31 @@ public class Tower extends Rectangle{
 			block.setSpeedX(0);
 			block.setSpeedY(0);
 			block.setAccelY(0);
+			comb=combo(getTopX(), block.getX());
 			blocks.add(block);
 			block.setY(getTopY()-5);
 			block.setIsDroping(false);
-			World3.notifyStackedBlock();
+			if(comb){
+				mult+=1;
+			}else{
+				mult=1;
+			}
+			World3.setScore(World3.getScore()+mult*100);
 			World3.getPendulum().notifyStackedBlock();
 			cpt=0;
 			this.needDefile=true;
 	}
 
 	
+	private boolean combo(float topX, float x) {
+		if(Math.abs(topX-x)<10){
+			return true;
+		}
+		return false;
+	}
+
 	public boolean intersects(Shape shape){
 		System.out.println(getTop().intersects(shape));
 		return getTop().intersects(shape);
 	}
-	
 }
