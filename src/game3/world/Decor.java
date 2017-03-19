@@ -22,13 +22,19 @@ public class Decor {
 	private int red;
 	private int blue;
 	private int green;
-	
+	private Image[] cloudImages=new Image[4];
+	private Image imageStar;
 	public Decor() throws SlickException
 	{
 		this.height=0;
 		this.compteur=0;
 		this.listSkyElements=new ArrayList<SkyElements>();
 		this.background =new Image("./Images/TowerBlocks/DecorBase.png");
+
+		for(int i=0;i<cloudImages.length;i++){
+			cloudImages[i]=new Image("./Images/TowerBlocks/SkyElements/cloud"+(i+1)+".png");
+		}
+		imageStar=new Image("./Images/TowerBlocks/SkyElements/star.png");
 		red=169;
 		green=217;
 		blue=199;
@@ -37,38 +43,35 @@ public class Decor {
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException 
 	{
 		this.compteur+=1;
-		if(this.height>=arg0.getHeight()+2000){
+		if(this.height>=arg0.getHeight()+500){
 			this.endTown=true;
 		}
 		Random r = new Random();
 		if(changeHeigth )
 		{
 			
-			if(height<=2000+arg0.getHeight() && (compteur%150==0 || compteur==1)){
+			if(height<=1000+arg0.getHeight() && (compteur%350==0 || compteur==1)){
 				
-				int numberCloud= 2 + r.nextInt(4-2);
+				int numberCloud= r.nextInt(2);
 				for(int i =0;i<=numberCloud;i++){
 					int posX=0 + r.nextInt(arg0.getWidth() - 0);
 					int posY=0;
-					int width=50 + r.nextInt(200 - 50);
-					int heigth=50 + r.nextInt(200 - 50);
-					int numberImageCloud=1 + r.nextInt(5 - 1);
-					Image cloud= new Image("./Images/TowerBlocks/SkyElements/cloud"+numberImageCloud+".png");
-					cloud = cloud.getScaledCopy(width, heigth);
-					this.listSkyElements.add(new Cloud(posX,posY,width,heigth,numberImageCloud,cloud));
+					int width=100 + r.nextInt(400);
+					int heigth=100 + r.nextInt(50);
+					int numberImageCloud=r.nextInt(cloudImages.length);
+					
+					this.listSkyElements.add(new Cloud(posX,posY,width,heigth,numberImageCloud,cloudImages[i].getScaledCopy(width, heigth)));
 				}
 				changeHeigth=false;
 			}
-			else if(height>=2000+arg0.getHeight() && compteur%30==0)
+			else if(height>=1000+arg0.getHeight() && compteur%30==0)
 			{
 				
 				int numberStar= 5 + r.nextInt(15-5);
 				for(int i =0;i<=numberStar;i++){
 					int posX=0 + r.nextInt(arg0.getWidth() - 0);
 					int posY=0;
-					Image star= new Image("./Images/TowerBlocks/SkyElements/star.png");
-					star = star.getScaledCopy(20, 20);
-					this.listSkyElements.add(new Star(posX,posY,star));
+					this.listSkyElements.add(new Star(posX,posY,imageStar.getScaledCopy(20, 20)));
 				}
 				changeHeigth=false;
 			}
