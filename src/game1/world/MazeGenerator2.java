@@ -80,18 +80,20 @@ public class MazeGenerator2
 		return false;
 	}
 	
+	
+	
 	public boolean hasAnUnvisitedNeighbor(int i , int j)
 	{
+		boolean result = false;
 		if (i-1 >= 0 && this.unvisitedCell[i-1][j]!=null)
-			return (this.unvisitedCell[i-1][j]!=null);
-		else if (j-1 >= 0 && this.unvisitedCell[i][j-1]!=null)
-			return (this.unvisitedCell[i][j-1]!=null);
-		else if (i+1 < labyrinth.getLines() && this.unvisitedCell[i+1][j]!=null)
-			return (this.unvisitedCell[i+1][j]!=null);
-		else if (j+1 < labyrinth.getRows() && this.unvisitedCell[i][j+1]!=null)
-			return (this.unvisitedCell[i][j+1]!=null);
-		else
-			return false;
+			result =  result||(this.unvisitedCell[i-1][j]!=null);
+		if (j-1 >= 0 && this.unvisitedCell[i][j-1]!=null)
+			result =  result||(this.unvisitedCell[i][j-1]!=null);
+		if (i+1 < labyrinth.getLines() && this.unvisitedCell[i+1][j]!=null)
+			result =  result||(this.unvisitedCell[i+1][j]!=null);
+		if (j+1 < labyrinth.getRows() && this.unvisitedCell[i][j+1]!=null)
+			result =  result||(this.unvisitedCell[i][j+1]!=null);
+		return result;
 	}
 	
 	public void mazeGenerate() throws SlickException

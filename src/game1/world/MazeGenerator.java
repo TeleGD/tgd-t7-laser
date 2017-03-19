@@ -25,47 +25,35 @@ public class MazeGenerator
 		}
 	}
 	
-	/*
-	 * 0=>East
-	 * 1=>North
-	 * 2=>West
-	 * 3=>South
-	 * Warning can be Null
-	 */
-	public Cell[] getNeighbor(int i , int j)
+	public int getChosenCell(int i,int j)
 	{
-		Cell [] neighbor = new Cell[4];
-		if (i-1 >= 0)
-			neighbor [0] = labyrinth.getCell(i-1, j);
-		else 
-			neighbor [0] = null;
-		if (j-1 >= 0)
-			neighbor [1] = labyrinth.getCell(i,j-1);
-		else
-			neighbor [1] = null;
-		if (i+1 < labyrinth.getLines())
-			neighbor [2] = labyrinth.getCell(i+1, j);
-		else
-			neighbor [2] = null;
-		if (j+1 < labyrinth.getRows())
-			neighbor [3] = labyrinth.getCell(i, j+1);
-		else
-			neighbor [3] = null;
-		return neighbor;
+		int random = (int)Math.floor(Math.random()*4);
+		System.out.println(random);
+		if (random == 0 && i-1 >=0)
+			this.choosenCell = this.labyrinth.getCell(i-1, j);
+		else if (random ==1 && i+1<this.labyrinth.getLines())
+			this.choosenCell = this.labyrinth.getCell(i+1, j);
+		else if (random ==2 && j-1>=0)
+			this.choosenCell = this.labyrinth.getCell(i, j-1);
+		else if (random == 3 && j+1 < this.labyrinth.getRows())
+			this.choosenCell = this.labyrinth.getCell(i, j+1);
+		else return getChosenCell(i,j);
+		return random;
 	}
+	
 	
 	public boolean hasAnUnvisitedNeighbor(int i , int j)
 	{
-		if (i-1 >= 0)
-			return (this.unvisitedCell[i-1][j]!=null);
-		else if (j-1 >= 0)
-			return (this.unvisitedCell[i][j-1]!=null);
-		else if (i+1 < labyrinth.getLines())
-			return (this.unvisitedCell[i+1][j]!=null);
-		else if (j+1 < labyrinth.getRows())
-			return (this.unvisitedCell[i][j+1]!=null);
-		else
-			return false;
+		boolean result = false;
+		if (i-1 >= 0 && this.unvisitedCell[i-1][j]!=null)
+			result =  result||(this.unvisitedCell[i-1][j]!=null);
+		if (j-1 >= 0 && this.unvisitedCell[i][j-1]!=null)
+			result =  result||(this.unvisitedCell[i][j-1]!=null);
+		if (i+1 < labyrinth.getLines() && this.unvisitedCell[i+1][j]!=null)
+			result =  result||(this.unvisitedCell[i+1][j]!=null);
+		if (j+1 < labyrinth.getRows() && this.unvisitedCell[i][j+1]!=null)
+			result =  result||(this.unvisitedCell[i][j+1]!=null);
+		return result;
 	}
 	
 	public boolean stillUnvisitedCell()
@@ -98,16 +86,10 @@ public class MazeGenerator
 			unvisitedCell[this.currentCell.getI()][this.currentCell.getJ()] = null;
 			
 			//If the current cell has any neighbours which have not been visited
-			//System.out.println("i : "+this.currentCell.getI()+ " j : "+this.currentCell.getJ());
 			if (this.hasAnUnvisitedNeighbor(this.currentCell.getI(),this.currentCell.getJ()))
 			{
 				//Choose randomly one of the unvisited neighbours
-				Cell [] neighbor = this.getNeighbor(this.currentCell.getI(), this.currentCell.getJ());
-				int random = (int)Math.random()*4;
-				while (neighbor[random] == null){
-					random = (int)Math.floor((Math.random()*4));
-				}
-				this.choosenCell = neighbor[random];
+				int random = this.getChosenCell(this.currentCell.getI(),this.currentCell.getJ());
 				System.out.println("has not visited nei... i next : "+this.choosenCell.getI()+ " j next : "+this.choosenCell.getJ());
 				
 				//Push the current cell to the stack
@@ -148,10 +130,12 @@ public class MazeGenerator
 				this.currentCell = stack.pop();
 				System.out.println(stack.isEmpty());
 			}
+			//else break;
 			stillUnvisitedCell = this.stillUnvisitedCell();
+			
 		}
 		System.out.println("fin");
-		//labyrinth.autoset();
+		labyrinth.autoset();
 	}
 	
 }
