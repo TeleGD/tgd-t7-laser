@@ -1,5 +1,6 @@
 package game4.tower.core;
 
+import game4.world.*;
 import game4.world.Cell;
 
 public abstract class GeneratorRessourceTower extends Tower{
@@ -20,7 +21,7 @@ public abstract class GeneratorRessourceTower extends Tower{
 	}
 	
 	public void action(){
-		World.setRessource(World.getRessource()+this.giveRessource);
+		World4.setRessources(World4.getRessources()+this.giveRessource);
 	}
 	
 	

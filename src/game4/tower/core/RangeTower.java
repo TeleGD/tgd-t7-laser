@@ -8,7 +8,7 @@ public abstract class RangeTower extends Tower {
 	private int rangeMax;
 	
 	
-	public RangeTower(Cell cellule, int cost, String name, int dommage, int rangeMin, int rangeMax) {
+	public RangeTower(Cell cellule, int cost, String name, int rangeMin, int rangeMax) {
 		super(cellule, cost, name);
 		this.rangeMin = rangeMin;
 		this.rangeMax = rangeMax;

@@ -22,13 +22,20 @@ public class Decor {
 	private int red;
 	private int blue;
 	private int green;
-	
+	private Image[] cloudImages=new Image[4];
+	private Image imageStar;
+	private ArrayList<Copter> copters=new ArrayList<>();
 	public Decor() throws SlickException
 	{
 		this.height=0;
 		this.compteur=0;
 		this.listSkyElements=new ArrayList<SkyElements>();
 		this.background =new Image("./Images/TowerBlocks/DecorBase.png");
+
+		for(int i=0;i<cloudImages.length;i++){
+			cloudImages[i]=new Image("./Images/TowerBlocks/SkyElements/cloud"+(i+1)+".png");
+		}
+		imageStar=new Image("./Images/TowerBlocks/SkyElements/star2.png");
 		red=169;
 		green=217;
 		blue=199;
@@ -44,18 +51,17 @@ public class Decor {
 		if(changeHeigth )
 		{
 			
-			if(height<=1000+arg0.getHeight() && (compteur%150==0 || compteur==1)){
+			if(height<=1000+arg0.getHeight() && (compteur%350==0 || compteur==1)){
 				
-				int numberCloud= 2 + r.nextInt(4-2);
+				int numberCloud= r.nextInt(2);
 				for(int i =0;i<=numberCloud;i++){
 					int posX=0 + r.nextInt(arg0.getWidth() - 0);
 					int posY=0;
-					int width=50 + r.nextInt(200 - 50);
-					int heigth=50 + r.nextInt(200 - 50);
-					int numberImageCloud=1 + r.nextInt(5 - 1);
-					Image cloud= new Image("./Images/TowerBlocks/SkyElements/cloud"+numberImageCloud+".png");
-					cloud = cloud.getScaledCopy(width, heigth);
-					this.listSkyElements.add(new Cloud(posX,posY,width,heigth,numberImageCloud,cloud));
+					int width=100 + r.nextInt(400);
+					int heigth=100 + r.nextInt(50);
+					int numberImageCloud=r.nextInt(cloudImages.length);
+					
+					this.listSkyElements.add(new Cloud(posX,posY,width,heigth,numberImageCloud,cloudImages[i].getScaledCopy(width, heigth)));
 				}
 				changeHeigth=false;
 			}
@@ -66,9 +72,7 @@ public class Decor {
 				for(int i =0;i<=numberStar;i++){
 					int posX=0 + r.nextInt(arg0.getWidth() - 0);
 					int posY=0;
-					Image star= new Image("./Images/TowerBlocks/SkyElements/star.png");
-					star = star.getScaledCopy(20, 20);
-					this.listSkyElements.add(new Star(posX,posY,star));
+					this.listSkyElements.add(new Star(posX,posY,imageStar.getScaledCopy(20, 20)));
 				}
 				changeHeigth=false;
 			}
@@ -86,6 +90,15 @@ public class Decor {
 			}
 		}
 		listSkyElements.removeAll(listSkyElementsToRemove);
+		
+		if(compteur %180==0 && r.nextInt(5)==1){
+			copters.add(new Copter());
+			copters.get(copters.size()-1).start();
+		}
+		
+		for(int i=0;i<copters.size();i++){
+			copters.get(i).update(arg0, arg1,arg2);
+		}
 	}
 		
 	
@@ -125,6 +138,10 @@ public class Decor {
 				g.setColor(Color.yellow);
 			}
 			g.drawImage(se.getImage(), se.getPosX(), se.getPosY(), null);
+		}
+		
+		for(int i=0;i<copters.size();i++){
+			copters.get(i).render(arg0, arg1, g);
 		}
 	}
 

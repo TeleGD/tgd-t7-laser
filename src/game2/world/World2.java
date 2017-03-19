@@ -4,6 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -14,11 +15,14 @@ public class World2 extends BasicGameState{
 	private static Player2 player;
 	private static Grid2 grid;
 	private static int score;
+	private Music music;
 	
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
+		music = new Music("Music/T7Laser/EpicSaxGuy.ogg");
+        music.loop();
 	}
 	
 	public void enter(GameContainer arg0, StateBasedGame arg1) throws SlickException{
@@ -47,6 +51,7 @@ public class World2 extends BasicGameState{
 		
 		if(player.isDead()){
 			arg0.exit();
+			music.stop();
 			System.out.println(score);
 		}
 		score++;
