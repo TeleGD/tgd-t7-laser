@@ -98,25 +98,25 @@ public class MazeGenerator
 				//Remove the wall between the current cell and the chosen cell
 				if (random == 0)
 				{
-					System.out.print("up - ");
+					//System.out.print("up - ");
 					this.labyrinth.getCell(i, j).setNorthWall(false);
 					this.labyrinth.getCell(i-1, j).setSouthWall(false);
 				}
 				else if (random == 1)
 				{
-					System.out.print("down - ");
+					//System.out.print("down - ");
 					this.labyrinth.getCell(i, j).setSouthWall(false);
 					this.labyrinth.getCell(i+1, j).setNorthWall(false);
 				}
 				else if (random == 2)
 				{
-					System.out.print("left - ");
+					//System.out.print("left - ");
 					this.labyrinth.getCell(i, j).setWestWall(false);
 					this.labyrinth.getCell(i, j-1).setEastWall(false);
 				}
 				else if (random == 3)
 				{
-					System.out.print("right - ");
+					//System.out.print("right - ");
 					this.labyrinth.getCell(i, j).setEastWall(false);
 					this.labyrinth.getCell(i, j+1).setWestWall(false);
 				}
