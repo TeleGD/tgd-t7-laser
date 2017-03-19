@@ -1,7 +1,5 @@
 package game1.world;
 
-import java.util.ArrayList;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -23,7 +21,7 @@ public class Labyrinth {
 		Cell cell;
 		for(int i=0 ; i<lines;i++ )
 		{
-			for (int j=0;j<lines;j++)
+			for (int j=0;j<rows;j++)
 			{
 				cell = new Cell(i,j);
 				cells[i][j]=cell;

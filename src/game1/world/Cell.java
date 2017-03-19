@@ -11,7 +11,6 @@ public class Cell{
 	
 	private boolean northWall,southWall,westWall,eastWall;
 	private int i,j;
-	private boolean partOfTheMaze;
 	private boolean itsATrap;
 	private boolean isFinalCell;
 	private boolean giveScore;
@@ -26,6 +25,8 @@ public class Cell{
 		this.setEastWall(true);
 		this.setWestWall(true);
 		this.giveScore=false;
+		this.isFinalCell=false;
+		this.itsATrap=false;
 		//TODO LIGNE A CORRIGER PLUS TARD
 		try {
 			this.sprite = new Image("Images/Labyrinth/noWalls.png");
@@ -43,6 +44,8 @@ public class Cell{
 		this.setEastWall(east);
 		this.setWestWall(west);
 		this.giveScore=false;
+		this.isFinalCell=false;
+		this.itsATrap=false;
 		try {
 			autoSetSprite();
 		} catch (SlickException e) {
@@ -53,42 +56,48 @@ public class Cell{
 
 	public void autoSetSprite() throws SlickException {
 	// Automatically selects the right sprite 
+		String path_prefix = "Images/Labyrinth/";
+		
+		if(itsATrap) path_prefix+="Trapped/";
+		else if(giveScore) path_prefix+="Points/";
+		else if(isFinalCell) path_prefix+="Exit/";
+		
 		if(eastWall){
 			if(northWall){
-				if(westWall) sprite = new Image("Images/Labyrinth/deadEnd_up.png");
-				else if(southWall) sprite = new Image("Images/Labyrinth/deadEnd_right.png");
-				else sprite = new Image("Images/Labyrinth/corner_left-down.png");
+				if(westWall) sprite = new Image(path_prefix+"deadEnd_up.png");
+				else if(southWall) sprite = new Image(path_prefix+"deadEnd_right.png");
+				else sprite = new Image(path_prefix+"corner_left-down.png");
 			}
 			else{
 				if(westWall){
-					if(southWall) sprite = new Image("Images/Labyrinth/deadEnd_down.png");
-					else sprite = new Image("Images/Labyrinth/vertical.png");
+					if(southWall) sprite = new Image(path_prefix+"deadEnd_down.png");
+					else sprite = new Image(path_prefix+"vertical.png");
 				}
 				else{
-					if(southWall) sprite = new Image("Images/Labyrinth/corner_left-up.png");
-					else sprite = new Image("Images/Labyrinth/tJunction_right.png");
+					if(southWall) sprite = new Image(path_prefix+"corner_left-up.png");
+					else sprite = new Image(path_prefix+"tJunction_right.png");
 				}
 			}
 		}
 		else{
 			if(northWall){
 				if(westWall){
-					if(southWall) sprite = new Image("Images/Labyrinth/deadEnd_left.png");
-					else sprite = new Image("Images/Labyrinth/corner_right-down.png");
+					if(southWall) sprite = new Image(path_prefix+"deadEnd_left.png");
+					else sprite = new Image(path_prefix+"corner_right-down.png");
 				}
 				else{
-					if(southWall) sprite = new Image("Images/Labyrinth/horizontal.png");
-					else sprite = new Image("Images/Labyrinth/tJunction_up.png");
+					if(southWall) sprite = new Image(path_prefix+"horizontal.png");
+					else sprite = new Image(path_prefix+"tJunction_up.png");
 				}
 			}
 			else{
 				if(westWall){
-					if(southWall) sprite = new Image("Images/Labyrinth/corner_right-up.png");
-					else sprite = new Image("Images/Labyrinth/tJunction_left.png");
+					if(southWall) sprite = new Image(path_prefix+"corner_right-up.png");
+					else sprite = new Image(path_prefix+"tJunction_left.png");
 				}
 				else{
-					if(southWall) sprite = new Image("Images/Labyrinth/tJunction_down.png");
-					else sprite = new Image("Images/Labyrinth/noWalls.png");
+					if(southWall) sprite = new Image(path_prefix+"tJunction_down.png");
+					else sprite = new Image(path_prefix+"noWalls.png");
 				}
 			}
 		}		
@@ -146,15 +155,7 @@ public class Cell{
 	
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException 
 	{
-		arg2.drawImage(sprite,i*64,j*64);
-		if (itsATrap){
-			arg2.setColor(Color.red);
-			arg2.fillRect(i*62, j*62, 60, 60);
-		}
-		if (isFinalCell){
-			arg2.setColor(Color.cyan);
-			arg2.fillRect(i*62, j*62, 60, 60);
-		}
+		arg2.drawImage(sprite,j*64,i*64);
 	}
 
 	
@@ -162,6 +163,7 @@ public class Cell{
 		if (this.equals(World1.getPlayer())){
 			if (giveScore){
 				giveScore=false;
+				autoSetSprite();
 				World1.setScore(World1.getScore()+1);
 			}
 			if (isFinalCell){
@@ -188,14 +190,6 @@ public class Cell{
 
 	public void setJ(int j) {
 		this.j = j;
-	}
-
-	public boolean isPartOfTheMaze() {
-		return partOfTheMaze;
-	}
-
-	public void setPartOfTheMaze(boolean partOfTheMaze) {
-		this.partOfTheMaze = partOfTheMaze;
 	}
 
 	public Image getSprite() {

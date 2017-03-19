@@ -78,17 +78,19 @@ public class MazeGenerator
 		currentCell = labyrinth.getCell(0, 0);
 		unvisitedCell[0][0] = null;
 		boolean stillUnvisitedCell = this.stillUnvisitedCell();
-		
+		int i,j;
 		//While there are unvisited cells
 		while(stillUnvisitedCell)
 		{
-			unvisitedCell[this.currentCell.getI()][this.currentCell.getJ()] = null;
+			i = this.currentCell.getI();
+			j = this.currentCell.getJ();
+			unvisitedCell[i][j] = null;
 			
 			//If the current cell has any neighbours which have not been visited
-			if (this.hasAnUnvisitedNeighbor(this.currentCell.getI(),this.currentCell.getJ()))
+			if (this.hasAnUnvisitedNeighbor(i,j))
 			{
 				//Choose randomly one of the unvisited neighbours
-				int random = this.getChosenCell(this.currentCell.getI(),this.currentCell.getJ());
+				int random = this.getChosenCell(i,j);
 				
 				//Push the current cell to the stack
 				stack.push(this.currentCell);
@@ -96,23 +98,27 @@ public class MazeGenerator
 				//Remove the wall between the current cell and the chosen cell
 				if (random == 0)
 				{
-					this.currentCell.setNorthWall(false);
-					this.choosenCell.setSouthWall(false);
+					//System.out.print("up - ");
+					this.labyrinth.getCell(i, j).setNorthWall(false);
+					this.labyrinth.getCell(i-1, j).setSouthWall(false);
 				}
 				else if (random == 1)
 				{
-					this.currentCell.setSouthWall(false);
-					this.choosenCell.setNorthWall(false);
+					//System.out.print("down - ");
+					this.labyrinth.getCell(i, j).setSouthWall(false);
+					this.labyrinth.getCell(i+1, j).setNorthWall(false);
 				}
 				else if (random == 2)
 				{
-					this.currentCell.setWestWall(false);
-					this.choosenCell.setEastWall(false);
+					//System.out.print("left - ");
+					this.labyrinth.getCell(i, j).setWestWall(false);
+					this.labyrinth.getCell(i, j-1).setEastWall(false);
 				}
 				else if (random == 3)
 				{
-					this.currentCell.setEastWall(false);
-					this.choosenCell.setWestWall(false);
+					//System.out.print("right - ");
+					this.labyrinth.getCell(i, j).setEastWall(false);
+					this.labyrinth.getCell(i, j+1).setWestWall(false);
 				}
 				
 				//Make the chosen cell the current cell and mark it as visited
@@ -129,7 +135,20 @@ public class MazeGenerator
 			stillUnvisitedCell = this.stillUnvisitedCell();
 			
 		}
+		setExit();
 		labyrinth.autoset();
+	}
+	
+	public void setExit()
+	{
+		int i,j;
+		do
+		{
+			i = (int)Math.floor(Math.random()*this.labyrinth.getLines());
+			j = (int)Math.floor(Math.random()*this.labyrinth.getRows());
+			System.out.println("i : "+i+" j :"+j);
+		}while (i==0 && j==0);
+		this.labyrinth.getCell(i, j).setFinalCell(true);
 	}
 	
 }
