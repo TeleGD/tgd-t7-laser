@@ -91,7 +91,7 @@ public class Grid2 {
 		laserTimer--;
 		if(laserTimer <= 0){
 			addLaser();
-			laserTimer = Math.max(50-waveNumber*5, 0)+25;
+			laserTimer = Math.max(50-waveNumber*5, 0)+20;
 		}
 		try{
 			for(Laser l : laserList)

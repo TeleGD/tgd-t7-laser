@@ -72,6 +72,16 @@ public class Player2{
 		}
 	}
 	
+	public boolean isMoveUp() {
+		return moveUp;
+	}
+
+
+	public boolean isMoveDown() {
+		return moveDown;
+	}
+
+
 	public void move(int x,int y){
 		
 		if(World2.getGrid().MovePlayer(x, y, this)){
