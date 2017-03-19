@@ -11,6 +11,7 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import game1.world.World1;
 import general.Main;
 import general.utils.FontUtils;
 
@@ -28,6 +29,7 @@ public class World3 extends BasicGameState{
 	private Image toitImage;
 	private TrueTypeFont fontPerdu;
 	private boolean perdu;
+	public static int score=0;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -67,6 +69,8 @@ public class World3 extends BasicGameState{
 			g.setFont(fontPerdu);
 			g.drawString("PERDU !", Main.longueur/2-200, Main.hauteur/2-100);
 		}
+		g.setFont(fontPerdu);
+		g.drawString("Score :"+score, Main.longueur/2-200, Main.hauteur/2-100);
 		
 		if(currentBlock!=null){
 			currentBlock.render(container, game, g);
@@ -87,6 +91,7 @@ public class World3 extends BasicGameState{
 		if(currentBlock!=null){
 			currentBlock.update(container, game, compt);
 		}
+		System.out.println("Score :"+score);
 	}
 	
 	@Override
@@ -141,4 +146,14 @@ public class World3 extends BasicGameState{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public static int  getScore() {
+		return score;
+	}
+
+	public static void setScore(int score) {
+		World3.score = score;
+	}
+
+	
 }
