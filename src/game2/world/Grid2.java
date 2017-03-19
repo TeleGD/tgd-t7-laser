@@ -91,6 +91,7 @@ public class Grid2 {
 		laserTimer--;
 		if(laserTimer <= 0){
 			addLaser();
+			addMine();
 			laserTimer = Math.max(50-waveNumber*5, 0)+20;
 		}
 		try{
@@ -193,6 +194,15 @@ public class Grid2 {
 	
 	public void removeLaser(Laser l){
 		laserList.remove(l);
+	}
+
+	public void addMine(){
+		Random r1 = new Random();
+		Random r2 = new Random();
+		int row = r1.nextInt(this.rows);
+		int column = r2.nextInt(this.columns);
+		this.grid[row][column].setDeadly(true);
+		this.grid[row][column].setImage(this.grid[row][column].mine);
 	}
 
 }
