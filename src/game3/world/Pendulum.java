@@ -15,10 +15,48 @@ import general.Main;
 public class Pendulum extends BasicGameState{
 	private int x;
 	private int y;
-	private int speed;
+	private float speed;
 	private float theta;
 	private float length;
+	
+	public float getLength() {
+		return length;
+	}
+
+
+
+	public void setLength(float length) {
+		this.length = length;
+		loadImage();
+	}
+
+
+
+
 	private float initialAngle;
+	public float getInitialAngle() {
+		return initialAngle;
+	}
+
+
+
+	public void setInitialAngle(float initialAngle) {
+		this.initialAngle = initialAngle;
+	}
+	
+	public float getSpeed() {
+		return speed;
+	}
+
+
+
+	public void setSpeed(float f) {
+		this.speed = f;
+	}
+
+
+
+
 	private double omega;
 	private Block block;
 	private Image corde;
@@ -30,7 +68,11 @@ public class Pendulum extends BasicGameState{
 		length=1800;
 		initialAngle=(float) (-Math.PI/12);
 		omega=World3.GRAVITY/length;
+		loadImage();
 		addBlock();
+	}
+	
+	public void loadImage(){
 		try {
 			corde=new Image("Images/TowerBlocks/corde.png").getScaledCopy(10, (int) length);
 		} catch (SlickException e) {
@@ -38,7 +80,6 @@ public class Pendulum extends BasicGameState{
 			e.printStackTrace();
 		}
 	}
-	
 	
 
 	private void addBlock() {
@@ -120,6 +161,14 @@ public class Pendulum extends BasicGameState{
 	}
 	public float getY() {
 		return this.y;
+	}
+	
+	public void setY(int y) {
+		this.y=y;
+	}
+	
+	public void setX(int x) {
+		this.x=x;
 	}
 
 

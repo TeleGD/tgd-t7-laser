@@ -35,7 +35,9 @@ public class Decor {
 		for(int i=0;i<cloudImages.length;i++){
 			cloudImages[i]=new Image("./Images/TowerBlocks/SkyElements/cloud"+(i+1)+".png");
 		}
-		imageStar=new Image("./Images/TowerBlocks/SkyElements/star.png");
+
+		imageStar=new Image("Images/TowerBlocks/SkyElements/star2.png");
+
 		red=169;
 		green=217;
 		blue=199;
@@ -67,12 +69,12 @@ public class Decor {
 			}
 			else if(height>=1000+arg0.getHeight() && compteur%30==0)
 			{
-				
-				int numberStar= 5 + r.nextInt(15-5);
+				int numberStar= r.nextInt(Math.max(1, Math.min((height-1000)/10000,15)));
 				for(int i =0;i<=numberStar;i++){
 					int posX=0 + r.nextInt(arg0.getWidth() - 0);
 					int posY=0;
-					this.listSkyElements.add(new Star(posX,posY,imageStar.getScaledCopy(20, 20)));
+					int hasard=r.nextInt(15)+5;
+					this.listSkyElements.add(new Star(posX,posY,imageStar.getScaledCopy(hasard,hasard)));
 				}
 				changeHeigth=false;
 			}

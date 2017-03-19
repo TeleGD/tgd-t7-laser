@@ -12,24 +12,27 @@ import game4.tower.core.*;
 
 public class World4 extends BasicGameState{
 
-	public static int ID=1;
+	public static int ID=4;
 	private static ArrayList<Ennemy> ennemy;
 	private static ArrayList<Tower> tower;
 	private static int score;
 	private static int ressources;
+	private static Map map;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
-		ennemy = new ArrayList<Ennemy>();
-		tower = new ArrayList<Tower>();
+		
 		
 	}
 	
 	@Override
 	public void enter(GameContainer arg0, StateBasedGame arg1){
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
+		ennemy = new ArrayList<Ennemy>();
+		tower = new ArrayList<Tower>();
 		ennemy.add(new Ennemy());
+		map = new Map();
 	}
 	
 
@@ -42,6 +45,7 @@ public class World4 extends BasicGameState{
 		arg2.drawString("Bonjour 1", 500, 400);
 		player.render(arg0, arg1, arg2);
 		*/
+		map.render(arg0, arg1, arg2);
 
 	}
 
