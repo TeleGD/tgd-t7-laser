@@ -29,11 +29,11 @@ public class Grid2 {
 	
 
 	public Grid2(int r, int c) throws SlickException{
-		maxRows = r;
-		maxCols = c;
-		rows = 4;
-		columns = 4;
-		grid = new Cell[r][c];
+		maxRows = 20;
+		maxCols = 20;
+		rows = r;
+		columns = c;
+		grid = new Cell[maxRows][maxRows];
 		for(int i = 0; i<maxRows; i++)//init row
 			for(int j=0;j<maxCols;j++) //init cologne
 				grid[i][j] = new Cell(i,j,false,false);
@@ -60,18 +60,28 @@ public class Grid2 {
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		for(int i = 0; i<this.rows; i++)//init row
 			for(int j=0;j<this.columns;j++) //init cologne
-				grid[i][j].getImage().draw(0+i*100,0+j*100,100,100);
+				grid[i][j].getImage().draw(250+i*100*World2.getRenderScale(),0+j*100*World2.getRenderScale(),100*World2.getRenderScale(),100*World2.getRenderScale());
 		
 		for(Laser l : laserList)
 			l.render(arg0, arg1, arg2);
 			
 	}
 
+	public int getWaveNumber() {
+		return waveNumber;
+	}
+
+
+	public void setWaveNumber(int waveNumber) {
+		this.waveNumber = waveNumber;
+	}
+
+
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		laserTimer--;
 		if(laserTimer <= 0){
 			addLaser();
-			laserTimer = (75-waveNumber*15)+10;
+			laserTimer = Math.max(80-waveNumber*10, 0)+10;
 		}
 		try{
 			for(Laser l : laserList)
@@ -94,7 +104,10 @@ public class Grid2 {
 			if(columns+1 < maxCols)
 				columns++;
 			waveNumber++;
-			waveTimer = 350;
+			waveTimer = 100;
+			
+			if(rows > 7)
+				World2.setRenderScale((float)720.0/(100*rows));
 		}
 	}
 	

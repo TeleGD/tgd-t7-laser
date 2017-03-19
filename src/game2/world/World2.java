@@ -15,6 +15,8 @@ public class World2 extends BasicGameState{
 	private static Grid2 grid;
 	private static int score;
 	
+	private static float renderScale = (float)1;
+	
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
@@ -23,7 +25,7 @@ public class World2 extends BasicGameState{
 	
 	public void enter(GameContainer arg0, StateBasedGame arg1) throws SlickException{
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
-		grid =  new Grid2(8,8);
+		grid =  new Grid2(4,4);
 		player = new Player2();
 		score = 0;
 	}
@@ -38,7 +40,8 @@ public class World2 extends BasicGameState{
 		player.render(arg0,arg1,arg2);
 		
 		arg2.setColor(Color.black);
-		arg2.drawString(""+score, 1000, 600);
+		arg2.drawString("Score : "+score, 0, 0);
+		arg2.drawString("Vague : "+grid.getWaveNumber(), 0, 50);
 	}
 
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
@@ -75,5 +78,13 @@ public class World2 extends BasicGameState{
 
 	public static void reset() {
 		// TODO Auto-generated method stub
+	}
+	
+	public static float  getRenderScale(){
+		return renderScale;
+	}
+	
+	public static void setRenderScale(float d){
+		 renderScale = d;
 	}
 }
