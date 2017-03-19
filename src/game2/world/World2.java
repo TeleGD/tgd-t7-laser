@@ -8,6 +8,11 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
+
+import game3.world.MainMenu3;
+import menus.MainMenu;
 
 public class World2 extends BasicGameState{
 
@@ -76,6 +81,7 @@ public class World2 extends BasicGameState{
 			cpt++;
 			if( player.isPressEnter()){
 				start = true;
+				cpt = 10;
 			}
 		}
 		if (start){
@@ -83,11 +89,13 @@ public class World2 extends BasicGameState{
 				player.update(arg0,arg1,arg2);
 				grid.update(arg0, arg1, arg2);
 				score++;
+				if (player.isDead()) {
+					music.stop();
+					cat.play();
+				}
 			}
 			
 			if(player.isDead()){
-				music.stop();
-				cat.play();
 				if ((player.isMoveUp() && selec == 0) || (player.isMoveDown() && selec == 0)){
 					selec = 1;
 					player.setMoveUp(false);
@@ -99,7 +107,8 @@ public class World2 extends BasicGameState{
 				}
 				if (player.isPressEnter()){
 					if (selec == 1){
-						arg0.exit();
+						arg1.enterState(MainMenu.ID, new FadeOutTransition(),
+								new FadeInTransition());
 					} else {
 						music.loop();
 						grid =  new Grid2(4,4);
