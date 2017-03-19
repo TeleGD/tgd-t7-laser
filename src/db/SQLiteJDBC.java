@@ -85,5 +85,30 @@ public class SQLiteJDBC {
 			System.exit(0);
 		}
 	}
+	
+	public static ArrayList<Person> searchHS(int i){
+		ArrayList<Person> result = new ArrayList<Person>();
+		Connection c = null;
+		Statement stmt = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			c = DriverManager.getConnection("jdbc:sqlite:datas.db");
+			stmt=c.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM SCORES WHERE Game="+i+" ORDER BY Score LIMIT 10");
+			while (rs.next()){
+				Person p=new Person(rs.getString(1));
+				p.setScore2(rs.getInt(3));
+				result.add(p);
+			}
+			rs.close();
+			stmt.close();
+			c.close();
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			System.exit(0);
+		}
+		return result;
+		
+	}
 
 }
