@@ -13,6 +13,8 @@ public class Cell {
 	private int y;
 	private Boolean contains;
 	private Boolean deadly;
+	private boolean hasEnnemy;
+	
 	private Image image;
 	
 	
@@ -23,6 +25,7 @@ public class Cell {
 		this.contains=c;
 		this.deadly=d;
 		this.image= new Image("Images/T7Laser/Cell.png");
+		this.hasEnnemy = false;
 	}
 	
 	
@@ -65,6 +68,16 @@ public class Cell {
 		if(deadly && contains)
 			World2.getPlayer().setLives(0);
 		
+	}
+
+
+	public boolean isHasEnnemy() {
+		return hasEnnemy;
+	}
+
+
+	public void setHasEnnemy(boolean hasEnnemy) {
+		this.hasEnnemy = hasEnnemy;
 	}
 	
 }
