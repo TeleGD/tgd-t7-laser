@@ -13,13 +13,13 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import game1.world.World1;
 import general.Main;
 import general.utils.FontUtils;
 
 public class World3 extends BasicGameState{
 	public final static float GRAVITY= 0.3f;
 	public final static int ID=3;
+	private static int score = 0;
 	
 	public static Pendulum pendulum;
 	public static long timeInitial;
@@ -31,9 +31,7 @@ public class World3 extends BasicGameState{
 	private Image toitImage;
 	private TrueTypeFont fontPerdu;
 	private boolean perdu;
-	public static int score=0;
 	private Music soundLose,soundMusicBackground;
-
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -58,7 +56,7 @@ public class World3 extends BasicGameState{
 		soundLose=new Music("son/gameOver.wav");
 		
 		soundMusicBackground=new Music("son/what_is_love.wav");
-		soundMusicBackground.play(1, 0.5f);
+		soundMusicBackground.play(1, 0.3f);
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 	}
 	
@@ -67,22 +65,23 @@ public class World3 extends BasicGameState{
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		//Affichage
 		
-		decor.render(container, game, g);
-		pendulum.render(container, game,g);
+		  
+        decor.render(container, game, g);
+        pendulum.render(container, game,g);
 
-		if(!perdu){
-			tower.render(container, game, g);
+        if(!perdu){
+                tower.render(container, game, g);
 
-		}else{
-			g.setFont(fontPerdu);
-			g.drawString("PERDU !", Main.longueur/2-200, Main.hauteur/2-100);
-		}
-		g.setFont(fontPerdu);
-		g.drawString("Score :"+score, Main.longueur/2-200, Main.hauteur/2-100);
-		
-		if(currentBlock!=null){
-			currentBlock.render(container, game, g);
-		}
+        }else{
+                g.setFont(fontPerdu);
+                g.drawString("PERDU !", Main.longueur/2-200, Main.hauteur/2-100);
+        }
+        g.setFont(fontPerdu);
+        g.drawString("Score :"+score, Main.longueur/2-200, Main.hauteur/2-100);
+        
+        if(currentBlock!=null){
+                currentBlock.render(container, game, g);
+        }
 	}
 	
 
@@ -103,9 +102,9 @@ public class World3 extends BasicGameState{
 				currentBlock.setIsDroping(true);
 				currentBlock.setRealeased(true);
 				soundLose.play();
+				perdu=true;
 			}
 		}
-		System.out.println("Score :"+score);
 	}
 	
 	@Override
