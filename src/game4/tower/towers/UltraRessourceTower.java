@@ -6,7 +6,7 @@ import game4.world.Cell;
 public class UltraRessourceTower extends GeneratorRessourceTower{
 
 	public UltraRessourceTower(Cell cellule) {
-		super(cellule,45,"BasicRessourceTower",3);
+		super(cellule,45,"UltraRessourceTower",3);
 	}
 
 }
