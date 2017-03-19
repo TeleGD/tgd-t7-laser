@@ -44,7 +44,6 @@ public class Tower extends Rectangle{
 		if(cpt==blocks.get(blocks.size()-1).getHeight()){
 			needDefile=false;
 		}
-		
 	}
 	
 	public void addBlock(Block initialBlock) {
@@ -68,7 +67,7 @@ public class Tower extends Rectangle{
 			World3.notifyStackedBlock();
 			World3.getPendulum().notifyStackedBlock();
 			cpt=0;
-			this.needDefile =true;
+			this.needDefile=true;
 	}
 
 	
