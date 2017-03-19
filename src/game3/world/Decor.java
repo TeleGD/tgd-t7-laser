@@ -29,7 +29,6 @@ public class Decor {
 	
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException 
 	{
-		this.height+=1;
 		this.compteur+=1;
 		if(this.height>=arg0.getHeight()){
 			this.endTown=true;
