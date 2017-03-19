@@ -71,7 +71,7 @@ public class Grid2 {
 		laserTimer--;
 		if(laserTimer <= 0){
 			addLaser();
-			laserTimer = 100-waveNumber*20;
+			laserTimer = (75-waveNumber*15)+10;
 		}
 		try{
 			for(Laser l : laserList)
@@ -88,15 +88,13 @@ public class Grid2 {
 		
 		waveTimer--;
 		if(waveTimer == 0){
-			for(Laser l : laserList)
-				l.setDeadlyCells(false);
-			laserList = new LinkedList<Laser>();
+			
 			if(rows+1 < maxRows)
 				rows++;
 			if(columns+1 < maxCols)
 				columns++;
 			waveNumber++;
-			waveTimer = 500;
+			waveTimer = 350;
 		}
 	}
 	

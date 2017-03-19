@@ -13,6 +13,7 @@ public class World2 extends BasicGameState{
 	public static int ID=2;
 	private static Player2 player;
 	private static Grid2 grid;
+	private static int score;
 	
 	
 	@Override
@@ -24,16 +25,20 @@ public class World2 extends BasicGameState{
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 		grid =  new Grid2(8,8);
 		player = new Player2();
+		score = 0;
 	}
 	
 
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		//Affichage
 		arg2.setColor(Color.white);
+		
 		arg2.fillRect(0,0,1280,720);
 		grid.render(arg0,arg1,arg2);
 		player.render(arg0,arg1,arg2);
-
+		
+		arg2.setColor(Color.black);
+		arg2.drawString(""+score, 1000, 600);
 	}
 
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
@@ -42,8 +47,9 @@ public class World2 extends BasicGameState{
 		
 		if(player.isDead()){
 			arg0.exit();
+			System.out.println(score);
 		}
-
+		score++;
 	}
 	
 	public void keyReleased(int key, char c) {
