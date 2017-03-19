@@ -88,12 +88,6 @@ public class Grid2 {
 		if(waveNumber % 5 == 2 && waveTimer == 1)
 			addEnnemy();
 		
-		laserTimer--;
-		if(laserTimer <= 0){
-			addLaser();
-			addMine();
-			laserTimer = Math.max(50-waveNumber*5, 0)+20;
-		}
 		try{
 			for(Laser l : laserList)
 				l.update(arg0, arg1, arg2);
@@ -105,10 +99,21 @@ public class Grid2 {
 			//System.out.println(e.getMessage());
 		}
 		
-		
 		for(int i = 0; i<this.rows; i++)//init row
 			for(int j=0;j<this.columns;j++) //init cologne
 				grid[i][j].update(arg0, arg1, arg2);
+		
+		laserTimer--;
+		if(laserTimer <= 0){
+			
+			addLaser();
+			addMine();
+			laserTimer = Math.max(50-waveNumber*5, 0)+20;
+		}
+	
+		
+		
+		
 		
 		waveTimer--;
 		if(waveTimer == 0){

@@ -68,7 +68,7 @@ public class Block extends Rectangle {
 		System.out.println(this.y  +" / "+ this.accelY + " / " + this.speedY );
 		if(isDroping){
 			if( World3.getTower().intersects(this)){
-				World3.getTower().isSuccess(this);
+				World3.getTower().blockCollidedWithTower(this);
 				soundPop.play();
 			}
 		}
@@ -109,13 +109,6 @@ public class Block extends Rectangle {
 	
 	public void setAccelY(float accelY) {
 		this.accelY=accelY;
-	}
-
-	public Block cloneBlock() {
-		Block block=new Block(x,y,width,height);
-		block.setSpeedX(speedX);
-		block.setSpeedY(speedY);
-		return block;
 	}
 
 	public boolean isDroping() {
