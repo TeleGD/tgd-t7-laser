@@ -21,13 +21,15 @@ public class World4 extends BasicGameState{
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
+		ennemy = new ArrayList<Ennemy>();
+		tower = new ArrayList<Tower>();
 		
 	}
 	
 	@Override
 	public void enter(GameContainer arg0, StateBasedGame arg1){
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
-		
+		ennemy.add(new Ennemy());
 	}
 	
 
@@ -55,27 +57,10 @@ public class World4 extends BasicGameState{
 
 	public static void reset() {
 		// TODO Auto-generated method stub
-		
+		ennemy.clear();
+		tower.clear();
 	}
 	
-	/*
-	public static Labyrinth getLabyrinth(){
-		return labyrinth;
-	}
-	
-	public void keyPressed(int key, char c) {
-		player.keyPressed(key, c);
-	}
-	
-	public void keyReleased(int key, char c) {
-		player.keyReleased(key, c);
-	}
-
-	public static Player getPlayer(){
-		return player;
-	}
-	*/
-
 	public static int  getScore() {
 		return score;
 	}
