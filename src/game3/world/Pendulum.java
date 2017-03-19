@@ -18,7 +18,34 @@ public class Pendulum extends BasicGameState{
 	private int speed;
 	private float theta;
 	private float length;
+	
+	public float getLength() {
+		return length;
+	}
+
+
+
+	public void setLength(float length) {
+		this.length = length;
+	}
+
+
+
+
 	private float initialAngle;
+	public float getInitialAngle() {
+		return initialAngle;
+	}
+
+
+
+	public void setInitialAngle(float initialAngle) {
+		this.initialAngle = initialAngle;
+	}
+
+
+
+
 	private double omega;
 	private Block block;
 	private Image corde;
