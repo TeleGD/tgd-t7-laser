@@ -20,7 +20,6 @@ public class Tower extends Rectangle{
 	private int cpt;
 	private int mult;
 	private boolean comb=false;
-	private TrueTypeFont fontPerdu;
 	public static int difficulty;
 	
 	public Tower(float x, float y, Block initialBlock) {
@@ -84,10 +83,9 @@ public class Tower extends Rectangle{
 		block.setSpeedX(0);
 		block.setSpeedY(0);
 		block.setAccelY(0);
+		comb=combo(getTopX(), block.getX());
 		block.setY(getTopY()-getTop().getHeight());
 		block.setIsDroping(false);
-		
-		comb=combo(getTopX(), block.getX());
 		blocks.add(block);
 		
 		if(comb){
@@ -95,8 +93,12 @@ public class Tower extends Rectangle{
 		}else{
 			mult=1;
 		}
-		
-		World3.setScore(World3.getScore()+mult*100);
+		if(World3.difficulty==0){
+			
+			World3.setScore(World3.getScore()+mult*100);
+		}else{
+			World3.setScore(World3.getScore()+mult*2*World3.difficulty*100);
+		}
 		World3.getPendulum().notifyStackedBlock();
 		
 		cpt=0;

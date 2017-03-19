@@ -42,7 +42,6 @@ public class MainMenu extends Menu{
 					new FadeInTransition());
 			break;
 		case 2:
-			World3.reset();
 			game.enterState(MainMenu3.ID, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
