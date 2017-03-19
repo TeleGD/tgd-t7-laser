@@ -16,6 +16,7 @@ public class World2 extends BasicGameState{
 	private static Grid2 grid;
 	private static int score;
 	private Music music;
+	private Music cat;
 	private int selec;
 	private int cpt=-30;
 	private boolean start = false;
@@ -28,6 +29,7 @@ public class World2 extends BasicGameState{
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
 		music = new Music("Music/T7Laser/EpicSaxGuy.ogg");
+		cat = new Music("Music/T7Laser/Cat.ogg");
 	}
 	
 	public void enter(GameContainer arg0, StateBasedGame arg1) throws SlickException{
@@ -85,6 +87,7 @@ public class World2 extends BasicGameState{
 			
 			if(player.isDead()){
 				music.stop();
+				cat.play();
 				if ((player.isMoveUp() && selec == 0) || (player.isMoveDown() && selec == 0)){
 					selec = 1;
 					player.setMoveUp(false);
