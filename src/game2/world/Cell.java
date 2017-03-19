@@ -27,6 +27,7 @@ public class Cell {
 		this.y=y;
 		this.contains=c;
 		this.deadly=d;
+		this.hasBonus=false;
 		this.normal= new Image("Images/T7Laser/Cell.png");
 		this.mine=new Image("Images/T7Laser/Mine.png");
 		this.bonus=new Image("Images/T7Laser/Bonus.png");
@@ -94,7 +95,9 @@ public class Cell {
 			World2.getPlayer().setLives(0);
 		
 		if(hasBonus && contains){
-			World2.setScore(World2.getScore()+777);
+			World2.setScore(World2.getScore()+77);
+			World2.getGrid().getCell(x, y).setHasBonus(false);
+			World2.getGrid().getCell(x,y).setImage(normal);
 		}
 			
 	}
