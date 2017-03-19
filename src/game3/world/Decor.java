@@ -37,14 +37,14 @@ public class Decor {
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException 
 	{
 		this.compteur+=1;
-		if(this.height>=arg0.getHeight()+500){
+		if(this.height>=arg0.getHeight()+2000){
 			this.endTown=true;
 		}
 		Random r = new Random();
 		if(changeHeigth )
 		{
 			
-			if(height<=1000+arg0.getHeight() && (compteur%150==0 || compteur==1)){
+			if(height<=2000+arg0.getHeight() && (compteur%150==0 || compteur==1)){
 				
 				int numberCloud= 2 + r.nextInt(4-2);
 				for(int i =0;i<=numberCloud;i++){
@@ -59,7 +59,7 @@ public class Decor {
 				}
 				changeHeigth=false;
 			}
-			else if(height>=1000+arg0.getHeight() && compteur%30==0)
+			else if(height>=2000+arg0.getHeight() && compteur%30==0)
 			{
 				
 				int numberStar= 5 + r.nextInt(15-5);
