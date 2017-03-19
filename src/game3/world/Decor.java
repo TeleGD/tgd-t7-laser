@@ -24,7 +24,7 @@ public class Decor {
 	private int green;
 	private Image[] cloudImages=new Image[4];
 	private Image imageStar;
-	private ArrayList<Copter> copters=new ArrayList<>();
+	private static ArrayList<Copter> copters=new ArrayList<>();
 	public Decor() throws SlickException
 	{
 		this.height=0;
@@ -152,6 +152,11 @@ public class Decor {
 	public void setHeight(int height) {
 		this.height = height;
 		this.changeHeigth=true;
+	}
+
+	public static ArrayList<Copter> getCopters() {
+		// TODO Auto-generated method stub
+		return copters;
 	}
 	
 	
