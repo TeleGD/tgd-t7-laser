@@ -153,7 +153,7 @@ public class Cell{
 		}
 		if (isFinalCell){
 			arg2.setColor(Color.cyan);
-			arg2.fillRect(j*62, i*62, 60, 60);
+			arg2.fillRect(j*64, i*64, 60, 60);
 		}
 	}
 
