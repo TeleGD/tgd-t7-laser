@@ -25,10 +25,10 @@ public class Pendulum extends BasicGameState{
 	
 	public Pendulum(){
 		x=Main.longueur/2;
-		y=-200;
-		speed=2000;
-		length=600;
-		initialAngle=(float) (-Math.PI/4);
+		y=-1400;
+		speed=16000;
+		length=1800;
+		initialAngle=(float) (-Math.PI/12);
 		omega=World3.GRAVITY/length;
 		addBlock();
 		try {
