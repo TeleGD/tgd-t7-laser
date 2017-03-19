@@ -2,20 +2,19 @@ package game4.world;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.Color;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import game4.tower.core.*;
 
-import game1.characters.Player;
-
-public class World extends BasicGameState{
+public class World4 extends BasicGameState{
 
 	public static int ID=1;
 	private static ArrayList<Ennemy> ennemy;
-	//private ArrayList<Tower> tower;
+	private static ArrayList<Tower> tower;
 	private static int score;
 	private static int ressources;
 	
@@ -82,10 +81,10 @@ public class World extends BasicGameState{
 	}
 
 	public static void setScore(int score) {
-		World.score = score;
+		World4.score = score;
 	}
 	
-	public void setRessources(int amount){
+	public static void setRessources(int amount){
 		ressources = amount;
 	}
 	
