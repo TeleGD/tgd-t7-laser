@@ -14,20 +14,34 @@ public class Grid2 {
 	private int columns;
 	public Cell grid[][];
 	
+	private int maxRows; //limite horizontale
+	private int maxCols;
+	
 	public List<Laser> laserList;
 	private int laserTimer;
 	
+	private int waveTimer;
+	private int waveNumber;
+	
+
+	
+	
+	
 
 	public Grid2(int r, int c) throws SlickException{
-		rows = r;
-		columns = c;
+		maxRows = r;
+		maxCols = c;
+		rows = 4;
+		columns = 4;
 		grid = new Cell[r][c];
-		for(int i = 0; i<r; i++)//init row
-			for(int j=0;j<c;j++) //init cologne
+		for(int i = 0; i<maxRows; i++)//init row
+			for(int j=0;j<maxCols;j++) //init cologne
 				grid[i][j] = new Cell(i,j,false,false);
 		
 		laserList = new LinkedList<Laser>();
 		laserTimer = 1;
+		waveTimer = 200;
+		waveNumber = 0;
 	}
 
 	
@@ -55,9 +69,9 @@ public class Grid2 {
 
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		laserTimer--;
-		if(laserTimer == 0){
+		if(laserTimer <= 0){
 			addLaser();
-			laserTimer = 100;
+			laserTimer = (75-waveNumber*15)+10;
 		}
 		try{
 			for(Laser l : laserList)
@@ -71,14 +85,33 @@ public class Grid2 {
 		for(int i = 0; i<this.rows; i++)//init row
 			for(int j=0;j<this.columns;j++) //init cologne
 				grid[i][j].update(arg0, arg1, arg2);
+		
+		waveTimer--;
+		if(waveTimer == 0){
+			
+			if(rows+1 < maxRows)
+				rows++;
+			if(columns+1 < maxCols)
+				columns++;
+			waveNumber++;
+			waveTimer = 350;
+		}
 	}
 	
 	public int getRows(){
-		return grid.length;
+		return rows;
 	}
 	
 	public int getColumns(){
-		return grid[0].length;
+		return columns;
+	}
+	
+	public int getMaxRows(){
+		return maxRows;
+	}
+	
+	public int getMaxColumns(){
+		return maxCols;
 	}
 	
 	//x y new position

@@ -83,6 +83,7 @@ public class Laser {
 			//vertical
 			g.fillRect((float)pos*100+25, (float)0, (float)50, (float)100*World2.getGrid().getColumns());
 		}
+		
 	}
 
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {

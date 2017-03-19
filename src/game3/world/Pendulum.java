@@ -33,6 +33,8 @@ public class Pendulum extends BasicGameState{
 		addBlock();
 		try {
 			corde=new Image("Images/TowerBlocks/corde.png").getScaledCopy(10, (int) length);
+			corde.rotate(initialAngle);
+
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -64,12 +66,13 @@ public class Pendulum extends BasicGameState{
 		g.setColor(Color.white);
 		
 		if(!block.isRealeased()){
-			block.render(container, game, g);
-			corde.rotate(theta);
+			corde.setRotation((float)(-theta*180.0/Math.PI));
 			corde.setCenterOfRotation(0, 0);
-			g.drawImage(corde,x,y);
-			g.drawLine((float)(Main.longueur/2), y,block.getCenterX(), block.getCenterY());
+			g.drawImage(corde,(float)(Main.longueur/2),y);
 		}
+		
+		block.render(container, game, g);
+
 	}
 
 	@Override
