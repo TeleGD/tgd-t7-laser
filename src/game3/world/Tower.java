@@ -19,6 +19,9 @@ public class Tower extends Rectangle{
 	private int cpt;
 	private int mult;
 	private boolean comb=false;
+	private int accelX;
+	private double alpha=1;
+	private double amplitude=0;
 	public static int difficulty;
 	
 	public Tower(float x, float y, Block initialBlock) {
@@ -29,6 +32,7 @@ public class Tower extends Rectangle{
 	
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
 		// Rendering
+		g.translate((float) (amplitude*Math.cos(alpha*World3.getTimeInMillis()/1000)), 0);
 		for(int i = 0; i < blocks.size(); i++){
 			blocks.get(i).render(arg0, arg1, g);
 		}
@@ -49,6 +53,8 @@ public class Tower extends Rectangle{
 		if(cpt==blocks.get(blocks.size()-1).getHeight()){
 			needDefile=false;
 		}
+
+		System.out.println("amplitude="+amplitude);
 	}
 	
 	public void addBlock(Block initialBlock) {
@@ -74,6 +80,7 @@ public class Tower extends Rectangle{
 	}
 
 	public boolean intersects(Shape shape){
+		
 		System.out.println(getTop().intersects(shape));
 		return getTop().intersects(shape);
 	}
@@ -85,7 +92,6 @@ public class Tower extends Rectangle{
 		comb=combo(getTopX(), block.getX());
 		block.setY(getTopY()-getTop().getHeight());
 		block.setIsDroping(false);
-		blocks.add(block);
 		
 		if(comb){
 			mult+=1;
@@ -101,6 +107,12 @@ public class Tower extends Rectangle{
 		World3.getPendulum().notifyStackedBlock();
 		
 		cpt=0;
-		this.needDefile=true;		
+		this.needDefile=true;	
+		System.out.println("top="+getTop().getX());
+		System.out.println("block="+block.getX());
+
+		amplitude+=Math.abs((getTop().getX()-block.getX())/50);
+		blocks.add(block);
+
 	}
 }
