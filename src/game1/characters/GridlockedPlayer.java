@@ -89,23 +89,18 @@ public class GridlockedPlayer {
 	private void move() {
 		if(((up && !down) || (up && down && !updown)) )
 		{
-			if(!this.cell.isNorthWall() && y > 64){
-				y = y - 64;
-			}
-			
+			if(!this.cell.isNorthWall() && y > cellSize) y = y - cellSize;
 		}
 		if(((down && !up) || (up && down && updown))){
-				if(!this.cell.isSouthWall() && y < game1.world.World1.getLabyrinth().getLines()*64 - 64) y = y + 64;
+				if(!this.cell.isSouthWall() && y < game1.world.World1.getLabyrinth().getLines()*cellSize - cellSize) y = y + cellSize;
 		}
 		if(((left && !right)|| (left && right && !rightLeft)))
 		{
-				if(!this.cell.isWestWall() && x > 64) x = x - 64;
-			
+				if(!this.cell.isWestWall() && x > cellSize) x = x - cellSize;
 		}
 		if(((!left && right)|| (left && right && rightLeft)))
 		{
-
-				if(!this.cell.isEastWall() && x < game1.world.World1.getLabyrinth().getRows()*64 - 64 ) x = x + 64;
+				if(!this.cell.isEastWall() && x < game1.world.World1.getLabyrinth().getRows()*cellSize - cellSize ) x = x + cellSize;
 		}
 	}
 	
