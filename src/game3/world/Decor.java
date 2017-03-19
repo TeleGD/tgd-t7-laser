@@ -67,8 +67,7 @@ public class Decor {
 			}
 			else if(height>=1000+arg0.getHeight() && compteur%30==0)
 			{
-				
-				int numberStar= Math.min((height-10)/1000,15);
+				int numberStar= r.nextInt(Math.max(1, Math.min((height-1000)/10000,15)));
 				for(int i =0;i<=numberStar;i++){
 					int posX=0 + r.nextInt(arg0.getWidth() - 0);
 					int posY=0;
