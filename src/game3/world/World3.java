@@ -25,7 +25,6 @@ public class World3 extends BasicGameState{
 	public static Decor decor;
 	public static int difficulty;
 	public static String colorImage;
-
 	private Image toitImage;
 	private TrueTypeFont fontPerdu;
 	private boolean perdu;
@@ -132,5 +131,14 @@ public class World3 extends BasicGameState{
 	public static Pendulum getPendulum() {
 		// TODO Auto-generated method stub
 		return pendulum;
+	}
+
+	public static Decor getDecor() {
+		return decor;
+	}
+
+	public static void notifyStackedBlock() {
+		// TODO Auto-generated method stub
+		
 	}
 }
