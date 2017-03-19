@@ -31,11 +31,9 @@ public class World3 extends BasicGameState{
 	private Image toitImage;
 	private TrueTypeFont fontPerdu;
 	private boolean perdu;
-<<<<<<< HEAD
 	public static int score=0;
-=======
 	private Music soundLose,soundMusicBackground;
->>>>>>> f100bc01c946d149c9ff21cc8b2e95fd7000b58d
+
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
