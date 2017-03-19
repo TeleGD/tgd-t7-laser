@@ -98,13 +98,13 @@ public class MazeGenerator
 				//Remove the wall between the current cell and the chosen cell
 				if (random == 0)
 				{
-					this.currentCell.setEastWall(false);
-					this.choosenCell.setWestWall(false);
+					this.currentCell.setNorthWall(false);
+					this.choosenCell.setSouthWall(false);
 				}
 				else if (random == 1)
 				{
-					this.currentCell.setNorthWall(false);
-					this.choosenCell.setSouthWall(false);
+					this.currentCell.setSouthWall(false);
+					this.choosenCell.setNorthWall(false);
 				}
 				else if (random == 2)
 				{
@@ -113,8 +113,8 @@ public class MazeGenerator
 				}
 				else if (random == 3)
 				{
-					this.currentCell.setSouthWall(false);
-					this.choosenCell.setNorthWall(false);
+					this.currentCell.setEastWall(false);
+					this.choosenCell.setWestWall(false);
 				}
 				
 				//Make the chosen cell the current cell and mark it as visited
