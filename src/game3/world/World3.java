@@ -109,4 +109,13 @@ public class World3 extends BasicGameState{
 		// TODO Auto-generated method stub
 		return pendulum;
 	}
+
+	public static void notifyStackedBlock() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static Decor getDecor() {
+		return decor; 		
+	}
 }
