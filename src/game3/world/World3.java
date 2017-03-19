@@ -25,11 +25,11 @@ public class World3 extends BasicGameState{
 	public static Decor decor;
 	public static int difficulty;
 	public static String colorImage;
-	private boolean perdu=false;
 
 	private Image toitImage;
 	private TrueTypeFont fontPerdu;
-
+	private boolean perdu;
+	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 	
@@ -50,7 +50,6 @@ public class World3 extends BasicGameState{
 		timeInitial=System.currentTimeMillis(); // on reinitialise le temps
 		tower=new Tower(Main.longueur/2,Main.hauteur,new Block(pendulum.getX() - 50, Main.hauteur-101,100,100,new Image("Images/TowerBlocks/Blocs/"+World3.colorImage+" Porte.png")));
 
-		
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 	}
 	
@@ -73,13 +72,11 @@ public class World3 extends BasicGameState{
 		if(currentBlock!=null){
 			currentBlock.render(container, game, g);
 		}
-		
 	}
 	
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int compt) throws SlickException {
-		
 		decor.update(container, game, compt);
 		if(!perdu){
 			pendulum.update(container, game,compt);
@@ -87,21 +84,10 @@ public class World3 extends BasicGameState{
 
 		}
 		
+		tower.update(container, game, compt);
 		if(currentBlock!=null){
 			currentBlock.update(container, game, compt);
-			
-			if(currentBlock.getY()>Main.hauteur)
-			{
-				currentBlock=new Block(Main.longueur/2,-100,100,100,toitImage);
-				currentBlock.setRealeased(true);
-				currentBlock.setIsDroping(true);
-				currentBlock.setAccelY(World3.GRAVITY);
-				//perdu
-				perdu=true;
-			}
 		}
-		
-		
 	}
 	
 	@Override
@@ -147,14 +133,4 @@ public class World3 extends BasicGameState{
 		// TODO Auto-generated method stub
 		return pendulum;
 	}
-
-	public static Decor getDecor() {
-		return decor;
-	}
-	
-	public static void notifyStackedBlock() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
