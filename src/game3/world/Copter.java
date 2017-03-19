@@ -21,13 +21,25 @@ public class Copter extends Rectangle{
 	private float goToX;
 	private float goToY;
 	private boolean isFlying;
+	private int timer;
 	private int nb = 0;
 	private float alpha = 0.02f;
+	public boolean toDestroy = false;
 	
+	public boolean isFlying() {
+		return isFlying;
+	}
+
+	public boolean isToDestroy() {
+		return toDestroy;
+	}
+
 	public Copter(){
 		super(50, 50, width, height);
 
 		leave();
+		
+		timer = (int) ((Math.random() + 1) * 600);
 		
 		this.x = goToX;
 		this.y = goToY;
@@ -69,7 +81,6 @@ public class Copter extends Rectangle{
 			g.drawImage(image0,x,y);
 		} else {
 			g.drawImage(image1,x,y);
-
 		}
 	}
 	
@@ -77,11 +88,23 @@ public class Copter extends Rectangle{
 		// Updating
 		x = lerp(x,goToX, alpha);
 		y = lerp(y, goToY, alpha);
+		if( (x - goToX) < 1 && (y - goToY) < 1 ){
+			if(isFlying){
+				majGoTo();
+			}else{
+				toDestroy  = true;
+			}
+		}
+		if(nb > timer){
+			stop();
+		}
 	}
 	
 	private float lerp(float point1, float point2, float alpha)
 	{
 	    return point1 + alpha * (point2 - point1);
 	}
+	
+	
 	
 }
