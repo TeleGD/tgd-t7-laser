@@ -13,6 +13,7 @@ public class Cell {
 	private int y;
 	private Boolean contains;
 	private Boolean deadly;
+	private Boolean hasBonus;
 	private boolean hasEnnemy;
 	private Image image;
 	protected Image normal;
@@ -67,6 +68,20 @@ public class Cell {
 	public void setImage(Image i){
 		this.image=i;
 	}
+	public boolean isHasEnnemy() {
+		return hasEnnemy;
+	}
+	public void setHasEnnemy(boolean hasEnnemy) {
+		this.hasEnnemy = hasEnnemy;
+	}
+	public Boolean getHasBonus() {
+		return hasBonus;
+	}
+	public void setHasBonus(Boolean hasBonus) {
+		this.hasBonus = hasBonus;
+	}
+	
+	
 	
 	//render et update
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
@@ -78,16 +93,10 @@ public class Cell {
 		if(deadly && contains)
 			World2.getPlayer().setLives(0);
 		
-	}
-
-
-	public boolean isHasEnnemy() {
-		return hasEnnemy;
-	}
-
-
-	public void setHasEnnemy(boolean hasEnnemy) {
-		this.hasEnnemy = hasEnnemy;
+		if(hasBonus && contains){
+			World2.setScore(World2.getScore()+777);
+		}
+			
 	}
 	
 }

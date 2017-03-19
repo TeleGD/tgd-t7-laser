@@ -42,7 +42,7 @@ public class World2 extends BasicGameState{
 		music.loop();
 		grid =  new Grid2(4,4);
 		player = new Player2();
-		score = 0;
+		setScore(0);
 		selec = 0;
 	}
 	
@@ -60,7 +60,7 @@ public class World2 extends BasicGameState{
 			player.render(arg0,arg1,arg2);
 		
 			arg2.setColor(Color.black);
-			arg2.drawString("Score : "+score, 88, 100);
+			arg2.drawString("Score : "+getScore(), 88, 100);
 			arg2.drawString("Waves : "+grid.getWaveNumber(), 95, 150);
 		
 			if (player.isDead()){
@@ -88,7 +88,7 @@ public class World2 extends BasicGameState{
 			if (!player.isDead()){
 				player.update(arg0,arg1,arg2);
 				grid.update(arg0, arg1, arg2);
-				score++;
+				setScore(getScore() + 1);
 				if (player.isDead()) {
 					music.stop();
 					cat.play();
@@ -113,7 +113,7 @@ public class World2 extends BasicGameState{
 						music.loop();
 						grid =  new Grid2(4,4);
 						player = new Player2();
-						score = 0;
+						setScore(0);
 						selec = 0;
 						renderScale = (float)1;
 					}
@@ -153,5 +153,13 @@ public class World2 extends BasicGameState{
 	
 	public static void setRenderScale(float d){
 		 renderScale = d;
+	}
+
+	public static int getScore() {
+		return score;
+	}
+
+	public static void setScore(int score) {
+		World2.score = score;
 	}
 }

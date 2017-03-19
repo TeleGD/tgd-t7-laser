@@ -74,8 +74,12 @@ public class SQLiteJDBC {
 			c = DriverManager.getConnection("jdbc:sqlite:datas.db");
 			stmt=c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT Score FROM SCORES WHERE name='"+name+"' AND Game="+score);
-			if (score>rs.getInt(1)){
-				stmt.executeUpdate("UPDATE SCORES SET Score="+score+" WHERE name='"+name+"' AND Game="+game);
+			if(rs.next()){
+				if (score>rs.getInt(1)){
+					stmt.executeUpdate("UPDATE SCORES SET Score="+score+" WHERE name='"+name+"' AND Game="+game);
+				}
+			}else {
+				stmt.executeUpdate("INSERT INTO SCORES (Name,Game,Score) VALUES ('"+name+"',"+game+","+score+")");
 			}
 			rs.close();
 			stmt.close();
@@ -85,7 +89,7 @@ public class SQLiteJDBC {
 			System.exit(0);
 		}
 	}
-	
+
 	public static ArrayList<Person> searchHS(int i){
 		ArrayList<Person> result = new ArrayList<Person>();
 		Connection c = null;
@@ -108,7 +112,7 @@ public class SQLiteJDBC {
 			System.exit(0);
 		}
 		return result;
-		
+
 	}
 
 }

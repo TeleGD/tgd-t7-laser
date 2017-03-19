@@ -19,43 +19,6 @@ public class Pendulum extends BasicGameState{
 	private float theta;
 	private float length;
 	
-	public float getLength() {
-		return length;
-	}
-
-
-
-	public void setLength(float length) {
-		this.length = length;
-		loadImage();
-	}
-
-
-
-
-	private float initialAngle;
-	public float getInitialAngle() {
-		return initialAngle;
-	}
-
-
-
-	public void setInitialAngle(float initialAngle) {
-		this.initialAngle = initialAngle;
-	}
-	
-	public float getSpeed() {
-		return speed;
-	}
-
-
-
-	public void setSpeed(float f) {
-		this.speed = f;
-	}
-
-
-
 
 	private double omega;
 	private Block block;
@@ -66,7 +29,7 @@ public class Pendulum extends BasicGameState{
 	public Pendulum(){
 		x=Main.longueur/2;
 		y=-1400;
-		speed=16000;
+		speed=8000;
 		length=1800;
 		initialAngle=(float) (-Math.PI/12);
 		omega=World3.GRAVITY/length;
@@ -127,7 +90,7 @@ public class Pendulum extends BasicGameState{
 		System.out.println(theta);
 		System.out.println("Time="+World3.getTime());
 		
-		speed+=1;
+		speed+=0.01;
 		speed=Math.max(speed,18000);
 
 	}
@@ -140,17 +103,10 @@ public class Pendulum extends BasicGameState{
 	}
 
 
-
-
-
-
-
-
 	public Block releaseBlock() {
 		float thetaDot=calculateThetaDot();
 		System.out.println("thetaDot="+thetaDot);
 		block.drop((float)(length*thetaDot*1+Math.pow(Math.tan(theta),2))/2000,0);
-		//block.drop(0,0);
 		compt=0;
 		return block;
 	}
@@ -183,5 +139,43 @@ public class Pendulum extends BasicGameState{
 	public void notifyStackedBlock() {
 		addBlock();
 	}
+
+
+	public float getLength() {
+		return length;
+	}
+
+
+
+	public void setLength(float length) {
+		this.length = length;
+		loadImage();
+	}
+
+
+
+
+	private float initialAngle;
+	public float getInitialAngle() {
+		return initialAngle;
+	}
+
+
+
+	public void setInitialAngle(float initialAngle) {
+		this.initialAngle = initialAngle;
+	}
+	
+	public float getSpeed() {
+		return speed;
+	}
+
+
+
+	public void setSpeed(float f) {
+		this.speed = f;
+	}
+
+
 
 }

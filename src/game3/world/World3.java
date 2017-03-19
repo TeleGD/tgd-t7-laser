@@ -13,6 +13,7 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import db.SQLiteJDBC;
 import general.Main;
 import general.utils.FontUtils;
 
@@ -124,6 +125,8 @@ public class World3 extends BasicGameState{
 				currentBlock.setRealeased(true);
 				soundLose.play();
 				perdu=true;
+				
+				//db.SQLiteJDBC.updateScore("Jeje", 3, score);
 			}
 		}
 	}
