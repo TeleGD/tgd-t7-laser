@@ -9,21 +9,21 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import game1.characters.Player;
+import game1.characters.GridlockedPlayer;
 
 public class World1 extends BasicGameState{
 
 	public static int ID=1;
 	private static Labyrinth labyrinth;
 	private MazeGenerator mazeGenerator;
-	private static Player player;
+	private static GridlockedPlayer player;
 	private ArrayList<Cell> cellTest;
 	private static int score;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
-		labyrinth = new Labyrinth(20,20);
+		labyrinth = new Labyrinth(10,15);
 		
 	}
 	
@@ -31,7 +31,7 @@ public class World1 extends BasicGameState{
 	public void enter(GameContainer arg0, StateBasedGame arg1){
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 		
-		player = new Player(0,0);
+		player = new GridlockedPlayer(0,0);
 		mazeGenerator = new MazeGenerator(labyrinth);
 		try {
 			mazeGenerator.mazeGenrator();
@@ -47,7 +47,7 @@ public class World1 extends BasicGameState{
 		//Affichage
 		arg2.setColor(Color.white);
 		labyrinth.render(arg0, arg1, arg2);
-		arg2.drawString("Bonjour 1", 500, 400);
+		//arg2.drawString("Bonjour 1", 500, 400);
 		player.render(arg0, arg1, arg2);
 
 	}
@@ -80,7 +80,7 @@ public class World1 extends BasicGameState{
 		player.keyReleased(key, c);
 	}
 
-	public static Player getPlayer(){
+	public static GridlockedPlayer getPlayer(){
 		return player;
 	}
 
