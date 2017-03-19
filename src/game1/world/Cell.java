@@ -1,6 +1,5 @@
 package game1.world;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -156,26 +155,21 @@ public class Cell{
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException 
 	{
 		arg2.drawImage(sprite,j*64,i*64);
-		if (itsATrap){
-			arg2.setColor(Color.red);
-			arg2.fillRect(j*62, i*62, 60, 60);
-		}
-		if (isFinalCell){
-			arg2.setColor(Color.cyan);
-			arg2.fillRect(j*64, i*64, 60, 60);
-		}
 	}
 
 	
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		if (this.equals(World1.getPlayer())){
+		System.out.println("player i :"+World1.getPlayer().getI()+"player j :"+World1.getPlayer().getJ());
+		System.out.println("i : "+this.getI()+" j : "+this.getJ());
+		if (World1.getPlayer().getI()==this.getI() && World1.getPlayer().getJ()==this.getJ()){
 			if (giveScore){
 				giveScore=false;
 				autoSetSprite();
 				World1.setScore(World1.getScore()+1);
 			}
 			if (isFinalCell){
-				System.exit(0);
+				
+				System.out.println("fin");
 			}
 			if (itsATrap){
 				System.exit(0);

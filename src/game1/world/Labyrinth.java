@@ -11,6 +11,7 @@ public class Labyrinth {
 	
 	private int lines,rows;
 	private Cell[][] cells;
+	private boolean haveExit;
 	
 	
 	public Labyrinth (int lines,int rows) 
@@ -44,9 +45,20 @@ public class Labyrinth {
 	{
 		return cells[i][j];
 	}
+
+	
+	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException
+	{
+		for (Cell[] cells2 : cells)
+		{
+			for(Cell cell : cells2)
+			{
+				cell.update(arg0, arg1, arg2);
+			}
+		}
+	}
 	
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
-		arg2.drawString("str", 500, 500);
 		for (Cell[] cells2 : cells)
 		{
 			for(Cell cell : cells2)
@@ -65,6 +77,14 @@ public class Labyrinth {
 					this.getCell(i, j).autoSetSprite();
 				}
 		}
+	}
+
+	public boolean isHaveExit() {
+		return haveExit;
+	}
+
+	public void setHaveExit(boolean haveExit) {
+		this.haveExit = haveExit;
 	}
 
 }

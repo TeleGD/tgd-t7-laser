@@ -56,6 +56,7 @@ public class World1 extends BasicGameState{
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		// TODO Auto-generated method stub		
 		player.update(arg0, arg1, arg2);
+		this.labyrinth.update(arg0, arg1, arg2);
 	}
 
 	@Override
