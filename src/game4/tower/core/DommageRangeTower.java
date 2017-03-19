@@ -8,7 +8,7 @@ public class DommageRangeTower extends RangeTower{
 
 	public DommageRangeTower(Cell cellule, int cost, String name, int dommage, int rangeMin, int rangeMax,
 			int dommage2) {
-		super(cellule, cost, name, dommage, rangeMin, rangeMax);
+		super(cellule, cost, name, rangeMin, rangeMax);
 		dommage = dommage2;
 	}
 
