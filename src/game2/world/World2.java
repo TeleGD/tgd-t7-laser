@@ -4,6 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
@@ -28,6 +29,7 @@ public class World2 extends BasicGameState{
 	private int cpt=-30;
 	private boolean start = false;
 	private boolean disp = false;
+	private static StateBasedGame game;
 	
 	private static float renderScale = (float)1;
 	
@@ -35,13 +37,15 @@ public class World2 extends BasicGameState{
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
-		music = new Music("Music/T7Laser/EpicSaxGuy.ogg");
-		end = new Music("Music/T7Laser/EndSong.ogg");
-		cat= new Sound("Music/T7Laser/Cat.ogg");
+		game=arg1;
+		
 	}
 	
 	public void enter(GameContainer arg0, StateBasedGame arg1) throws SlickException{
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
+		music = new Music("Music/T7Laser/EpicSaxGuy.ogg");
+		end = new Music("Music/T7Laser/EndSong.ogg");
+		cat= new Sound("Music/T7Laser/Cat.ogg");
 		music.loop();
 		grid =  new Grid2(4,4);
 		player = new Player2();
@@ -133,6 +137,10 @@ public class World2 extends BasicGameState{
 
 	public void keyPressed(int key, char c) {
 		player.keyPressed(key, c);
+		if(key==Input.KEY_F1){
+			music.stop();
+			game.enterState(MainMenu.ID);
+		}
 	}
 
 	public int getID() {

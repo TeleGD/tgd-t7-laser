@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import game1.characters.GridlockedPlayer;
+import menus.MainMenu;
 
 public class World1 extends BasicGameState{
 
@@ -19,17 +21,17 @@ public class World1 extends BasicGameState{
 	private static GridlockedPlayer player;
 	private ArrayList<Cell> cellTest;
 	private static int score;
+	private static StateBasedGame game;
 	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
-		//Ici ne mettre que des initialisations de variables 
-		labyrinth = new Labyrinth(10,15);
-		
+		game=arg1;
 	}
 	
 	@Override
 	public void enter(GameContainer arg0, StateBasedGame arg1){
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
+		labyrinth = new Labyrinth(10,15);
 		reset();
 	}
 	
@@ -39,14 +41,12 @@ public class World1 extends BasicGameState{
 		//Affichage
 		arg2.setColor(Color.white);
 		labyrinth.render(arg0, arg1, arg2);
-		//arg2.drawString("Bonjour 1", 500, 400);
 		player.render(arg0, arg1, arg2);
 
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		// TODO Auto-generated method stub		
 		player.update(arg0, arg1, arg2);
 		this.labyrinth.update(arg0, arg1, arg2);
 	}
@@ -74,6 +74,9 @@ public class World1 extends BasicGameState{
 	
 	public void keyPressed(int key, char c) {
 		player.keyPressed(key, c);
+		if(key==Input.KEY_F1){
+			game.enterState(MainMenu.ID);
+		}
 	}
 	
 	public void keyReleased(int key, char c) {

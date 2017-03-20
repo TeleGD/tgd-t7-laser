@@ -23,14 +23,15 @@ public class Player {
 	}
 	
 	public Player(int i, int j){
-		x = i*cellSize + 32 - 25;
+		x = i*cellSize + 32 - 250;
 		y = j*cellSize + 32 - 25;
 		this.getCell();
 	}
 	
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
-		arg2.setColor(Color.magenta);
+		arg2.setColor(Color.blue);
 		arg2.fillRect((float)x,(float) y, (float)50, (float)50);
+		arg2.drawString("bonjour", 1100, 500);
 
 	}
 
@@ -95,7 +96,6 @@ public class Player {
 			
 		}
 		if(((down && !up) || (up && down && updown)) && !(this.cell.isSouthWall())){
-			System.out.println("kkkkkkkkkkkkkkkkkkkk");
 			
 				speedY=0.5;
 		}

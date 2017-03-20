@@ -16,6 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import db.SQLiteJDBC;
 import general.Main;
 import general.utils.FontUtils;
+import menus.MainMenu;
 
 public class World3 extends BasicGameState{
 	public final static float GRAVITY= 0.3f;
@@ -133,22 +134,32 @@ public class World3 extends BasicGameState{
 	
 	@Override
 	public void keyPressed(int key, char  c){
-  		if(key==Input.KEY_SPACE){
- 			currentBlock=pendulum.releaseBlock();
+  		switch(key){
+  		case Input.KEY_SPACE:
+  			currentBlock=pendulum.releaseBlock();
  			if(perdu){
  				reset();
  			}else{
  				currentBlock=pendulum.releaseBlock();
  			}
- 		}else if(key==Input.KEY_ENTER){
- 			if(perdu){
- 				reset();
- 			}
-  		}else if(key==Input.KEY_ESCAPE){
-			if(perdu){
+ 			break;
+  		case Input.KEY_ENTER:
+  		if(perdu){
+				reset();
+			}
+  		break;
+  		case Input.KEY_ESCAPE:
+  			if(perdu){
+  				this.soundMusicBackground.stop();
 				game.enterState(MainMenu3.ID);
 			}
-		}
+  			break;
+  		case Input.KEY_F1:
+  			this.soundMusicBackground.stop();
+  			game.enterState(MainMenu.ID);
+  			break;
+  			
+  		}
   	}
 
 	@Override
@@ -157,7 +168,6 @@ public class World3 extends BasicGameState{
 	}
 
 	public static void reset() {
-		 		// TODO Auto-generated method stub
 		 		perdu=false;
 		 		try {
 		 			decor=new Decor();

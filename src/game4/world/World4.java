@@ -31,7 +31,7 @@ public class World4 extends BasicGameState{
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 		ennemy = new ArrayList<Ennemy>();
 		tower = new ArrayList<Tower>();
-		ennemy.add(new Ennemy());
+		//ennemy.add(new Ennemy());
 		map = new Map();
 	}
 	

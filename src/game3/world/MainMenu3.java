@@ -13,41 +13,43 @@ import game1.world.World1;
 import game2.world.World2;
 import game3.world.World3;
 import general.Main;
+import menus.MainMenu;
 import menus.Menu;
 
 public class MainMenu3 extends Menu{
 
 	public static int ID = -10;	
-	
+
 	private Image[] image= new Image[3];
 	public MainMenu3(){
-		
+
 		super.setTitrePrincipal("CATHEDRAL BLOXXX");
-		super.setTitreSecondaire("Choisissez votre difficultÃ©");
-		super.setItems("Facile","Moyen","Difficile");
-		
+		super.setTitreSecondaire("Choisissez votre difficulté");
+		super.setItems("Facile","Moyen","Difficile","Menu Principal");
+
 		super.setEnableClignote(true);
 		super.setCouleurClignote(Color.red);
 		super.setTempsClignote(400);
-		
 
-		
+
+
 	}
-	
+
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
 		image[0]=new Image("Images/TowerBlocks/Blocs/Rouge Normal.png").getScaledCopy(50, 50);
 		image[1]=new Image("Images/TowerBlocks/Blocs/Bleu Normal.png").getScaledCopy(50, 50);
 		image[2]=new Image("Images/TowerBlocks/Blocs/Vert Normal.png").getScaledCopy(50, 50);
 	}
-	
-	
+
+
 	@Override
 	public void renderSelectionItem(GameContainer arg0, StateBasedGame arg1, Graphics g,int position) {
 		super.renderSelectionItem(container, game, g, position);
-
-		g.drawImage(image[position], Main.longueur/2-fontItem.getWidth(items[indexItemPlusGrand])/2-125, 340 + 30 * selection);
-		g.drawImage(image[position], Main.longueur/2-fontItem.getWidth(items[indexItemPlusGrand])/2+120, 340 + 30 * selection);
+		if (position<3){
+			g.drawImage(image[position], Main.longueur/2-fontItem.getWidth(items[indexItemPlusGrand])/2-125, 340 + 30 * selection);
+			g.drawImage(image[position], Main.longueur/2-fontItem.getWidth(items[indexItemPlusGrand])/2+120, 340 + 30 * selection);
+		}
 
 	}
 	@Override
@@ -57,12 +59,17 @@ public class MainMenu3 extends Menu{
 
 	@Override
 	public void onOptionItemSelected(int position) {
-		
+
 		World3.difficulty=position;
-		game.enterState(World3.ID, new FadeOutTransition(),
-				new FadeInTransition());
+		if(position<4){
+			game.enterState(World3.ID, new FadeOutTransition(),
+					new FadeInTransition());
+		}else if (position==4){
+			game.enterState(MainMenu.ID);
+		}
+
 	}
-	
+
 	@Override
 	public int getID() {
 		return ID;
