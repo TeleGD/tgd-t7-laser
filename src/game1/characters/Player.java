@@ -91,23 +91,23 @@ public class Player {
 		if(((up && !down) || (up && down && !updown)) )
 		{
 			if(!(this.cell.isNorthWall())){
-				speedY=-0.5;
+				speedY=-0.2;
 			}
 			
 		}
 		if(((down && !up) || (up && down && updown)) && !(this.cell.isSouthWall())){
 			
-				speedY=0.5;
+				speedY=0.2;
 		}
 		if(((left && !right)|| (left && right && !rightLeft)) && !(this.cell.isWestWall()))
 		{
-				speedX = -0.5;
+				speedX = -0.2;
 			
 		}
 		if(((!left && right)|| (left && right && rightLeft)) && !(this.cell.isEastWall()))
 		{
 
-				speedX = 0.5;
+				speedX = 0.2;
 		}
 	}
 	
