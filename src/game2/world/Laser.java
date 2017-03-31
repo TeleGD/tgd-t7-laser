@@ -87,7 +87,7 @@ public class Laser {
 	}
 
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		if(!shooting){ //temps de prévention
+		if(!shooting){ //temps de prï¿½vention
 			setupTime--;
 			if(setupTime == 0){
 				shooting = true;
@@ -100,7 +100,7 @@ public class Laser {
 				this.setDeadlyCells(false);
 			}
 		}
-		//une fois que tout ça c'est fini
+		//une fois que tout ï¿½a c'est fini
 		if(setupTime == 0 && shootingTime == 0)
 			World2.getGrid().removeLaser(this);
 	}

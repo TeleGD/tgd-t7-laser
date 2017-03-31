@@ -131,7 +131,7 @@ public class Grid2 {
 			Random b2 = new Random();
 			int rowB = b1.nextInt(this.rows);
 			int columnB = b2.nextInt(this.columns);
-			if(grid[rowB][columnB].getImage()!=Cell.mine)
+			if(grid[rowB][columnB].getImageType()!=Cell.MINE_TYPE)
 					addBonus(rowB,columnB);
 				
 			if(rows > 7)
@@ -217,7 +217,7 @@ public class Grid2 {
 		int column = r2.nextInt(this.columns);
 		if(!getCell(row, column).getContains()){
 			this.grid[row][column].setDeadly(true);
-			this.grid[row][column].setImage(this.grid[row][column].mine);
+			this.grid[row][column].setImageType(Cell.MINE_TYPE);
 		}
 		
 	}
@@ -225,7 +225,7 @@ public class Grid2 {
 	public void addBonus(int row, int column){
 		this.grid[row][column].setDeadly(false);
 		this.grid[row][column].setHasBonus(true);
-		this.grid[row][column].setImage(this.grid[row][column].bonus);
+		this.grid[row][column].setImageType(Cell.BONUS_TYPE);
 	}
 
 }

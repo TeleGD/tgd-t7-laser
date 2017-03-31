@@ -7,6 +7,14 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Cell {
+
+	public static final int NORMAL_TYPE = 0 ;
+	public static final int MINE_TYPE = 1 ;
+	public static final int BONUS_TYPE = 2 ;
+
+	protected static Image NORMAL;
+	protected static Image MINE;
+	protected static Image BONUS;
 	
 	//Variables
 	private int x;
@@ -15,12 +23,9 @@ public class Cell {
 	private Boolean deadly;
 	private Boolean hasBonus;
 	private boolean hasEnnemy;
-	private Image image;
-	protected Image normal;
-	protected static Image mine;
-	protected Image bonus;
 	
-	
+	private int imageType;
+
 	//Constructeur
 	public Cell(int x, int y, Boolean c, Boolean d) throws SlickException{
 		this.x=x;
@@ -28,11 +33,14 @@ public class Cell {
 		this.contains=c;
 		this.deadly=d;
 		this.hasBonus=false;
-		this.normal= new Image("Images/T7Laser/Cell.png");
-		this.mine=new Image("Images/T7Laser/Mine.png");
-		this.bonus=new Image("Images/T7Laser/Bonus.png");
-		this.image=(normal);
 		this.hasEnnemy = false;
+		
+
+		if(NORMAL==null){
+			NORMAL= new Image("Images/T7Laser/Cell.png");
+			MINE=new Image("Images/T7Laser/Mine.png");
+			BONUS=new Image("Images/T7Laser/Bonus.png");
+		}
 	}
 	
 	
@@ -60,15 +68,23 @@ public class Cell {
 	}
 	public void setDeadly(Boolean deadly) {
 		this.deadly = deadly;
-		if(this.image == mine)
+		if(this.imageType == MINE_TYPE)
 			this.deadly = true;
 	}
-	public Image getImage(){
-		return image;
+	public int getImageType() {
+		return imageType;
 	}
-	public void setImage(Image i){
-		this.image=i;
+
+	public void setImageType(int imageType) {
+		this.imageType = imageType;
 	}
+
+    public Image getImage() {
+        if(imageType==MINE_TYPE)return MINE;
+        else if(imageType==NORMAL_TYPE)return NORMAL;
+        else if(imageType==BONUS_TYPE)return BONUS;
+        return NORMAL;
+    }
 	public boolean isHasEnnemy() {
 		return hasEnnemy;
 	}
@@ -87,7 +103,7 @@ public class Cell {
 	//render et update
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		//Affichage
-		arg2.drawImage(image,0,0);
+		arg2.drawImage(getImage(),0,0);
 	}
 
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
@@ -97,7 +113,7 @@ public class Cell {
 		if(hasBonus && contains){
 			World2.setScore(World2.getScore()+77);
 			World2.getGrid().getCell(x, y).setHasBonus(false);
-			World2.getGrid().getCell(x,y).setImage(normal);
+			World2.getGrid().getCell(x,y).setImageType(NORMAL_TYPE);
 			World2.cat.play();
 		}
 			

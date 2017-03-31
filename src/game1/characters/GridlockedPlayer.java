@@ -1,5 +1,7 @@
 package game1.characters;
 
+import java.io.File;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -31,17 +33,17 @@ public class GridlockedPlayer {
 		this.getCell();
 		moving =0;
 		try{
-		right1=new Image("Images\\Labyrinth\\Player\\droite1.png").getScaledCopy(39,50);
-		right2=new Image("Images\\Labyrinth\\Player\\droite2.png").getScaledCopy(39,50);
-		left1=new Image("Images\\Labyrinth\\Player\\gauche1.png").getScaledCopy(39,50);
-		left2=new Image("Images\\Labyrinth\\Player\\gauche2.png").getScaledCopy(39,50);
-		up1=new Image("Images\\Labyrinth\\Player\\haut1.png").getScaledCopy(39,50);
-		up2=new Image("Images\\Labyrinth\\Player\\haut2.png").getScaledCopy(39,50);
-		down1=new Image("Images\\Labyrinth\\Player\\bas1.png").getScaledCopy(39,50);
-		down2=new Image("Images\\Labyrinth\\Player\\bas2.png");
+		right1=new Image("Images"+File.separator+"Labyrinth"+File.separator+"Player"+File.separator+"droite1.png").getScaledCopy(39,50);
+		right2=new Image("Images"+File.separator+"Labyrinth"+File.separator+"Player"+File.separator+"droite2.png").getScaledCopy(39,50);
+		left1=new Image("Images"+File.separator+"Labyrinth"+File.separator+"Player"+File.separator+"gauche1.png").getScaledCopy(39,50);
+		left2=new Image("Images"+File.separator+"Labyrinth"+File.separator+"Player"+File.separator+"gauche2.png").getScaledCopy(39,50);
+		up1=new Image("Images"+File.separator+"Labyrinth"+File.separator+"Player"+File.separator+"haut1.png").getScaledCopy(39,50);
+		up2=new Image("Images"+File.separator+"Labyrinth"+File.separator+"Player"+File.separator+"haut2.png").getScaledCopy(39,50);
+		down1=new Image("Images"+File.separator+"Labyrinth"+File.separator+"Player"+File.separator+"bas1.png").getScaledCopy(39,50);
+		down2=new Image("Images"+File.separator+"Labyrinth"+File.separator+"Player"+File.separator+"bas2.png");
 		img=right1;
 		} catch( Exception e){
-			System.out.println("image du player-labyrinth non chargée");
+			System.out.println("image du player-labyrinth non chargÃ©e");
 		}
 		
 	}
