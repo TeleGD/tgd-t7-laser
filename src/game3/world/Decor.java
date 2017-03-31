@@ -11,6 +11,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import general.Main;
 public class Decor {
 
 	private int height;
@@ -24,13 +25,13 @@ public class Decor {
 	private int green;
 	private Image[] cloudImages=new Image[4];
 	private Image imageStar;
-	private static ArrayList<Copter> copters=new ArrayList<>();
-	public Decor() throws SlickException
-	{
+	private static ArrayList<Mobile> mobiles=new ArrayList<>();
+	public Decor() throws SlickException {
 		this.height=0;
 		this.compteur=0;
 		this.listSkyElements=new ArrayList<SkyElements>();
 		this.background =new Image("./Images/TowerBlocks/DecorBase.png");
+        this.background=background.getScaledCopy(Main.longueur,Main.hauteur);
 
 		for(int i=0;i<cloudImages.length;i++){
 			cloudImages[i]=new Image("./Images/TowerBlocks/SkyElements/cloud"+(i+1)+".png");
@@ -43,7 +44,7 @@ public class Decor {
 		blue=199;
 	}
 	
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException 
+	public void update(GameContainer arg0, StateBasedGame arg1, int arg2)  
 	{
 		this.compteur+=1;
 		if(this.height>=arg0.getHeight()+500){
@@ -94,18 +95,30 @@ public class Decor {
 		listSkyElements.removeAll(listSkyElementsToRemove);
 		
 		if(compteur %180==0 && r.nextInt(5)==1){
-			copters.add(new Copter());
-			copters.get(copters.size()-1).start();
+			mobiles.add(new Copter());
+			mobiles.get(mobiles.size()-1).start();
 		}
 		
-		for(int i=0;i<copters.size();i++){
-			copters.get(i).update(arg0, arg1,arg2);
+		for(int i=0;i<mobiles.size();i++){
+			mobiles.get(i).update(arg0, arg1,arg2);
+		}
+		
+		if(height>=1000+arg0.getHeight() && compteur%20==0){
+
+			if(compteur %180==0 && r.nextInt(5)==1){
+				mobiles.add(new Alien());
+				mobiles.get(mobiles.size()-1).start();
+			}
+			
+			for(int i=0;i<mobiles.size();i++){
+				mobiles.get(i).update(arg0, arg1,arg2);
+			}
 		}
 	}
 		
 	
 
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
+	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g)  {
 
 		if(this.endTown)
 		{
@@ -126,9 +139,8 @@ public class Decor {
 			}
 		}
 		g.setBackground(new Color(red,green,blue));
-		this.background = this.background.getScaledCopy(arg0.getWidth(),arg0.getHeight() );
 		g.setColor(Color.white);
-		g.drawImage(this.background, 0,0+height, null);
+		g.drawImage(this.background, 0,0+height);
 		
 		for(SkyElements se : listSkyElements)
 		{
@@ -139,11 +151,11 @@ public class Decor {
 			{
 				g.setColor(Color.yellow);
 			}
-			g.drawImage(se.getImage(), se.getPosX(), se.getPosY(), null);
+			g.drawImage(se.getImage(), se.getPosX(), se.getPosY());
 		}
 		
-		for(int i=0;i<copters.size();i++){
-			copters.get(i).render(arg0, arg1, g);
+		for(int i=0;i<mobiles.size();i++){
+			mobiles.get(i).render(arg0, arg1, g);
 		}
 	}
 
@@ -156,9 +168,9 @@ public class Decor {
 		this.changeHeigth=true;
 	}
 
-	public static ArrayList<Copter> getCopters() {
+	public static ArrayList<Mobile> getMobiles() {
 		// TODO Auto-generated method stub
-		return copters;
+		return mobiles;
 	}
 	
 	
