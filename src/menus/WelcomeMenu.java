@@ -21,7 +21,7 @@ public class WelcomeMenu extends Menu{
 	private static final String CONFIRM_TEXT="PRESS ENTER";
 
 	private Image background;
-	
+	private int blinkPeriod=10;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -52,8 +52,13 @@ public class WelcomeMenu extends Menu{
 
 		g.drawRect(Main.longueur/2-300,25, 600,37);
 		
-		
+		;
 		g.setFont(fontConfirmText);
+		int alpha=(int) ((System.currentTimeMillis()/blinkPeriod)%1000);
+		if(alpha>255)alpha=500-alpha;
+		if(alpha>500)alpha=0;
+		System.out.println("alpha="+alpha);
+		g.setColor(new Color(255-alpha,255-alpha,255-alpha));
 		g.drawString(CONFIRM_TEXT, Main.longueur/2-fontConfirmText.getWidth(CONFIRM_TEXT)/2,35);
 		g.drawImage(background,Main.longueur/2-background.getWidth()/2,Main.hauteur/2-background.getHeight()/2);
 	}
