@@ -11,6 +11,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import game1.world.Cell;
+import game1.world.World1;
 
 public class GridlockedPlayer {
 	private double x,y;
@@ -33,14 +34,14 @@ public class GridlockedPlayer {
 		this.getCell();
 		moving =0;
 		try{
-		right1=new Image("Images"+File.separator+"Labyrinth"+File.separator+"Player"+File.separator+"droite1.png").getScaledCopy(39,50);
-		right2=new Image("Images"+File.separator+"Labyrinth"+File.separator+"Player"+File.separator+"droite2.png").getScaledCopy(39,50);
-		left1=new Image("Images"+File.separator+"Labyrinth"+File.separator+"Player"+File.separator+"gauche1.png").getScaledCopy(39,50);
-		left2=new Image("Images"+File.separator+"Labyrinth"+File.separator+"Player"+File.separator+"gauche2.png").getScaledCopy(39,50);
-		up1=new Image("Images"+File.separator+"Labyrinth"+File.separator+"Player"+File.separator+"haut1.png").getScaledCopy(39,50);
-		up2=new Image("Images"+File.separator+"Labyrinth"+File.separator+"Player"+File.separator+"haut2.png").getScaledCopy(39,50);
-		down1=new Image("Images"+File.separator+"Labyrinth"+File.separator+"Player"+File.separator+"bas1.png").getScaledCopy(39,50);
-		down2=new Image("Images"+File.separator+"Labyrinth"+File.separator+"Player"+File.separator+"bas2.png");
+		right1=new Image(World1.DIRECTORY_IMAGES+"Player"+File.separator+"droite1.png").getScaledCopy(39,50);
+		right2=new Image(World1.DIRECTORY_IMAGES+"Player"+File.separator+"droite2.png").getScaledCopy(39,50);
+		left1=new Image(World1.DIRECTORY_IMAGES+"Player"+File.separator+"gauche1.png").getScaledCopy(39,50);
+		left2=new Image(World1.DIRECTORY_IMAGES+"Player"+File.separator+"gauche2.png").getScaledCopy(39,50);
+		up1=new Image(World1.DIRECTORY_IMAGES+"Player"+File.separator+"haut1.png").getScaledCopy(39,50);
+		up2=new Image(World1.DIRECTORY_IMAGES+"Player"+File.separator+"haut2.png").getScaledCopy(39,50);
+		down1=new Image(World1.DIRECTORY_IMAGES+"Player"+File.separator+"bas1.png").getScaledCopy(39,50);
+		down2=new Image(World1.DIRECTORY_IMAGES+"Player"+File.separator+"bas2.png");
 		img=right1;
 		} catch( Exception e){
 			System.out.println("image du player-labyrinth non chargée");

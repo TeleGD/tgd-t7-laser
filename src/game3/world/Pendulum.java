@@ -39,7 +39,7 @@ public class Pendulum extends BasicGameState{
 	
 	public void loadImage(){
 		try {
-			corde=new Image("Images/TowerBlocks/corde.png").getScaledCopy(10, (int) length);
+			corde=new Image(World3.DIRECTORY_IMAGES+"corde.png").getScaledCopy(10, (int) length);
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,7 +49,7 @@ public class Pendulum extends BasicGameState{
 
 	private void addBlock() {
 		try {
-			block=new Block(0,0,100,100,new Image("Images/TowerBlocks/Blocs/"+World3.colorImage+" Normal.png"));
+			block=new Block(0,0,100,100,new Image(World3.DIRECTORY_IMAGES+"Blocs/"+World3.colorImage+" Normal.png"));
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,7 +69,7 @@ public class Pendulum extends BasicGameState{
 		g.setColor(Color.white);
 		
 		g.drawImage(corde,x,y);
-		corde.setRotation((float) ( -theta*180/Math.PI));
+		corde.setRotation((float) (-theta*180.0f/Math.PI));
 		corde.setCenterOfRotation(0, 0);
 		
 		block.render(container, game, g);
@@ -177,7 +177,7 @@ public class Pendulum extends BasicGameState{
 		return block;
 	}
 	public void finishTower() throws SlickException {
-		block=new Block(World3.getTower().getTop().getX(),0,100,100, new Image("Images/TowerBlocks/Blocs/"+World3.colorImage+" Toit.png"));
+		block=new Block(World3.getTower().getTop().getX(),0,100,100, new Image(World3.DIRECTORY_IMAGES+"Blocs/"+World3.colorImage+" Toit.png"));
 		block.setSpeedY(2f);
 		block.setSpeedX(0f);
 		block.setRealeased(true);

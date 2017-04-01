@@ -1,5 +1,7 @@
 package game2.world;
 
+import java.io.File;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -19,6 +21,14 @@ import menus.MainMenu;
 public class World2 extends BasicGameState{
 
 	public static int ID=2;
+
+	public final static String GAME_NAME="T7Laser";
+	
+	public final static String GAME_FOLDER_NAME="T7Laser";
+	public final static String DIRECTORY_SOUNDS="sounds"+File.separator+GAME_FOLDER_NAME+File.separator;
+	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
+	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
+	
 	private static Player2 player;
 	private static Grid2 grid;
 	private static int score;
@@ -43,9 +53,9 @@ public class World2 extends BasicGameState{
 	
 	public void enter(GameContainer arg0, StateBasedGame arg1) throws SlickException{
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
-		music = new Music("Music/T7Laser/EpicSaxGuy.ogg");
-		end = new Music("Music/T7Laser/EndSong.ogg");
-		cat= new Sound("Music/T7Laser/Cat.ogg");
+		music = new Music(DIRECTORY_MUSICS+"EpicSaxGuy.ogg");
+		end = new Music(DIRECTORY_MUSICS+"EndSong.ogg");
+		cat= new Sound(DIRECTORY_SOUNDS+"Cat.ogg");
 		music.loop();
 		grid =  new Grid2(4,4);
 		player = new Player2();

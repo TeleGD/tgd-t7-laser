@@ -1,6 +1,8 @@
 package game3.world;
 
 import java.awt.Font;
+import java.io.File;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -21,8 +23,15 @@ import menus.MainMenu;
 public class World3 extends BasicGameState{
 	public final static float GRAVITY= 0.3f;
 	public final static int ID=3;
-	private static int score = 0;
 	
+	public final static String GAME_NAME="Cathedral Bloxx";
+	
+	public final static String GAME_FOLDER_NAME="CathedralBloxx";
+	public final static String DIRECTORY_SOUNDS="sounds"+File.separator+GAME_FOLDER_NAME+File.separator;
+	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
+	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
+	
+	private static int score = 0;
 	public static Pendulum pendulum;
 	public static long timeInitial;
 	public static Tower tower;
@@ -33,7 +42,7 @@ public class World3 extends BasicGameState{
 	private Image toitImage;
 	private TrueTypeFont fontPerdu;
 	private static boolean perdu=false;
-	private Music soundLose,soundMusicBackground;
+	private static Music soundMusicBackground;
 	private StateBasedGame game;
 	private Block endBlock;
 	
@@ -67,15 +76,13 @@ public class World3 extends BasicGameState{
 		setDifficulty(difficulty);
 
 		fontPerdu=FontUtils.chargerFont("font/PressStart2P.ttf",Font.BOLD,40,false);
-		toitImage=new Image("Images/TowerBlocks/Blocs/"+World3.colorImage+" Toit.png");
+		toitImage=new Image(DIRECTORY_IMAGES+"Blocs/"+World3.colorImage+" Toit.png");
 		
 		decor=new Decor();
 		timeInitial=System.currentTimeMillis(); // on reinitialise le temps
-		tower=new Tower(Main.longueur/2,Main.hauteur,new Block(pendulum.getX() - 50, Main.hauteur-101,100,100,new Image("Images/TowerBlocks/Blocs/"+World3.colorImage+" Porte.png")));
-
-		soundLose=new Music("son/gameOver.wav");
+		tower=new Tower(Main.longueur/2,Main.hauteur,new Block(pendulum.getX() - 50, Main.hauteur-101,100,100,new Image(World3.DIRECTORY_IMAGES+"Blocs/"+World3.colorImage+" Porte.png")));
 		
-		soundMusicBackground=new Music("son/what_is_love.wav");
+		soundMusicBackground=new Music(DIRECTORY_MUSICS+"what_is_love.ogg");
 		soundMusicBackground.play(1, 0.3f);
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 	}
@@ -97,6 +104,8 @@ public class World3 extends BasicGameState{
             g.setFont(fontPerdu);
             g.setColor(Color.white);
             g.drawString("PERDU !", Main.longueur/2-fontPerdu.getWidth("PERDU !")/2, Main.hauteur/2);
+            //g.setFont(FontUtils.chargerFont("Kalinga", Font.PLAIN, 15, true));
+            //g.drawString("PRESS ENTER TO RESTART",Main.longueur/2-t/2-40,Main.hauteur/2+100);
         }
         
         g.setFont(fontPerdu);
@@ -116,7 +125,6 @@ public class World3 extends BasicGameState{
 
 		if(!perdu && pendulum.getBlock().isRealeased() && pendulum.getBlock().getY()>Main.hauteur){
 			pendulum.finishTower();
-			soundLose.play();
 			perdu=true;
 			db.SQLiteJDBC.updateScore("Jeje", 3, score);
 		}
@@ -166,7 +174,10 @@ public class World3 extends BasicGameState{
 		 			score=0;
 		 			setDifficulty(difficulty);
 		 			timeInitial=System.currentTimeMillis(); // on reinitialise le temps
-		 			tower=new Tower(Main.longueur/2,Main.hauteur,new Block(pendulum.getX() - 50, Main.hauteur-101,100,100,new Image("Images/TowerBlocks/Blocs/"+World3.colorImage+" Porte.png")));
+		 			tower=new Tower(Main.longueur/2,Main.hauteur,new Block(pendulum.getX() - 50, Main.hauteur-101,100,100,new Image(World3.DIRECTORY_IMAGES+"Blocs/"+World3.colorImage+" Porte.png")));
+
+		 			soundMusicBackground=new Music(DIRECTORY_SOUNDS+"what_is_love.wav");
+		 			soundMusicBackground.play(1, 0.3f);
 		 		} catch (SlickException e) {
 		 			// TODO Auto-generated catch block
 		 			e.printStackTrace();

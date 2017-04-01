@@ -32,11 +32,11 @@ public class Player2{
 		World2.getGrid().getCell(0, 0).setContains(true);
 		this.x = 0;
 		this.y = 0;
-		this.setImage(new Image("Images/T7Laser/Char_down.png"));
-		this.down= new Image("Images/T7Laser/Char_down.png");
-		this.up=new Image("Images/T7Laser/Char_up.png");
-		this.right=new Image("Images/T7Laser/Char_right.png");
-		this.left=new Image("Images/T7Laser/Char_left.png");
+		this.setImage(new Image(World2.DIRECTORY_IMAGES+"Char_down.png"));
+		this.down= new Image(World2.DIRECTORY_IMAGES+"Char_down.png");
+		this.up=new Image(World2.DIRECTORY_IMAGES+"Char_up.png");
+		this.right=new Image(World2.DIRECTORY_IMAGES+"Char_right.png");
+		this.left=new Image(World2.DIRECTORY_IMAGES+"Char_left.png");
 	}
 	
 	

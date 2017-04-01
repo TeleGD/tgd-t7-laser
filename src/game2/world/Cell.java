@@ -37,9 +37,9 @@ public class Cell {
 		
 
 		if(NORMAL==null){
-			NORMAL= new Image("Images/T7Laser/Cell.png");
-			MINE=new Image("Images/T7Laser/Mine.png");
-			BONUS=new Image("Images/T7Laser/Bonus.png");
+			NORMAL= new Image(World2.DIRECTORY_IMAGES+"Cell.png");
+			MINE=new Image(World2.DIRECTORY_IMAGES+"Mine.png");
+			BONUS=new Image(World2.DIRECTORY_IMAGES+"Bonus.png");
 		}
 	}
 	

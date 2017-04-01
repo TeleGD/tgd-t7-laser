@@ -35,9 +35,9 @@ public class MainMenu3 extends Menu{
 
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
-		image[0]=new Image("Images/TowerBlocks/Blocs/Rouge Normal.png").getScaledCopy(50, 50);
-		image[1]=new Image("Images/TowerBlocks/Blocs/Bleu Normal.png").getScaledCopy(50, 50);
-		image[2]=new Image("Images/TowerBlocks/Blocs/Vert Normal.png").getScaledCopy(50, 50);
+		image[0]=new Image(World3.DIRECTORY_IMAGES+"Blocs/Rouge Normal.png").getScaledCopy(50, 50);
+		image[1]=new Image(World3.DIRECTORY_IMAGES+"Blocs/Bleu Normal.png").getScaledCopy(50, 50);
+		image[2]=new Image(World3.DIRECTORY_IMAGES+"Blocs/Vert Normal.png").getScaledCopy(50, 50);
 	}
 
 

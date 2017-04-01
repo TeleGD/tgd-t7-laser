@@ -33,7 +33,6 @@ public class Tower extends Rectangle{
 	
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
 		// Rendering
-		//g.translate((float) (amplitude*Math.cos(alpha*World3.getTimeInMillis()/1000)), 0);
 		
 		for(int i = 0; i < blocks.size(); i++){
 			blocks.get(i).render(arg0, arg1, g);
@@ -52,12 +51,12 @@ public class Tower extends Rectangle{
 				blocks.get(i).setY(blocks.get(i).getY()+arg2/5);
 			}
 		}
-		if(needDefile){
-			cpt+=arg2/5;
-			World3.getDecor().setHeight(World3.getDecor().getHeight()+arg2/5);
-		}
-		if(cpt>=blocks.get(blocks.size()-1).getHeight()){
-			needDefile=false;
+		if(needDefile)World3.getDecor().setHeight(World3.getDecor().getHeight()+arg2/5);
+
+		if(blocks.size()>1)
+		{
+			if(blocks.get(blocks.size()-2).getY()<Main.hauteur)needDefile=true;
+			else needDefile=false;
 		}
 
 	}
@@ -131,7 +130,6 @@ public class Tower extends Rectangle{
 		World3.getPendulum().notifyStackedBlock();
 		
 		cpt=0;
-		this.needDefile=true;	
 		System.out.println("top="+getTop().getX());
 		System.out.println("block="+block.getX());
 

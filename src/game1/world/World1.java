@@ -1,5 +1,6 @@
 package game1.world;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
@@ -16,6 +17,13 @@ import menus.MainMenu;
 public class World1 extends BasicGameState{
 
 	public static int ID=1;
+
+	public final static String GAME_NAME="Labyrinthe";
+	public final static String GAME_FOLDER_NAME="Labyrinth";
+	public final static String DIRECTORY_SOUNDS="sounds"+File.separator+GAME_FOLDER_NAME+File.separator;
+	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
+	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
+
 	private static Labyrinth labyrinth;
 	private static MazeGenerator mazeGenerator;
 	private static GridlockedPlayer player;

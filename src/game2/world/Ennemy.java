@@ -46,7 +46,7 @@ public class Ennemy {
 
 	public Ennemy(int x, int y){
 		try{
-			image = new Image("Images/T7Laser/nyan.png");
+			image = new Image(World2.DIRECTORY_IMAGES+"nyan.png");
 		}catch(Exception e){}
 		this.x = x;
 		this.y = y;

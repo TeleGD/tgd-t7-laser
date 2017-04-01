@@ -44,7 +44,7 @@ public class Block extends Rectangle {
 	private void init() {
 
 		try {
-			soundPop=new Sound("son/pop.wav");
+			soundPop=new Sound(World3.DIRECTORY_SOUNDS+"pop.wav");
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -79,6 +79,7 @@ public class Block extends Rectangle {
 			}else if(isColliding==2){// frole a gauche
 				if(willDeath==false){
 					this.speedX-=1.3f;
+					new Sound(World3.DIRECTORY_SOUNDS+"game_over.ogg").play();
 				}
 				this.speedY=-0.5f;
 				
@@ -88,6 +89,8 @@ public class Block extends Rectangle {
 			}else if(isColliding==3){
 				if(willDeath==false){
 					this.speedX+=1.3f;
+					new Sound(World3.DIRECTORY_SOUNDS+"game_over.ogg").play();
+
 				}
 				this.speedY=-0.5f;
 				float angle=(float) (90*(getX()-World3.getTower().getTopX()-width/2)/(width/2));
