@@ -72,23 +72,21 @@ public class Pendulum extends BasicGameState{
 		corde.setRotation((float) ( -theta*180/Math.PI));
 		corde.setCenterOfRotation(0, 0);
 		
-		if(!block.isRealeased()){
-			block.render(container, game, g);
+		block.render(container, game, g);
 
-		}
 
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int arg2) throws SlickException {
 		theta=calculateTheta(); //theta=theta0cos(wt)
+		block.update(container, game, arg2);
 		if(!block.isRealeased()){
-			block.setCenterX(x+ (float)(length*Math.sin(theta)));
-			block.setCenterY(y+ (float)(length*Math.cos(theta)));
-			block.setAngle(theta);
+			block.setX(x+ (float)(length*Math.sin(theta))-block.getWidth()/2);
+			block.setY(y+ (float)(length*Math.cos(theta))-block.getHeight()/2);
+			block.setAngle((float) (-theta*180/Math.PI));
 		}
-		System.out.println(theta);
-		System.out.println("Time="+World3.getTime());
+		
 		
 		speed+=0.01;
 		speed=Math.max(speed,18000);
@@ -103,12 +101,11 @@ public class Pendulum extends BasicGameState{
 	}
 
 
-	public Block releaseBlock() {
+	public void releaseBlock() {
+		if(block.isRealeased())return;
 		float thetaDot=calculateThetaDot();
-		System.out.println("thetaDot="+thetaDot);
-		block.drop((float)(length*thetaDot*1+Math.pow(Math.tan(theta),2))/2000,0);
+		block.drop((float) (-thetaDot/3000*180.0f/Math.PI),(float)(length*thetaDot*1+Math.pow(Math.tan(theta),2))/1800,0);
 		compt=0;
-		return block;
 	}
 
 
@@ -176,6 +173,16 @@ public class Pendulum extends BasicGameState{
 		this.speed = f;
 	}
 
+	public Block getBlock() {
+		return block;
+	}
+	public void finishTower() throws SlickException {
+		block=new Block(World3.getTower().getTop().getX(),0,100,100, new Image("Images/TowerBlocks/Blocs/"+World3.colorImage+" Toit.png"));
+		block.setSpeedY(2f);
+		block.setSpeedX(0f);
+		block.setRealeased(true);
+		block.setIsDroping(true);
+	}
 
 
 }

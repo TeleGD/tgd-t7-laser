@@ -7,6 +7,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Transform;
 import org.newdawn.slick.state.StateBasedGame;
 
 import general.Main;
@@ -23,6 +24,9 @@ public class Block extends Rectangle {
 	private boolean isRealeased = false;
 	private Image image;
 	private Sound soundPop;
+	private float accelX;
+	private boolean willDeath;
+	private float speedAngle;
 	
 
 	public Block(float x, float y, float width, float height,Image image) {
@@ -49,11 +53,10 @@ public class Block extends Rectangle {
 	
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
 		// Rendering
-		g.setColor(Color.cyan);
 		
 		//g.rotate(Main.longueur/2, -100, -(float) (angle*180/Math.PI));
-		g.drawRect(x, y, width, height);
 		//g.rotate(getCenterY(), getCenterY(), (float) (angle*180/Math.PI));
+		image.setRotation(angle);
 		g.drawImage(image,x,y);
 	}
 	
@@ -62,24 +65,54 @@ public class Block extends Rectangle {
 
 		x += speedX*delta;
 		y += speedY*delta;
-		
+		angle+=speedAngle*delta;
+
+		speedX+=accelX;
 		speedY+=accelY;
 		
-		System.out.println(this.y  +" / "+ this.accelY + " / " + this.speedY );
+		System.out.println("speedX="+speedX);
 		if(isDroping){
-			if( World3.getTower().intersects(this)){
+			int isColliding=World3.getTower().isColliding(this);
+			if( isColliding==1){
 				World3.getTower().blockCollidedWithTower(this);
 				soundPop.play();
+			}else if(isColliding==2){// frole a gauche
+				if(willDeath==false){
+					this.speedX-=1.3f;
+				}
+				this.speedY=-0.5f;
+				
+				float angle=(float) (90*(World3.getTower().getTopX()-getX()-width/2)/(width/2));
+				setAngle(360-angle);
+				willDeath=true;
+			}else if(isColliding==3){
+				if(willDeath==false){
+					this.speedX+=1.3f;
+				}
+				this.speedY=-0.5f;
+				float angle=(float) (90*(getX()-World3.getTower().getTopX()-width/2)/(width/2));
+				System.out.println("angle="+angle);
+				setAngle(angle);
+				willDeath=true;
+
+			}else if(willDeath){
+
+				float angle=(float) (90*(getX()-World3.getTower().getTopX()-width/2)/(width/2));
+				System.out.println("angle="+angle);
+				setAngle(angle);
 			}
 		}
 		
 	}
 	// Methods =================================================================================
 
-	public void drop(float speedX,float speedY){
+	public void drop(float angleSpeed,float speedX,float speedY){
+		if(isDroping)return;
+		
 		successY = World3.getTower().getTopY();
 		this.speedY = speedY;
 		this.speedX = speedX;
+		this.speedAngle=angleSpeed;
 		this.accelY= World3.GRAVITY;
 		isDroping = true;
 		isRealeased = true;
@@ -127,6 +160,19 @@ public class Block extends Rectangle {
 
 	public void setRealeased(boolean isRealeased) {
 		this.isRealeased = isRealeased;
+	}
+
+
+
+	public void setAngleSpeed(int speedAngle) {
+		this.speedAngle=speedAngle;
+	}
+
+
+
+
+	public float getAngle() {
+		return angle;
 	}
 	
 }

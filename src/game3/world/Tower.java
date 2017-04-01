@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
@@ -32,29 +33,33 @@ public class Tower extends Rectangle{
 	
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
 		// Rendering
-		g.translate((float) (amplitude*Math.cos(alpha*World3.getTimeInMillis()/1000)), 0);
+		//g.translate((float) (amplitude*Math.cos(alpha*World3.getTimeInMillis()/1000)), 0);
+		
 		for(int i = 0; i < blocks.size(); i++){
 			blocks.get(i).render(arg0, arg1, g);
+			
 		}
 	}
 	
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		// Updating
+		
+		
 		for(int i = 0; i < blocks.size(); i++){
 			blocks.get(i).update(arg0, arg1, arg2);
+			blocks.get(i).setX(blocks.get(i).getX()+((float) (amplitude*Math.cos(alpha*World3.getTimeInMillis()/1000))));
 			if (needDefile==true){
-				blocks.get(i).setY(blocks.get(i).getY()+1);
+				blocks.get(i).setY(blocks.get(i).getY()+arg2/5);
 			}
 		}
 		if(needDefile){
-			cpt+=1;
-			World3.getDecor().setHeight(World3.getDecor().getHeight()+1);
+			cpt+=arg2/5;
+			World3.getDecor().setHeight(World3.getDecor().getHeight()+arg2/5);
 		}
-		if(cpt==blocks.get(blocks.size()-1).getHeight()){
+		if(cpt>=blocks.get(blocks.size()-1).getHeight()){
 			needDefile=false;
 		}
 
-		System.out.println("amplitude="+amplitude);
 	}
 	
 	public void addBlock(Block initialBlock) {
@@ -79,16 +84,35 @@ public class Tower extends Rectangle{
 		return false;
 	}
 
-	public boolean intersects(Shape shape){
+	//O: il n'est pas pret de tomber sur le tower;
+	//1: il  tombe sur le tower;
+	//2: vascille a gauche;
+	//3: vascille a droite;
+
+	public int isColliding(Shape shape){
+		if(shape.getY()+shape.getHeight()<getTop().getY())return 0;
+		if(shape.getY()>getTop().getY()+getTop().getHeight()/8)return 0;
 		
-		System.out.println(getTop().intersects(shape));
-		return getTop().intersects(shape);
+		if(shape.getX()-getTop().getX()>getTop().getWidth()/2){
+			if(shape.getX()-getTop().getX()<getTop().getWidth())return 3;
+			else return 0;
+		}
+		if(shape.getX()-getTop().getX()<-getTop().getWidth()/2){
+			if(shape.getX()-getTop().getX()>-getTop().getWidth())return 2;
+			else return 0;
+		}
+
+
+		return 1;
 	}
 
 	public void blockCollidedWithTower(Block block) {
 		block.setSpeedX(0);
 		block.setSpeedY(0);
 		block.setAccelY(0);
+		block.setAngleSpeed(0);
+		
+		block.setAngle((int)(block.getAngle()));
 		comb=combo(getTopX(), block.getX());
 		block.setY(getTopY()-getTop().getHeight());
 		block.setIsDroping(false);
@@ -111,8 +135,10 @@ public class Tower extends Rectangle{
 		System.out.println("top="+getTop().getX());
 		System.out.println("block="+block.getX());
 
-		amplitude+=Math.abs((getTop().getX()-block.getX())/50);
+		amplitude+=Math.abs((getTop().getX()-block.getX())/3)/100;
 		blocks.add(block);
 
 	}
+
+	
 }

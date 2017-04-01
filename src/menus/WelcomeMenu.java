@@ -19,7 +19,16 @@ public class WelcomeMenu extends Menu{
 	public static int ID = -2;	
 	
 	private static final String CONFIRM_TEXT="PRESS ENTER";
+
+	private Image background;
 	
+	
+	@Override
+	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+		super.init(container, game);
+		background=new Image("Images/LogoTGD_transparent.png");
+	}
+
 	@Override
 	public void onOptionItemFocusedChanged(int position){
 		time=System.currentTimeMillis();
@@ -46,7 +55,7 @@ public class WelcomeMenu extends Menu{
 		
 		g.setFont(fontConfirmText);
 		g.drawString(CONFIRM_TEXT, Main.longueur/2-fontConfirmText.getWidth(CONFIRM_TEXT)/2,35);
-
+		g.drawImage(background,Main.longueur/2-background.getWidth()/2,Main.hauteur/2-background.getHeight()/2);
 	}
 	
 	@Override

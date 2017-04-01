@@ -24,14 +24,12 @@ public class MainMenu3 extends Menu{
 	public MainMenu3(){
 
 		super.setTitrePrincipal("CATHEDRAL BLOXXX");
-		super.setTitreSecondaire("Choisissez votre difficulté");
+		super.setTitreSecondaire("Choisissez votre difficultÃ©");
 		super.setItems("Facile","Moyen","Difficile","Menu Principal");
 
 		super.setEnableClignote(true);
 		super.setCouleurClignote(Color.red);
 		super.setTempsClignote(400);
-
-
 
 	}
 
@@ -61,10 +59,10 @@ public class MainMenu3 extends Menu{
 	public void onOptionItemSelected(int position) {
 
 		World3.difficulty=position;
-		if(position<4){
+		if(position<3){
 			game.enterState(World3.ID, new FadeOutTransition(),
 					new FadeInTransition());
-		}else if (position==4){
+		}else if (position==3){
 			game.enterState(MainMenu.ID);
 		}
 
