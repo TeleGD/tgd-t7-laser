@@ -1,41 +1,37 @@
 package db;
 
+import java.util.HashMap;
+
 public class Person {
 	
 	private String name;
-	private int scoreg1,scoreg2,scoreg3;
+	private HashMap<Integer, Integer> scores;
 	
 	public Person(String name){
 		this.name=name;
-		scoreg1=0;
-		scoreg2=0;
-		scoreg3=0;
+		scores=new HashMap<Integer,Integer>();
 	}
 	
-	public void setScore1(int score){
-		this.scoreg1=score;
-	}
 	
-	public void setScore2(int score){
-		this.scoreg2=score;
-	}
-	
-	public void setScore3(int score){
-		this.scoreg3=score;
-	}
-	
-	public int getScore1(){
-		return this.scoreg1;
-	}
-	
-	public int getScore2(){
-		return this.scoreg2;
-	}
-	public int getScore3(){
-		return this.scoreg3;
-	}
 	
 	public String getName(){
 		return name;
+	}
+
+	public void setScoreAtGame(int indexGame, int score) {
+		scores.put(indexGame, score);
+	}
+
+	public int getScoreAtGame(int indexGame) {
+		if(scores.containsKey(indexGame))return scores.get(indexGame);
+		return 0;
+	}
+	
+	
+	@Override
+	public String toString(){
+		String s=name+": ";
+		s+=scores.toString();
+		return s;
 	}
 }

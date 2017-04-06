@@ -125,6 +125,8 @@ public class World2 extends BasicGameState{
 					player.setMoveDown(false);
 				}
 				if (player.isPressEnter()){
+					db.SQLiteJDBC.updateScore("Anonyme", 2, score);
+
 					if (selec == 1){
 						arg1.enterState(MainMenu.ID, new FadeOutTransition(),
 								new FadeInTransition());

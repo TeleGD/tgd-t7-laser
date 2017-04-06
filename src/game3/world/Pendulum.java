@@ -23,8 +23,6 @@ public class Pendulum extends BasicGameState{
 	private double omega;
 	private Block block;
 	private Image corde;
-	private int speedX;
-	private int compt;
 	
 	public Pendulum(){
 		x=Main.longueur/2;
@@ -89,7 +87,7 @@ public class Pendulum extends BasicGameState{
 		
 		
 		speed+=0.01;
-		speed=Math.max(speed,18000);
+		speed=Math.min(speed,18000);
 
 	}
 
@@ -105,7 +103,6 @@ public class Pendulum extends BasicGameState{
 		if(block.isRealeased())return;
 		float thetaDot=calculateThetaDot();
 		block.drop((float) (-thetaDot/3000*180.0f/Math.PI),(float)(length*thetaDot*1+Math.pow(Math.tan(theta),2))/1800,0);
-		compt=0;
 	}
 
 

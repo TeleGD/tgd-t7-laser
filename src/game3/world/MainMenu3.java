@@ -45,8 +45,8 @@ public class MainMenu3 extends Menu{
 	public void renderSelectionItem(GameContainer arg0, StateBasedGame arg1, Graphics g,int position) {
 		super.renderSelectionItem(container, game, g, position);
 		if (position<3){
-			g.drawImage(image[position], Main.longueur/2-fontItem.getWidth(items[indexItemPlusGrand])/2-125, 340 + 30 * selection);
-			g.drawImage(image[position], Main.longueur/2-fontItem.getWidth(items[indexItemPlusGrand])/2+120, 340 + 30 * selection);
+			g.drawImage(image[position], Main.longueur/2-fontItem.getWidth(items.get(indexItemPlusGrand))/2-125, 340 + 30 * selection);
+			g.drawImage(image[position], Main.longueur/2-fontItem.getWidth(items.get(indexItemPlusGrand))/2+120, 340 + 30 * selection);
 		}
 
 	}

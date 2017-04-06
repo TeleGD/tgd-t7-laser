@@ -17,7 +17,7 @@ public class MainMenu extends Menu{
 		super.setTitrePrincipal("MULTIGAME DESIGN");
 		super.setTitreSecondaire("Menu Principal");
 		super.setItems(World1.GAME_NAME,World2.GAME_NAME,World3.GAME_NAME,"Scores", "Quitter");
-		
+
 		super.setEnableClignote(false);
 		super.setCouleurClignote(Color.red);
 		super.setTempsClignote(400);

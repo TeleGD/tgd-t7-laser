@@ -11,6 +11,7 @@ import game1.world.World1;
 import game2.world.World2;
 import game3.world.MainMenu3;
 import game3.world.World3;
+import menus.HighScorePlayerMenu;
 import menus.MainMenu;
 import menus.ScoreMenu;
 import menus.WelcomeMenu;
@@ -45,6 +46,8 @@ public class Main extends StateBasedGame{
 		addState(new World3());
 		addState(new MainMenu3());
 		addState(new ScoreMenu());
+		addState(new HighScorePlayerMenu());
+
 		
 		this.enterState(WelcomeMenu.ID);
 	}

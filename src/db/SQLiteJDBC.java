@@ -14,8 +14,6 @@ public class SQLiteJDBC {
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:datas.db");
 			stmt = c.createStatement();
-
-
 			String sql ="CREATE TABLE SCORES " + "(Name VARCHAR(10), Game INT,Score INT);";
 			stmt.executeUpdate(sql);
 			sql="INSERT INTO SCORES (Name,Game,Score) VALUES ('nicorb',1,2500),('nicorb',2,2500),('nicorb',3,2500)";
@@ -30,30 +28,30 @@ public class SQLiteJDBC {
 
 
 	public static void main( String args[]){
-		initializeTables();
+		//initializeTables();
+		Person p=search("JEROME");
+		System.out.println(p.getScoreAtGame(3));
+
+		/*
+		ArrayList<Person> persons=getScoresForGame(3);
+		for(Person p:persons){
+			System.out.println(p.toString());
+		}*/
 	}
 
+	
 	public static Person search(String name){
 		Connection c = null;
 		Statement stmt = null;
-		Person result = new Person(name);
+		Person person = new Person(name);
 		try {
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:datas.db");
 			stmt=c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM SCORES WHERE name='"+name+"'");
+			
 			while (rs.next()){
-				switch (rs.getInt(2)){
-				case 1:
-					result.setScore1(rs.getInt(3));
-					break;
-				case 2:
-					result.setScore2(rs.getInt(3));
-					break;
-				case 3:
-					result.setScore3(rs.getInt(3));
-					break;
-				}
+				person.setScoreAtGame(rs.getInt(2),rs.getInt(3));
 			}
 			rs.close();
 			stmt.close();
@@ -62,7 +60,7 @@ public class SQLiteJDBC {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		return result;
+		return person;
 
 	}
 
@@ -73,7 +71,7 @@ public class SQLiteJDBC {
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:datas.db");
 			stmt=c.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT Score FROM SCORES WHERE name='"+name+"' AND Game="+score);
+			ResultSet rs = stmt.executeQuery("SELECT Score FROM SCORES WHERE name='"+name+"' AND Game="+game);
 			if(rs.next()){
 				if (score>rs.getInt(1)){
 					stmt.executeUpdate("UPDATE SCORES SET Score="+score+" WHERE name='"+name+"' AND Game="+game);
@@ -90,7 +88,7 @@ public class SQLiteJDBC {
 		}
 	}
 
-	public static ArrayList<Person> searchHS(int i){
+	public static ArrayList<Person> getScoreForGame(int gameIndex){
 		ArrayList<Person> result = new ArrayList<Person>();
 		Connection c = null;
 		Statement stmt = null;
@@ -98,10 +96,10 @@ public class SQLiteJDBC {
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:datas.db");
 			stmt=c.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM SCORES WHERE Game="+i+" ORDER BY Score LIMIT 10");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM SCORES WHERE Game="+gameIndex+" ORDER BY Score DESC LIMIT 10");
 			while (rs.next()){
 				Person p=new Person(rs.getString(1));
-				p.setScore2(rs.getInt(3));
+				p.setScoreAtGame(rs.getInt(2),rs.getInt(3));
 				result.add(p);
 			}
 			rs.close();

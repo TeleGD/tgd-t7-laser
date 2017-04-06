@@ -70,7 +70,6 @@ public class Block extends Rectangle {
 		speedX+=accelX;
 		speedY+=accelY;
 		
-		System.out.println("speedX="+speedX);
 		if(isDroping){
 			int isColliding=World3.getTower().isColliding(this);
 			if( isColliding==1){
@@ -94,14 +93,12 @@ public class Block extends Rectangle {
 				}
 				this.speedY=-0.5f;
 				float angle=(float) (90*(getX()-World3.getTower().getTopX()-width/2)/(width/2));
-				System.out.println("angle="+angle);
 				setAngle(angle);
 				willDeath=true;
 
 			}else if(willDeath){
 
 				float angle=(float) (90*(getX()-World3.getTower().getTopX()-width/2)/(width/2));
-				System.out.println("angle="+angle);
 				setAngle(angle);
 			}
 		}

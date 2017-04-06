@@ -17,10 +17,15 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import db.SQLiteJDBC;
 import general.Main;
+import general.ui.Button;
+import general.ui.TGDComponent;
+import general.ui.TGDComponent.OnClickListener;
+import general.ui.TextField;
+import general.ui.TextField.EnterActionListener;
 import general.utils.FontUtils;
 import menus.MainMenu;
 
-public class World3 extends BasicGameState{
+public class World3 extends BasicGameState implements OnClickListener, EnterActionListener{
 	public final static float GRAVITY= 0.3f;
 	public final static int ID=3;
 	
@@ -39,33 +44,38 @@ public class World3 extends BasicGameState{
 	public static int difficulty;
 	public static String colorImage;
 	
-	private Image toitImage;
 	private TrueTypeFont fontPerdu;
 	private static boolean perdu=false;
 	private static Music soundMusicBackground;
 	private StateBasedGame game;
-	private Block endBlock;
+	private TextField textField;
+	private Button bouton;
+	private String textPerdu;
+	
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		this.game=game;
+		
 	}
 	
 	public static void setDifficulty(int difficulty){
 		if(difficulty==0){
 			colorImage="Rouge";
 			pendulum=new Pendulum();
+			pendulum.setSpeed(12000);
+
 		}
 		else if(difficulty==1){
 			colorImage="Bleu";
 			pendulum=new Pendulum();
-			pendulum.setSpeed(pendulum.getSpeed()*2);
+			pendulum.setSpeed(16000);
 			pendulum.setLength(1650);
 		}
 		else if(difficulty==2){
 			colorImage="Vert";
 			pendulum=new Pendulum();
-			pendulum.setSpeed(pendulum.getSpeed()*4);
+			pendulum.setSpeed(22000);
 			pendulum.setLength(1500);
 		}
 	}
@@ -75,8 +85,7 @@ public class World3 extends BasicGameState{
 		//pendulum.enter(container, game);
 		setDifficulty(difficulty);
 
-		fontPerdu=FontUtils.chargerFont("font/PressStart2P.ttf",Font.BOLD,40,false);
-		toitImage=new Image(DIRECTORY_IMAGES+"Blocs/"+World3.colorImage+" Toit.png");
+		fontPerdu=FontUtils.loadFont("PressStart2P.ttf",Font.BOLD,20,false);
 		
 		decor=new Decor();
 		timeInitial=System.currentTimeMillis(); // on reinitialise le temps
@@ -85,27 +94,45 @@ public class World3 extends BasicGameState{
 		soundMusicBackground=new Music(DIRECTORY_MUSICS+"what_is_love.ogg");
 		soundMusicBackground.play(1, 0.3f);
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
+		
+
+		textField=new TextField(container,Main.longueur/2-100,Main.hauteur*0.6f,150,TGDComponent.AUTOMATIC);
+		textField.setMaxNumberOfLetter(13);
+		textField.setUpperCaseLock(true);
+		textField.setPlaceHolder("Entrez un pseudo");
+		textField.setEnterActionListener(this);
+		bouton=new Button("ENREGISTRER",container,Main.longueur/2+60,Main.hauteur*0.6f,TGDComponent.AUTOMATIC,textField.getHeight());
+		bouton.setOnClickListener(this);
+		bouton.setPadding(10,15,10,15);
 	}
 	
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		//Affichage
 		
+		//Affichage
 		  
         decor.render(container, game, g);
         tower.render(container, game, g);
         if(!perdu || pendulum.getBlock().isRealeased())pendulum.render(container, game,g);
 
         if(perdu){
-        	int t=fontPerdu.getWidth("Score :"+score);
+        	int t=Math.max(Math.max(fontPerdu.getWidth("Score :"+score),fontPerdu.getWidth(textPerdu)),400);
+        	
+    		
         	g.setColor(new Color(80,80,20));
         	g.fillRoundRect(Main.longueur/2-t/2-40,  Main.hauteur/2-150, t+80, 300,25,25);
             g.setFont(fontPerdu);
             g.setColor(Color.white);
-            g.drawString("PERDU !", Main.longueur/2-fontPerdu.getWidth("PERDU !")/2, Main.hauteur/2);
+            g.drawString(textPerdu, Main.longueur/2-fontPerdu.getWidth(textPerdu)/2, Main.hauteur/2-30);
             //g.setFont(FontUtils.chargerFont("Kalinga", Font.PLAIN, 15, true));
             //g.drawString("PRESS ENTER TO RESTART",Main.longueur/2-t/2-40,Main.hauteur/2+100);
+            
+            g.resetFont();
+    		g.drawString("PSEUDO", textField.getX()-g.getFont().getWidth("PSEUDO")-25, textField.getY()+textField.getHeight()/2-g.getFont().getHeight("PSEUDO")/2);
+
+        	textField.render(container, game, g);
+    		bouton.render(container, game, g);
         }
         
         g.setFont(fontPerdu);
@@ -117,17 +144,26 @@ public class World3 extends BasicGameState{
 	
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int compt) throws SlickException {
-		decor.update(container, game, compt);
-		tower.update(container, game, compt);
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		decor.update(container, game, delta);
+		tower.update(container, game, delta);
 		
-        if(!perdu || pendulum.getBlock().isRealeased())pendulum.update(container, game,compt);
+        if(!perdu || pendulum.getBlock().isRealeased())pendulum.update(container, game,delta);
 
 		if(!perdu && pendulum.getBlock().isRealeased() && pendulum.getBlock().getY()>Main.hauteur){
 			pendulum.finishTower();
 			perdu=true;
-			db.SQLiteJDBC.updateScore("Jeje", 3, score);
+			textField.setText("");
+			textPerdu="PERDU !";
+			
 		}
+		
+		if(perdu){
+			textField.update(container, game, delta);
+			bouton.update(container, game, delta);
+
+		}
+		
 		
 		
 	}
@@ -220,6 +256,18 @@ public class World3 extends BasicGameState{
 
 	public static void setScore(int score) {
 		World3.score = score;
+	}
+
+	@Override
+	public void onClick(TGDComponent component) {
+		db.SQLiteJDBC.updateScore(textField.getText(), 3, score);
+		textPerdu="Score Updated !";
+	}
+
+	@Override
+	public void onEnterPressed() {
+		db.SQLiteJDBC.updateScore(textField.getText(), 3, score);
+		textPerdu="Score Updated !";		
 	}
 
 	
