@@ -14,6 +14,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+import api.APIListener;
+import api.TGDApi;
 import db.Person;
 import game1.world.World1;
 import game2.world.World2;
@@ -26,7 +28,7 @@ import general.ui.TextField;
 import general.ui.TextField.EnterActionListener;
 import general.utils.FontUtils;
 
-public class ScoreMenu extends BasicGameState implements EnterActionListener, OnClickListener{
+public class ScoreMenu extends BasicGameState implements EnterActionListener, OnClickListener, APIListener{
 
 	public static int ID=-1;
 	
@@ -59,10 +61,11 @@ public class ScoreMenu extends BasicGameState implements EnterActionListener, On
 	@Override
 	public void enter(GameContainer container, StateBasedGame game){
 		this.game=game;
-		
+		TGDApi.setApiListener(this);
 		for(int i=0;i<NB_GAME;i++)
 		{
-			games.add(db.SQLiteJDBC.getScoreForGame(i+1));
+			games.add(new ArrayList<Person>());
+			TGDApi.getScoreForGame(i+1,10);
 		}
 		fontHighScore=FontUtils.loadCustomFont("PressStart2P.ttf", Font.BOLD, 35);
 		
@@ -108,17 +111,20 @@ public class ScoreMenu extends BasicGameState implements EnterActionListener, On
 			g.drawString(name,PADDING_LEFT+ i*LARGEUR_COLUMN+PADDING_LEFT_COLUMN+LARGEUR_COLUMN/2-g.getFont().getWidth(name), BEGIN_Y_TAB);
 			
 			g.setColor(Color.white);
-
-			for(int j=0;j<games.get(i).size();j++)
-			{
-				g.drawString((j+1)+")",PADDING_LEFT+ i*LARGEUR_COLUMN+PADDING_LEFT_COLUMN, BEGIN_Y_TAB+(j+1)*HEIGHT_ROW);
-				g.drawString(games.get(i).get(j).getName(),PADDING_LEFT+55+ i*LARGEUR_COLUMN+PADDING_LEFT_COLUMN, BEGIN_Y_TAB+(j+1)*HEIGHT_ROW);
-				g.drawString(""+games.get(i).get(j).getScoreAtGame((i+1)), PADDING_LEFT+(i+1)*LARGEUR_COLUMN-PADDING_RIGHT_COLUMN-g.getFont().getWidth(games.get(i).get(j).getScoreAtGame(i+1)+""), BEGIN_Y_TAB+(j+1)*HEIGHT_ROW);
-
-			}
 			if(i!=NB_GAME-1){
 				g.fillRoundRect(PADDING_LEFT+(i+1)*LARGEUR_COLUMN,BEGIN_Y_TAB,WIDTH_SEPARATOR,HAUTEUR_TABLEAU,3);	
 			}
+			if(games.size()>i){
+				for(int j=0;j<games.get(i).size();j++)
+				{
+					g.drawString((j+1)+")",PADDING_LEFT+ i*LARGEUR_COLUMN+PADDING_LEFT_COLUMN, BEGIN_Y_TAB+(j+1)*HEIGHT_ROW);
+					g.drawString(games.get(i).get(j).getName(),PADDING_LEFT+55+ i*LARGEUR_COLUMN+PADDING_LEFT_COLUMN, BEGIN_Y_TAB+(j+1)*HEIGHT_ROW);
+					g.drawString(""+games.get(i).get(j).getScoreAtGame((i+1)), PADDING_LEFT+(i+1)*LARGEUR_COLUMN-PADDING_RIGHT_COLUMN-g.getFont().getWidth(games.get(i).get(j).getScoreAtGame(i+1)+""), BEGIN_Y_TAB+(j+1)*HEIGHT_ROW);
+
+				}
+			}
+			
+			
 	   }
 		
 		textField.render(container, game, g);
@@ -154,6 +160,28 @@ public class ScoreMenu extends BasicGameState implements EnterActionListener, On
 	private void showHighScorePlayer() {
 		HighScorePlayerMenu.setNamePlayer(textField.getText());
 		game.enterState(HighScorePlayerMenu.ID, new FadeOutTransition(),new FadeInTransition());		
+	}
+
+	@Override
+	public void onContentReceived(Object content) {
+		System.out.println("Score:"+content.toString());
+
+		if(content instanceof ArrayList<?>){
+			ArrayList<Person> persons=((ArrayList<Person>)content);
+			games.set(persons.get(0).getGamesPlayed().get(0)-1,persons);
+		}
+	}
+
+	@Override
+	public void onContentUpdated(String reponse) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onError(String reason) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

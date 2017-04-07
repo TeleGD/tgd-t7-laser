@@ -15,6 +15,7 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import api.TGDApi;
 import db.SQLiteJDBC;
 import general.Main;
 import general.ui.Button;
@@ -155,6 +156,7 @@ public class World3 extends BasicGameState implements OnClickListener, EnterActi
 			perdu=true;
 			textField.setText("");
 			textPerdu="PERDU !";
+			textField.setHasFocus(true);
 			
 		}
 		
@@ -179,11 +181,6 @@ public class World3 extends BasicGameState implements OnClickListener, EnterActi
  				pendulum.releaseBlock();
  			}
  			break;
-  		case Input.KEY_ENTER:
-  		if(perdu){
-				reset();
-			}
-  		break;
   		case Input.KEY_ESCAPE:
   			if(perdu){
   				this.soundMusicBackground.stop();
@@ -212,7 +209,7 @@ public class World3 extends BasicGameState implements OnClickListener, EnterActi
 		 			timeInitial=System.currentTimeMillis(); // on reinitialise le temps
 		 			tower=new Tower(Main.longueur/2,Main.hauteur,new Block(pendulum.getX() - 50, Main.hauteur-101,100,100,new Image(World3.DIRECTORY_IMAGES+"Blocs/"+World3.colorImage+" Porte.png")));
 
-		 			soundMusicBackground=new Music(DIRECTORY_SOUNDS+"what_is_love.wav");
+		 			soundMusicBackground=new Music(DIRECTORY_MUSICS+"what_is_love.ogg");
 		 			soundMusicBackground.play(1, 0.3f);
 		 		} catch (SlickException e) {
 		 			// TODO Auto-generated catch block
@@ -260,13 +257,13 @@ public class World3 extends BasicGameState implements OnClickListener, EnterActi
 
 	@Override
 	public void onClick(TGDComponent component) {
-		db.SQLiteJDBC.updateScore(textField.getText(), 3, score);
+		TGDApi.updateScoreForGame(textField.getText(), 3, score);
 		textPerdu="Score Updated !";
 	}
 
 	@Override
 	public void onEnterPressed() {
-		db.SQLiteJDBC.updateScore(textField.getText(), 3, score);
+		TGDApi.updateScoreForGame(textField.getText(), 3, score);
 		textPerdu="Score Updated !";		
 	}
 

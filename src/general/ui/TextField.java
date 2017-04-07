@@ -63,6 +63,12 @@ public class TextField extends TGDComponent{
 
 		
 		unauthorizedKeys=new ArrayList<Integer>();
+		unauthorizedKeys.add(Input.KEY_RIGHT);
+		unauthorizedKeys.add(Input.KEY_LEFT);
+		unauthorizedKeys.add(Input.KEY_UP);
+		unauthorizedKeys.add(Input.KEY_DOWN);
+		unauthorizedKeys.add(Input.KEY_ENTER);
+
 	}
 
 	@Override
@@ -116,11 +122,10 @@ public class TextField extends TGDComponent{
 			g.drawString(placeHolder, x+paddingLeft, y+paddingTop);
 			
 		}
-		if(cursorEnabled && (System.currentTimeMillis()-time)%800<400){
+		if(cursorEnabled && (System.currentTimeMillis()-timeInit)%800<400 && hasFocus){
 			g.setColor(cursorColor);
 			g.fillRect(x+paddingLeft+Math.min(textFont.getWidth(text),getWidth()-paddingRight-paddingLeft), y+paddingTop,cursorWidth,getHeight()-paddingBottom-paddingTop);
 		}
-		
 	}
 	
 	@Override
@@ -227,6 +232,7 @@ public class TextField extends TGDComponent{
 	public void keyPressed(int key, char c) {
 		super.keyPressed(key, c);
 		if(!hasFocus)return;
+		
 		if(key==Input.KEY_BACK){
 			if(text.length()>0)text=text.substring(0, text.length()-1);
 		}else if(key==Input.KEY_ENTER)
@@ -235,14 +241,25 @@ public class TextField extends TGDComponent{
 			if(listener!=null){
 				listener.onEnterPressed();
 			}
+			hasFocus=false;
 		}
-		else if(!unauthorizedKeys.contains(key) && ((int)c)!=0 && (text.length()<maxNumberOfLetter || maxNumberOfLetter==-1)){
-			System.out.println("char : "+c);
+		else if(!unauthorizedKeys.contains(key) && ((int)c)!=0 && (text.length()<maxNumberOfLetter || maxNumberOfLetter==-1) &&  (c+"").length()>0){
 			text+=c;
 			if(upperCaseLock)text=text.toUpperCase();
 		}
 	}
 
+	@Override
+	public void mouseClicked(int type, int x, int y, int count) {
+		if(!contains(x,y)){
+			hasFocus=false;
+		}else{
+			hasFocus=true;
+		}
+
+		super.mouseClicked(type, x, y, count);
+	}
+	
 	@Override
 	public void keyReleased(int key, char c) {
 		super.keyReleased(key, c);

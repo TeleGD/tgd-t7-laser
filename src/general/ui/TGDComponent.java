@@ -33,11 +33,13 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 
 	protected long time;
 
+	protected long timeInit;
+
 	
 	public TGDComponent(GameContainer container,float x, float y, float width, float height) {
 		super(x, y, width, height);
 		initDefaultUI();
-		time=System.currentTimeMillis();
+		timeInit=System.currentTimeMillis();
 
 
 		container.getInput().addMouseListener(this);
@@ -51,6 +53,8 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 		setBackgroundColorPressed(null);
 		setBorderWidth(0);
 		
+		hasFocus=true;
+		
 	}
 	
 	public void update(GameContainer container,StateBasedGame game, int delta) throws SlickException{
@@ -60,6 +64,8 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.setAntiAlias(true);
 		g.resetLineWidth();
+		
+		time=System.currentTimeMillis();
 
 		if(mousePressed && backgroundColorPressed!=null)g.setColor(backgroundColorPressed);
 		else if(mouseEntered  && backgroundColorEntered!=null)g.setColor(backgroundColorEntered);
@@ -209,32 +215,30 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 	
 	@Override
 	public void mouseClicked(int type, int x, int y, int count) {
-		hasFocus=System.currentTimeMillis()-time<500;
-		if(contains(x, y) && listener!=null && hasFocus)listener.onClick(this);
-
+		if(hasFocus && listener!=null)listener.onClick(this);
 	}
 
 	@Override
 	public void mouseDragged(int arg0, int arg1, int arg2, int arg3) {
-		hasFocus=System.currentTimeMillis()-time<500;
-
+		if(System.currentTimeMillis()-time>500)hasFocus=false;
+		if(!hasFocus)return;
 	}
 
 	@Override
 	public void mouseMoved(int ox, int oy, int x, int y) {
-		hasFocus=System.currentTimeMillis()-time<500;
+		if(System.currentTimeMillis()-time>500)hasFocus=false;
 		mouseEntered=contains(x, y);
 	}
 
 	@Override
 	public void mousePressed(int arg0, int x, int y) {
-		hasFocus=System.currentTimeMillis()-time<500;
+		if(System.currentTimeMillis()-time>500)hasFocus=false;
 		mousePressed=contains(x, y);
 	}
 
 	@Override
 	public void mouseReleased(int arg0, int x, int y) {
-		hasFocus=System.currentTimeMillis()-time<500;
+		if(System.currentTimeMillis()-time>500)hasFocus=false;
 		mousePressed=false;
 		
 	}
@@ -243,14 +247,16 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 
 	@Override
 	public void keyPressed(int arg0, char arg1) {
-		hasFocus=System.currentTimeMillis()-time<500;
+		if(System.currentTimeMillis()-time>500)hasFocus=false;
+		if(!hasFocus)return;
 	}
 
 
 
 	@Override
 	public void keyReleased(int arg0, char arg1) {
-		hasFocus=System.currentTimeMillis()-time<500;
+		if(System.currentTimeMillis()-time>500)hasFocus=false;
+		
 		// TODO Auto-generated method stub
 		
 	}
@@ -273,7 +279,6 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 	    if(x>this.x+getWidth()) return false;
 		if(y<this.y) return false;
 		if(y>this.y+getHeight()) return false;
-		System.out.println("succes Contains");
 
 		return true;
 

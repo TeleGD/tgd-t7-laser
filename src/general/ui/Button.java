@@ -68,6 +68,11 @@ public class Button extends TGDComponent{
 	
 	//SLICK METHOD
 
+	public void update(GameContainer container,StateBasedGame game, int delta) throws SlickException{
+		super.update(container, game, delta);
+		if(mouseEntered)hasFocus=true;
+	}
+	
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		super.render(container, game, g);

@@ -15,10 +15,17 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+import api.TGDApi;
 import game3.world.MainMenu3;
+import general.Main;
+import general.ui.Button;
+import general.ui.TGDComponent;
+import general.ui.TGDComponent.OnClickListener;
+import general.ui.TextField;
+import general.ui.TextField.EnterActionListener;
 import menus.MainMenu;
 
-public class World2 extends BasicGameState{
+public class World2 extends BasicGameState implements EnterActionListener,OnClickListener{
 
 	public static int ID=2;
 
@@ -43,7 +50,8 @@ public class World2 extends BasicGameState{
 	
 	private static float renderScale = (float)1;
 	
-	
+	private TextField textField;
+	private Button button;
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
@@ -51,7 +59,7 @@ public class World2 extends BasicGameState{
 		
 	}
 	
-	public void enter(GameContainer arg0, StateBasedGame arg1) throws SlickException{
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 		music = new Music(DIRECTORY_MUSICS+"EpicSaxGuy.ogg");
 		end = new Music(DIRECTORY_MUSICS+"EndSong.ogg");
@@ -63,35 +71,63 @@ public class World2 extends BasicGameState{
 		selec = 0;
 		renderScale = (float)1;
 		start = false;
+		
+		initPerduView(container);
+		
 	}
 	
 
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
+	private void initPerduView(GameContainer container) {
+		
+		textField=new TextField(container,60,200,150,TGDComponent.AUTOMATIC);
+		textField.setMaxNumberOfLetter(13);
+		textField.setUpperCaseLock(true);
+		textField.setBorderWidth(2);
+		textField.setBorderColor(Color.black);
+		textField.setTextColor(Color.black);
+		textField.setPlaceHolder("Entrez un pseudo");
+		textField.setEnterActionListener(this);
+		
+		button=new Button("ENREGISTRER",container,textField.getX()+160,200,TGDComponent.AUTOMATIC,textField.getHeight());
+		button.setOnClickListener(this);
+		button.setPadding(10,15,10,15);		
+		button.setBorderWidth(2);
+		button.setBorderColor(Color.black);
+		button.setBackgroundColorEntered(Color.black);
+		button.setTextColorEntered(Color.white);
+		button.setTextColor(Color.black);
+	}
+
+	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		//Affichage
-		arg2.setColor(Color.white);
+		g.setColor(Color.white);
 		
-		arg2.fillRect(0,0,1280,720);
+		g.fillRect(0,0,1280,720);
 		if (!start){
-			arg2.setColor(Color.black);
-			if (disp) arg2.drawString("Press Enter", 600, 355);
+			g.setColor(Color.black);
+			if (disp) g.drawString("Press Enter", 600, 355);
 		} else {
-			grid.render(arg0,arg1,arg2);
-			player.render(arg0,arg1,arg2);
+			grid.render(container,game,g);
+			player.render(container,game,g);
 		
-			arg2.setColor(Color.black);
-			arg2.drawString("Score : "+getScore(), 88, 100);
-			arg2.drawString("Waves : "+grid.getWaveNumber(), 95, 150);
+			g.setColor(Color.black);
+			g.drawString("Score : "+getScore(), 88, 100);
+			g.drawString("Waves : "+grid.getWaveNumber(), 95, 150);
 		
 			if (player.isDead()){
-				arg2.setColor(Color.black);
-				arg2.drawString("Rejouer", 100,400);
-				arg2.drawString("Quitter", 100,450);
-			arg2.drawString(">>>", 50, 400+selec*50);
+				
+				g.setColor(Color.black);
+				g.drawString("Rejouer", 100,400);
+				g.drawString("Quitter", 100,450);
+				g.drawString(">>>", 50, 400+selec*50);
+
+				textField.render(container, game, g);
+				button.render(container, game, g);
 			}
 		}
 	}
 
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if (!start){
 			if (cpt > 60) {
 				cpt = 0;
@@ -105,8 +141,8 @@ public class World2 extends BasicGameState{
 		}
 		if (start){
 			if (!player.isDead()){
-				player.update(arg0,arg1,arg2);
-				grid.update(arg0, arg1, arg2);
+				player.update(container,game,delta);
+				grid.update(container, game, delta);
 				setScore(getScore() + 1);
 				if (player.isDead()) {
 					music.stop();
@@ -115,6 +151,12 @@ public class World2 extends BasicGameState{
 			}
 			
 			if(player.isDead()){
+				
+				button.update(container, game, delta);
+				textField.update(container, game, delta);
+				textField.setHasFocus(true);
+
+				
 				if ((player.isMoveUp() && selec == 0) || (player.isMoveDown() && selec == 0)){
 					selec = 1;
 					player.setMoveUp(false);
@@ -125,10 +167,9 @@ public class World2 extends BasicGameState{
 					player.setMoveDown(false);
 				}
 				if (player.isPressEnter()){
-					db.SQLiteJDBC.updateScore("Anonyme", 2, score);
 
 					if (selec == 1){
-						arg1.enterState(MainMenu.ID, new FadeOutTransition(),
+						game.enterState(MainMenu.ID, new FadeOutTransition(),
 								new FadeInTransition());
 					} else {
 						music.loop();
@@ -186,5 +227,16 @@ public class World2 extends BasicGameState{
 
 	public static void setScore(int score) {
 		World2.score = score;
+	}
+
+	
+	@Override
+	public void onClick(TGDComponent component) {
+		TGDApi.updateScoreForGame(textField.getText(), 2, score);
+	}
+
+	@Override
+	public void onEnterPressed() {
+		TGDApi.updateScoreForGame(textField.getText(), 2, score);
 	}
 }

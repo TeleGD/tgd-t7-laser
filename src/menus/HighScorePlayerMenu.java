@@ -7,12 +7,14 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+import api.APIListener;
+import api.TGDApi;
 import db.Person;
 import game1.world.World1;
 import game2.world.World2;
 import game3.world.World3;
 
-public class HighScorePlayerMenu extends Menu{
+public class HighScorePlayerMenu extends Menu implements APIListener{
 	
 	public static int ID=-2039;
 	
@@ -21,7 +23,9 @@ public class HighScorePlayerMenu extends Menu{
 	private Person player;
 	@Override
 	public void enter(GameContainer arg0, StateBasedGame arg1){
-		this.player=db.SQLiteJDBC.search(namePlayer);
+		TGDApi.setApiListener(this);
+		TGDApi.getScoresForPlayer(namePlayer);
+		player=new Person(namePlayer);
 		
 		super.setTitrePrincipal("MEILLEURS SCORES");
 		super.setTitreSecondaire(namePlayer);
@@ -61,5 +65,30 @@ public class HighScorePlayerMenu extends Menu{
 		if(key==Input.KEY_ESCAPE){
 			game.enterState(ScoreMenu.ID, new FadeOutTransition(),new FadeInTransition());		
 		}
+	}
+
+	@Override
+	public void onContentReceived(Object content) {
+		if(content instanceof Person){
+			
+			player=(Person)content;
+			
+			super.removeAllItems();
+			super.addItem("Score "+World1.GAME_NAME +": "+player.getScoreAtGame(1));
+			super.addItem("Score "+World2.GAME_NAME +": "+player.getScoreAtGame(2));
+			super.addItem("Score "+World3.GAME_NAME +": "+player.getScoreAtGame(3));
+		}
+	}
+
+	@Override
+	public void onContentUpdated(String reponse) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onError(String reason) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -1,5 +1,6 @@
 package db;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Person {
@@ -33,5 +34,15 @@ public class Person {
 		String s=name+": ";
 		s+=scores.toString();
 		return s;
+	}
+
+
+
+	public ArrayList<Integer> getGamesPlayed() {
+		ArrayList<Integer> gamePlayed=new ArrayList<Integer>();
+		for(Integer i:scores.keySet()){
+			gamePlayed.add(i);
+		}
+		return gamePlayed;
 	}
 }
