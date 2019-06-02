@@ -7,7 +7,7 @@ public abstract class Tower {
 	private int cost;
 	private String name;
 
-	
+
 	public Tower(Cell cellule, int cost, String name) {
 		super();
 		this.cellule = cellule;
@@ -38,7 +38,7 @@ public abstract class Tower {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public abstract void action();
-	
+
 }

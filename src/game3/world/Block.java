@@ -19,7 +19,7 @@ public class Block extends Rectangle {
 	private float angle;
 	private float successY;
 	private float accelY;
-	
+
 	private boolean isDroping = false;
 	private boolean isRealeased = false;
 	private Image image;
@@ -27,15 +27,15 @@ public class Block extends Rectangle {
 	private float accelX;
 	private boolean willDeath;
 	private float speedAngle;
-	
+
 
 	public Block(float x, float y, float width, float height,Image image) {
 		super(x, y, width, height);
 		this.image=image.getScaledCopy((int)width, (int)height);
 		init();
 	}
-	
-	
+
+
 
 	public Block(float x, float y, float width, float height) {
 		super(x, y, width, height);
@@ -50,16 +50,16 @@ public class Block extends Rectangle {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
 		// Rendering
-		
+
 		//g.rotate(Main.longueur/2, -100, -(float) (angle*180/Math.PI));
 		//g.rotate(getCenterY(), getCenterY(), (float) (angle*180/Math.PI));
 		image.setRotation(angle);
 		g.drawImage(image,x,y);
 	}
-	
+
 	public void update(GameContainer arg0, StateBasedGame arg1, int delta) throws SlickException {
 		// Updating
 
@@ -69,7 +69,7 @@ public class Block extends Rectangle {
 
 		speedX+=accelX;
 		speedY+=accelY;
-		
+
 		if(isDroping){
 			int isColliding=World3.getTower().isColliding(this);
 			if( isColliding==1){
@@ -81,7 +81,7 @@ public class Block extends Rectangle {
 					new Sound(World3.DIRECTORY_SOUNDS+"game_over.ogg").play();
 				}
 				this.speedY=-0.5f;
-				
+
 				float angle=(float) (90*(World3.getTower().getTopX()-getX()-width/2)/(width/2));
 				setAngle(360-angle);
 				willDeath=true;
@@ -102,13 +102,13 @@ public class Block extends Rectangle {
 				setAngle(angle);
 			}
 		}
-		
+
 	}
 	// Methods =================================================================================
 
 	public void drop(float angleSpeed,float speedX,float speedY){
 		if(isDroping)return;
-		
+
 		successY = World3.getTower().getTopY();
 		this.speedY = speedY;
 		this.speedX = speedX;
@@ -119,7 +119,7 @@ public class Block extends Rectangle {
 
 	}
 	// Getters and Setters =====================================================================
-	
+
 	public float getSpeedX() {
 		return speedX;
 	}
@@ -139,7 +139,7 @@ public class Block extends Rectangle {
 	public void setAngle(float angle) {
 		this.angle=angle;
 	}
-	
+
 	public void setAccelY(float accelY) {
 		this.accelY=accelY;
 	}
@@ -174,5 +174,5 @@ public class Block extends Rectangle {
 	public float getAngle() {
 		return angle;
 	}
-	
+
 }

@@ -8,13 +8,13 @@ import org.newdawn.slick.state.StateBasedGame;
 import game1.world.Cell;
 
 public class Labyrinth {
-	
+
 	private int lines,rows;
 	private Cell[][] cells;
 	private boolean haveExit;
-	
-	
-	public Labyrinth (int lines,int rows) 
+
+
+	public Labyrinth (int lines,int rows)
 	{
 		int rand;
 		this.lines = lines;
@@ -31,25 +31,25 @@ public class Labyrinth {
 				if(rand < 3) cells[i][j].setGiveScore(true);
 			}
 		}
-		
+
 	}
-	
+
 	public int getLines()
 	{
 		return this.lines;
 	}
-	
+
 	public int getRows()
 	{
 		return this.rows;
 	}
-	
+
 	public Cell getCell(int i,int j)
 	{
 		return cells[i][j];
 	}
 
-	
+
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException
 	{
 		for (Cell[] cells2 : cells)
@@ -60,7 +60,7 @@ public class Labyrinth {
 			}
 		}
 	}
-	
+
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		for (Cell[] cells2 : cells)
 		{
@@ -70,7 +70,7 @@ public class Labyrinth {
 			}
 		}
 	}
-	
+
 	public void autoset() throws SlickException
 	{
 		for (int i = 0 ; i<this.getLines() ; i++)

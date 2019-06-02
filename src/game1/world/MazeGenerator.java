@@ -4,14 +4,14 @@ import java.util.Stack;
 
 import org.newdawn.slick.SlickException;
 
-public class MazeGenerator 
+public class MazeGenerator
 {
 	private Labyrinth labyrinth;
 	private Cell[][] unvisitedCell;
 	private Cell currentCell;
 	private Cell choosenCell;
 	private Stack<Cell> stack;
-	
+
 	public MazeGenerator (Labyrinth labyrinth)
 	{
 		this.labyrinth = labyrinth;
@@ -24,7 +24,7 @@ public class MazeGenerator
 			}
 		}
 	}
-	
+
 	public int getChosenCell(int i,int j)
 	{
 		int random = (int)Math.floor(Math.random()*4);
@@ -39,8 +39,8 @@ public class MazeGenerator
 		else return getChosenCell(i,j);
 		return random;
 	}
-	
-	
+
+
 	public boolean hasAnUnvisitedNeighbor(int i , int j)
 	{
 		boolean result = false;
@@ -54,7 +54,7 @@ public class MazeGenerator
 			result =  result||(this.unvisitedCell[i][j+1]!=null);
 		return result;
 	}
-	
+
 	public boolean stillUnvisitedCell()
 	{
 		for (int i=0 ; i<labyrinth.getLines();i++ )
@@ -69,11 +69,11 @@ public class MazeGenerator
 		}
 		return false;
 	}
-	
-	
+
+
 	public void mazeGenrator() throws SlickException
 	{
-		//Make the initial cell the current cell and mark it as visited 
+		//Make the initial cell the current cell and mark it as visited
 		stack = new Stack<Cell>();
 		currentCell = labyrinth.getCell(0, 0);
 		unvisitedCell[0][0] = null;
@@ -85,16 +85,16 @@ public class MazeGenerator
 			i = this.currentCell.getI();
 			j = this.currentCell.getJ();
 			unvisitedCell[i][j] = null;
-			
+
 			//If the current cell has any neighbours which have not been visited
 			if (this.hasAnUnvisitedNeighbor(i,j))
 			{
 				//Choose randomly one of the unvisited neighbours
 				int random = this.getChosenCell(i,j);
-				
+
 				//Push the current cell to the stack
 				stack.push(this.currentCell);
-				
+
 				//Remove the wall between the current cell and the chosen cell
 				if (random == 0)
 				{
@@ -120,11 +120,11 @@ public class MazeGenerator
 					this.labyrinth.getCell(i, j).setEastWall(false);
 					this.labyrinth.getCell(i, j+1).setWestWall(false);
 				}
-				
+
 				//Make the chosen cell the current cell and mark it as visited
 				this.currentCell = this.choosenCell;
 			}
-			
+
 			//Else if stack is not empty
 			else if (!stack.isEmpty())
 			{
@@ -133,12 +133,12 @@ public class MazeGenerator
 			}
 			//else break;
 			stillUnvisitedCell = this.stillUnvisitedCell();
-			
+
 		}
 		setExit();
 		labyrinth.autoset();
 	}
-	
+
 	public void setExit()
 	{
 		if (!labyrinth.isHaveExit()){
@@ -155,5 +155,5 @@ public class MazeGenerator
 			this.labyrinth.setHaveExit(true);
 		}
 	}
-	
+
 }

@@ -11,8 +11,8 @@ import game3.world.World3;
 
 public class MainMenu extends Menu{
 
-	public static int ID = -3;	
-	
+	public static int ID = -3;
+
 	public MainMenu(){
 		super.setTitrePrincipal("MULTIGAME DESIGN");
 		super.setTitreSecondaire("Menu Principal");
@@ -22,7 +22,7 @@ public class MainMenu extends Menu{
 		super.setCouleurClignote(Color.red);
 		super.setTempsClignote(400);
 	}
-	
+
 	@Override
 	public void onOptionItemFocusedChanged(int position) {
 		time=System.currentTimeMillis();
@@ -56,7 +56,7 @@ public class MainMenu extends Menu{
 			break;
 		}
 	}
-	
+
 	@Override
 	public int getID() {
 		return ID;

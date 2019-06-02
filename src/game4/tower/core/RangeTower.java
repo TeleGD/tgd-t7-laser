@@ -6,14 +6,14 @@ public abstract class RangeTower extends Tower {
 
 	private int rangeMin;
 	private int rangeMax;
-	
-	
+
+
 	public RangeTower(Cell cellule, int cost, String name, int rangeMin, int rangeMax) {
 		super(cellule, cost, name);
 		this.rangeMin = rangeMin;
 		this.rangeMax = rangeMax;
 	}
-	
+
 	public int getRangeMin() {
 		return rangeMin;
 	}
@@ -26,9 +26,9 @@ public abstract class RangeTower extends Tower {
 	public void setRangeMax(int rangeMax) {
 		this.rangeMax = rangeMax;
 	}
-	
 
-	
-	
+
+
+
 
 }

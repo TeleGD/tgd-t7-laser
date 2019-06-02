@@ -43,8 +43,8 @@ public class Decor {
 		green=217;
 		blue=199;
 	}
-	
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2)  
+
+	public void update(GameContainer arg0, StateBasedGame arg1, int arg2)
 	{
 		this.compteur+=1;
 		if(this.height>=arg0.getHeight()+500){
@@ -53,9 +53,9 @@ public class Decor {
 		Random r = new Random();
 		if(changeHeigth )
 		{
-			
+
 			if(height<=1000+arg0.getHeight() && (compteur%350==0 || compteur==1)){
-				
+
 				int numberCloud= r.nextInt(2);
 				for(int i =0;i<=numberCloud;i++){
 					int posX=0 + r.nextInt(arg0.getWidth() - 0);
@@ -63,7 +63,7 @@ public class Decor {
 					int width=100 + r.nextInt(400);
 					int heigth=100 + r.nextInt(50);
 					int numberImageCloud=r.nextInt(cloudImages.length);
-					
+
 					this.listSkyElements.add(new Cloud(posX,posY,width,heigth,numberImageCloud,cloudImages[i].getScaledCopy(width, heigth)));
 				}
 				changeHeigth=false;
@@ -79,7 +79,7 @@ public class Decor {
 				}
 				changeHeigth=false;
 			}
-			
+
 		}
 		ArrayList<SkyElements> listSkyElementsToRemove=new ArrayList<SkyElements>();
 		if(changeHeigth){
@@ -93,30 +93,30 @@ public class Decor {
 			}
 		}
 		listSkyElements.removeAll(listSkyElementsToRemove);
-		
+
 		if(compteur %180==0 && r.nextInt(5)==1){
 			mobiles.add(new Copter());
 			mobiles.get(mobiles.size()-1).start();
 		}
-		
+
 		for(int i=0;i<mobiles.size();i++){
 			mobiles.get(i).update(arg0, arg1,arg2);
 		}
-		
+
 		if(height>=1000+arg0.getHeight() && compteur%20==0){
 
 			if(compteur %180==0 && r.nextInt(5)==1){
 				mobiles.add(new Alien());
 				mobiles.get(mobiles.size()-1).start();
 			}
-			
+
 			for(int i=0;i<mobiles.size();i++){
 				mobiles.get(i).update(arg0, arg1,arg2);
 			}
 		}
 	}
-		
-	
+
+
 
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g)  {
 
@@ -141,7 +141,7 @@ public class Decor {
 		g.setBackground(new Color(red,green,blue));
 		g.setColor(Color.white);
 		g.drawImage(this.background, 0,0+height);
-		
+
 		for(SkyElements se : listSkyElements)
 		{
 			if(se instanceof Cloud){
@@ -153,7 +153,7 @@ public class Decor {
 			}
 			g.drawImage(se.getImage(), se.getPosX(), se.getPosY());
 		}
-		
+
 		for(int i=0;i<mobiles.size();i++){
 			mobiles.get(i).render(arg0, arg1, g);
 		}
@@ -172,6 +172,6 @@ public class Decor {
 		// TODO Auto-generated method stub
 		return mobiles;
 	}
-	
-	
+
+
 }

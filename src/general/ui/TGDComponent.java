@@ -35,7 +35,7 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 
 	protected long timeInit;
 
-	
+
 	public TGDComponent(GameContainer container,float x, float y, float width, float height) {
 		super(x, y, width, height);
 		initDefaultUI();
@@ -44,33 +44,33 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 
 		container.getInput().addMouseListener(this);
 		container.getInput().addKeyListener(this);
-		
+
 	}
-	
+
 	protected void initDefaultUI() {
 		setBackgroundColor(new Color(255,255,255));
 		setBackgroundColorEntered(null);
 		setBackgroundColorPressed(null);
 		setBorderWidth(0);
-		
+
 		hasFocus=true;
-		
+
 	}
-	
+
 	public void update(GameContainer container,StateBasedGame game, int delta) throws SlickException{
 		time=System.currentTimeMillis();
 	}
-	
+
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.setAntiAlias(true);
 		g.resetLineWidth();
-		
+
 		time=System.currentTimeMillis();
 
 		if(mousePressed && backgroundColorPressed!=null)g.setColor(backgroundColorPressed);
 		else if(mouseEntered  && backgroundColorEntered!=null)g.setColor(backgroundColorEntered);
 		else g.setColor(backgroundColor);
-		
+
 		g.fillRoundRect(x, y, getWidth(), getHeight(), cornerRadius);
 
 		if(borderWidth>0){
@@ -85,7 +85,7 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 		g.resetLineWidth();
 	}
 
-	
+
 	protected float getAutomaticWidth() {
 		return 100;
 	}
@@ -97,7 +97,7 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 	public Color getBackgroundColor() {
 		return backgroundColor;
 	}
-	
+
 	public Color getBackgroundColorEntered() {
 		return backgroundColorEntered;
 	}
@@ -109,7 +109,7 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 	public void setBackgroundColor(Color backgroundColor) {
 		this.backgroundColor = backgroundColor;
 	}
-	
+
 	public void setBackgroundColorEntered(Color backgroundColorEntered) {
 		this.backgroundColorEntered = backgroundColorEntered;
 	}
@@ -117,7 +117,7 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 	public void setBackgroundColorPressed(Color backgroundColorPressed) {
 		this.backgroundColorPressed = backgroundColorPressed;
 	}
-	
+
 
 	public int getCornerRadius() {
 		return cornerRadius;
@@ -165,21 +165,21 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 		setPaddingBottom(paddingBottom);
 
 	}
-	
+
 	public Color getBorderColor() {
 		return borderColor;
 	}
 
-	
+
 
 	public void setBorderColor(Color borderColor) {
 		this.borderColor = borderColor;
 	}
-	
+
 	public void setBorderColorPressed(Color borderColor) {
 		this.borderColorPressed = borderColor;
 	}
-	
+
 	public Color getBorderColorPressed() {
 		return borderColorPressed;
 	}
@@ -212,7 +212,7 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 
 	@Override
 	public void mouseWheelMoved(int arg0) {}
-	
+
 	@Override
 	public void mouseClicked(int type, int x, int y, int count) {
 		if(hasFocus && listener!=null)listener.onClick(this);
@@ -240,7 +240,7 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 	public void mouseReleased(int arg0, int x, int y) {
 		if(System.currentTimeMillis()-time>500)hasFocus=false;
 		mousePressed=false;
-		
+
 	}
 
 
@@ -256,11 +256,11 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 	@Override
 	public void keyReleased(int arg0, char arg1) {
 		if(System.currentTimeMillis()-time>500)hasFocus=false;
-		
+
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	@Override
 	public  float getWidth(){
 		if(width!=AUTOMATIC) return width;
@@ -271,7 +271,7 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 		if(height!=AUTOMATIC) return height;
 		else return getAutomaticHeight();
 	}
-	
+
 	@Override
 	public boolean contains(float x, float y){
 
@@ -284,11 +284,11 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 
 	}
 
-	
+
 	public void setOnClickListener(OnClickListener listener){
 		this.listener=listener;
 	}
-	
+
 	public interface OnClickListener{
 		void onClick(TGDComponent componenent);
 	}
@@ -300,4 +300,3 @@ public class TGDComponent extends Rectangle implements MouseListener, KeyListene
 		this.hasFocus = hasFocus;
 	}
 }
-

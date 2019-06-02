@@ -48,12 +48,12 @@ public class Enemy {
 		if(!moving)
 			System.out.println("oui");
 			move();
-		
+
 		if(this.x>this.nextX-5 && this.x<this.nextX+5)
 			x=this.nextX;
 		if(this.y>this.nextY-5 && this.y<this.nextY+5)
 			y=this.nextY;
-		
+
 		x+=speedX*arg2;
 		y+=speedY*arg2;
 	}
@@ -155,9 +155,9 @@ public class Enemy {
 		}
 	}
 
-	
-	
-	
+
+
+
 	private void moveUp(){
 		moving=true;
 		this.nextY=this.y-64;

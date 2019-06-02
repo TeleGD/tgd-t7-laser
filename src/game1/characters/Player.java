@@ -15,19 +15,19 @@ public class Player {
 	private int cellSize=64;
 	private Cell cell;
 	private double speedX,speedY;
-	
+
 	public Player(){
 		x = 100;
 		y = 100;
 		this.getCell();
 	}
-	
+
 	public Player(int i, int j){
 		x = i*cellSize + 32 - 250;
 		y = j*cellSize + 32 - 25;
 		this.getCell();
 	}
-	
+
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		arg2.setColor(Color.blue);
 		arg2.fillRect((float)x,(float) y, (float)50, (float)50);
@@ -41,21 +41,21 @@ public class Player {
 		x+=speedX*arg2;
 		y+=speedY*arg2;
 	}
-	
-	
+
+
 	public void keyPressed(int key, char c) {
 		switch (key){
-		
+
 		case Input.KEY_UP:
 			up=true;
 			updown=false;
 		break;
-		
+
 		case Input.KEY_DOWN:
 			down=true;
 			updown=true;
 		break;
-		
+
 		case Input.KEY_LEFT:
 			left=true;
 			rightLeft=false;
@@ -65,9 +65,9 @@ public class Player {
 			rightLeft=true;
 		break;
 		}
-		
+
 	}
-	
+
 	public void keyReleased(int key, char c) {
 		switch (key) {
 		case Input.KEY_UP:
@@ -84,7 +84,7 @@ public class Player {
 			break;
 		}
 	}
-	
+
 	private void move() {
 		speedX = 0;
 		speedY = 0;
@@ -93,16 +93,16 @@ public class Player {
 			if(!(this.cell.isNorthWall())){
 				speedY=-0.2;
 			}
-			
+
 		}
 		if(((down && !up) || (up && down && updown)) && !(this.cell.isSouthWall())){
-			
+
 				speedY=0.2;
 		}
 		if(((left && !right)|| (left && right && !rightLeft)) && !(this.cell.isWestWall()))
 		{
 				speedX = -0.2;
-			
+
 		}
 		if(((!left && right)|| (left && right && rightLeft)) && !(this.cell.isEastWall()))
 		{
@@ -110,7 +110,7 @@ public class Player {
 				speedX = 0.2;
 		}
 	}
-	
+
 	public void getCell(){
 		int i=(int) Math.floor(x/cellSize);
 		int j=(int) Math.floor(y/cellSize);

@@ -9,11 +9,11 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Ennemy {
 	private int x = 0;
 	private int y = 0;
-	
+
 	private Image image;
-	
+
 	int moveTimer = 100;
-	
+
 	public int getX() {
 		return x;
 	}
@@ -50,12 +50,12 @@ public class Ennemy {
 		}catch(Exception e){}
 		this.x = x;
 		this.y = y;
-		
+
 		World2.getGrid().getCell(x, y).setDeadly(true);
 	}
-	
-	
-	
+
+
+
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		//Affichage
 		image.draw(280+(x*100*World2.getRenderScale())+360-World2.getGrid().getColumns()*100*World2.getRenderScale()/2,y*100*World2.getRenderScale()+360-World2.getGrid().getColumns()*100*World2.getRenderScale()/2,100*World2.getRenderScale(),100*World2.getRenderScale());
@@ -76,14 +76,14 @@ public class Ennemy {
 				newY = y-1;
 			if(y < p.getY())
 				newY = y+1;
-			
+
 			if(World2.getGrid().MoveEnnemy(newX, newY, this)){
 				//move
 				x = newX;
 				y = newY;
 			}
-				
-			
+
+
 			moveTimer=50;
 		}
 	}

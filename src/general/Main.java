@@ -17,19 +17,18 @@ import menus.ScoreMenu;
 import menus.WelcomeMenu;
 
 public class Main extends StateBasedGame{
-	
+
 	public static int longueur=1280;
 	public static int hauteur=720;
-	
+
 	public static void main(String[] args) throws SlickException {
-		System.setProperty("org.lwjgl.librarypath", new File("natives").getAbsolutePath());
 		AppGameContainer app = new AppGameContainer(new Main(),longueur, hauteur, false);
 		app.setTargetFrameRate(60);
 		app.setVSync(true);
 		app.setShowFPS(true);
 		app.start();
 	}
-	
+
 
 	public Main() {
 		super("MultiGame");
@@ -48,7 +47,7 @@ public class Main extends StateBasedGame{
 		addState(new ScoreMenu());
 		addState(new HighScorePlayerMenu());
 
-		
+
 		this.enterState(WelcomeMenu.ID);
 	}
 }

@@ -18,10 +18,10 @@ import java.util.Random;
 
 
 public class Mobile extends Rectangle{
-	
+
 	private Image image0;
 	private Image image1;
-	
+
 	private float goToX;
 	private float goToY;
 	private boolean isFlying;
@@ -29,11 +29,11 @@ public class Mobile extends Rectangle{
 	private int nb = 0;
 	private float alpha = 0.02f;
 	public boolean toDestroy = false;
-	
+
 	public boolean isFlying() {
 		return isFlying;
 	}
-	
+
 	public static Sound sound;
 
 	public boolean isToDestroy() {
@@ -51,12 +51,12 @@ public class Mobile extends Rectangle{
 			}
 		}
 		leave();
-		
+
 		timer = (int) ((Math.random() + 1) * 600);
-		
+
 		this.x = goToX;
 		this.y = goToY;
-		
+
 		try {
 			image0=new Image(urlImage).getScaledCopy((int)width, (int)height);
 			image1=new Image(urlImage2).getScaledCopy((int)width, (int)height);
@@ -65,13 +65,13 @@ public class Mobile extends Rectangle{
 		}
 
 	}
-	
+
 	public void start(){
 		majGoTo();
 		isFlying = true;
 		sound.loop();
 	}
-	
+
 	private void majGoTo() {
 		goToX = new Random().nextInt(Main.longueur);
 		goToY = new Random().nextInt(Main.hauteur);
@@ -81,13 +81,13 @@ public class Mobile extends Rectangle{
 		isFlying = false;
 		leave();
 	}
-	
+
 	private void leave() {
 		goToX = Math.random() < 0.5 ? -Main.longueur-250 : Main.longueur+250;
 		goToY = (float) (Main.hauteur * Math.random());
 	}
 
-	
+
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g)  {
 		// Rendering
 		nb ++;
@@ -97,7 +97,7 @@ public class Mobile extends Rectangle{
 			g.drawImage(image1,x,y);
 		}
 	}
-	
+
 	public void update(GameContainer arg0, StateBasedGame arg1, int delta)  {
 		// Updating
 		x = lerp(x,goToX, alpha);
@@ -110,19 +110,19 @@ public class Mobile extends Rectangle{
 					Decor.getMobiles().remove(this);
 					sound.stop();
 				}
-				
+
 			}
 		}
 		if(nb > timer){
 			stop();
 		}
 	}
-	
+
 	private float lerp(float point1, float point2, float alpha)
 	{
 	    return point1 + alpha * (point2 - point1);
 	}
-	
-	
-	
+
+
+
 }

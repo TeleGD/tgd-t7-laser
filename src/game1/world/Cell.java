@@ -7,14 +7,14 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Cell{
-	
+
 	private boolean northWall,southWall,westWall,eastWall;
 	private int i,j;
 	private boolean itsATrap;
 	private boolean isFinalCell;
 	private boolean giveScore;
 	private Image sprite;
-	
+
 	public Cell (int i, int j)
 	{
 		this.i = i;
@@ -28,13 +28,13 @@ public class Cell{
 		this.itsATrap=false;
 		//TODO LIGNE A CORRIGER PLUS TARD
 		try {
-			this.sprite = new Image("Images/Labyrinth/noWalls.png");
+			this.sprite = new Image("images/Labyrinth/noWalls.png");
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Cell (int i, int j, boolean east, boolean north, boolean south, boolean west){
 		this.i = i;
 		this.j = j;
@@ -54,13 +54,13 @@ public class Cell{
 	}
 
 	public void autoSetSprite() throws SlickException {
-	// Automatically selects the right sprite 
-		String path_prefix = "Images/Labyrinth/";
-		
+	// Automatically selects the right sprite
+		String path_prefix = "images/Labyrinth/";
+
 		if(itsATrap) path_prefix+="Trapped/";
 		else if(giveScore) path_prefix+="Points/";
 		else if(isFinalCell) path_prefix+="Exit/";
-		
+
 		if(eastWall){
 			if(northWall){
 				if(westWall) sprite = new Image(path_prefix+"deadEnd_up.png");
@@ -99,50 +99,50 @@ public class Cell{
 					else sprite = new Image(path_prefix+"noWalls.png");
 				}
 			}
-		}		
-		
+		}
+
 	}
 
-	public boolean isWestWall() 
+	public boolean isWestWall()
 	{
 		return westWall;
 	}
 
-	public void setWestWall(boolean westWall) 
+	public void setWestWall(boolean westWall)
 	{
 		this.westWall = westWall;
 	}
 
-	public boolean isNorthWall() 
+	public boolean isNorthWall()
 	{
 		return northWall;
 	}
 
-	public void setNorthWall(boolean northWall) 
+	public void setNorthWall(boolean northWall)
 	{
 		this.northWall = northWall;
 	}
 
-	public boolean isSouthWall() 
+	public boolean isSouthWall()
 	{
 		return southWall;
 	}
 
-	public void setSouthWall(boolean southWall) 
+	public void setSouthWall(boolean southWall)
 	{
 		this.southWall = southWall;
 	}
 
-	public boolean isEastWall() 
+	public boolean isEastWall()
 	{
 		return eastWall;
 	}
 
-	public void setEastWall(boolean eastWall) 
+	public void setEastWall(boolean eastWall)
 	{
 		this.eastWall = eastWall;
 	}
-	
+
 	public boolean isItsATrap() {
 		return itsATrap;
 	}
@@ -151,13 +151,13 @@ public class Cell{
 		this.itsATrap = itsATrap;
 	}
 
-	
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException 
+
+	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException
 	{
 		arg2.drawImage(sprite,j*64,i*64);
 	}
 
-	
+
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		if (World1.getPlayer().getI()==this.getI() && World1.getPlayer().getJ()==this.getJ()){
 			if (giveScore){
@@ -174,8 +174,8 @@ public class Cell{
 			}
 		}
 	}
-	
-	
+
+
 	public int getI() {
 		return i;
 	}
@@ -215,6 +215,6 @@ public class Cell{
 	public void setGiveScore(boolean giveScore) {
 		this.giveScore = giveScore;
 	}
-	
+
 
 }

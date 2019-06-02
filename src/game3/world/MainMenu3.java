@@ -18,7 +18,7 @@ import menus.Menu;
 
 public class MainMenu3 extends Menu{
 
-	public static int ID = -10;	
+	public static int ID = -10;
 
 	private Image[] image= new Image[3];
 	public MainMenu3(){

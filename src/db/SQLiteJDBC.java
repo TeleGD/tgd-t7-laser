@@ -39,7 +39,7 @@ public class SQLiteJDBC {
 		}*/
 	}
 
-	
+
 	public static Person search(String name){
 		Connection c = null;
 		Statement stmt = null;
@@ -49,7 +49,7 @@ public class SQLiteJDBC {
 			c = DriverManager.getConnection("jdbc:sqlite:datas.db");
 			stmt=c.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM SCORES WHERE name='"+name+"'");
-			
+
 			while (rs.next()){
 				person.setScoreAtGame(rs.getInt(2),rs.getInt(3));
 			}

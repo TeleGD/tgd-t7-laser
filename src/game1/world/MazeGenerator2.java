@@ -4,16 +4,16 @@ import java.util.Stack;
 
 import org.newdawn.slick.SlickException;
 
-public class MazeGenerator2 
+public class MazeGenerator2
 {
-	
+
 	private Labyrinth labyrinth;
 	private Cell[][] unvisitedCell;
 	private Stack<Cell> stack;
 	private Cell currentCell;
 	private Cell chosenCell;
-	
-	
+
+
 	public MazeGenerator2(Labyrinth labyrinth)
 	{
 		stack = new Stack<Cell>();
@@ -27,7 +27,7 @@ public class MazeGenerator2
 			}
 		}
 	}
-	
+
 	public void destroyWall()
 	{
 		int random = (int)Math.random()*4;
@@ -64,7 +64,7 @@ public class MazeGenerator2
 			}
 		}
 	}
-	
+
 	public boolean stillUnvisitedCell()
 	{
 		for (int i=0 ; i<labyrinth.getLines();i++ )
@@ -79,9 +79,9 @@ public class MazeGenerator2
 		}
 		return false;
 	}
-	
-	
-	
+
+
+
 	public boolean hasAnUnvisitedNeighbor(int i , int j)
 	{
 		boolean result = false;
@@ -95,15 +95,15 @@ public class MazeGenerator2
 			result =  result||(this.unvisitedCell[i][j+1]!=null);
 		return result;
 	}
-	
+
 	public void mazeGenerate() throws SlickException
 	{
-		//Make the initial cell the current cell and mark it as visited 
+		//Make the initial cell the current cell and mark it as visited
 		stack = new Stack<Cell>();
 		currentCell = labyrinth.getCell(0, 0);
 		unvisitedCell[0][0] = null;
 		boolean stillUnvisitedCell = this.stillUnvisitedCell();
-		
+
 		//While there are unvisited cells
 		while (stillUnvisitedCell)
 		{
@@ -127,17 +127,17 @@ public class MazeGenerator2
 				{
 					this.chosenCell = this.labyrinth.getCell(this.currentCell.getI(),this.currentCell.getJ()+1);
 				}
-				
+
 				//Push the current cell to the stack
 				stack.push(this.currentCell);
-				
+
 				//Make the chosen cell the current cell and mark it as visited
 				this.currentCell = this.chosenCell;
 				this.destroyWall();
 				System.out.println("i : " +this.currentCell.getI()+" j : "+this.currentCell.getJ()+hasAnUnvisitedNeighbor(this.currentCell.getI(),this.currentCell.getJ()));
 				this.unvisitedCell[this.currentCell.getI()][this.currentCell.getJ()]=null;
 			}
-			
+
 			//Else if stack is not empty
 			else if (!stack.isEmpty())
 			{

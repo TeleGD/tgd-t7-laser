@@ -9,7 +9,7 @@ public class SkyElements {
 	private int width;
 	private int height;
 	private Image image;
-	
+
 	public SkyElements(int posX, int posY, int width, int height,Image image)
 	{
 		this.posX = posX;
@@ -18,7 +18,7 @@ public class SkyElements {
 		this.height=height;
 		this.image=image;
 	}
-	
+
 	public int getPosX() {
 		return posX;
 	}
@@ -51,6 +51,6 @@ public class SkyElements {
 	public void setImage(Image image) {
 		this.image = image;
 	}
-	
-	
+
+
 }

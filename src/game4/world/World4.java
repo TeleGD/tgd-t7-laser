@@ -18,14 +18,14 @@ public class World4 extends BasicGameState{
 	private static int score;
 	private static int ressources;
 	private static Map map;
-	
+
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
-		//Ici ne mettre que des initialisations de variables 
-		
-		
+		//Ici ne mettre que des initialisations de variables
+
+
 	}
-	
+
 	@Override
 	public void enter(GameContainer arg0, StateBasedGame arg1){
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
@@ -34,7 +34,7 @@ public class World4 extends BasicGameState{
 		//ennemy.add(new Ennemy());
 		map = new Map();
 	}
-	
+
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
@@ -64,7 +64,7 @@ public class World4 extends BasicGameState{
 		ennemy.clear();
 		tower.clear();
 	}
-	
+
 	public static int  getScore() {
 		return score;
 	}
@@ -72,13 +72,13 @@ public class World4 extends BasicGameState{
 	public static void setScore(int score) {
 		World4.score = score;
 	}
-	
+
 	public static void setRessources(int amount){
 		ressources = amount;
 	}
-	
+
 	public static int getRessources(){
 		return ressources;
 	}
-	
+
 }

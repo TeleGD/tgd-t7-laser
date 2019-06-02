@@ -16,11 +16,11 @@ public class Map {
 				cells[i][j]=new Cell(i,j);
 			}
 		}
-		
+
 		roadBis(taille-1,taille-3);
 	}
 
-	
+
 	private void roadBis(int i,int j){
 		int a=i;
 		int b=j;
@@ -128,8 +128,8 @@ public class Map {
 		}
 	}
 
-	
-	
+
+
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		for (int i=0;i<10;i++){
 			for(int j=0;j<10;j++){

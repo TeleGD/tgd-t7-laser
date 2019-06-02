@@ -24,26 +24,26 @@ public class Tower extends Rectangle{
 	private double alpha=1;
 	private double amplitude=0;
 	public static int difficulty;
-	
+
 	public Tower(float x, float y, Block initialBlock) {
 		super(x, y, 0, 0);
 		blocks = new ArrayList<Block>();
 		addBlock(initialBlock);
 	}
-	
+
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
 		// Rendering
-		
+
 		for(int i = 0; i < blocks.size(); i++){
 			blocks.get(i).render(arg0, arg1, g);
-			
+
 		}
 	}
-	
+
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		// Updating
-		
-		
+
+
 		for(int i = 0; i < blocks.size(); i++){
 			blocks.get(i).update(arg0, arg1, arg2);
 			blocks.get(i).setX(blocks.get(i).getX()+((float) (amplitude*Math.cos(alpha*World3.getTimeInMillis()/1000))));
@@ -60,9 +60,9 @@ public class Tower extends Rectangle{
 		}
 
 	}
-	
+
 	public void addBlock(Block initialBlock) {
-		blocks.add(initialBlock);		
+		blocks.add(initialBlock);
 	}
 
 	public float getTopY(){
@@ -75,7 +75,7 @@ public class Tower extends Rectangle{
 		return(blocks.get(blocks.size()-1));
 	}
 
-	
+
 	private boolean combo(float topX, float x) {
 		if(Math.abs(topX-x)<10){
 			return true;
@@ -91,7 +91,7 @@ public class Tower extends Rectangle{
 	public int isColliding(Shape shape){
 		if(shape.getY()+shape.getHeight()<getTop().getY())return 0;
 		if(shape.getY()>getTop().getY()+getTop().getHeight()/8)return 0;
-		
+
 		if(shape.getX()-getTop().getX()>getTop().getWidth()/2){
 			if(shape.getX()-getTop().getX()<getTop().getWidth())return 3;
 			else return 0;
@@ -110,25 +110,25 @@ public class Tower extends Rectangle{
 		block.setSpeedY(0);
 		block.setAccelY(0);
 		block.setAngleSpeed(0);
-		
+
 		block.setAngle((int)(block.getAngle()));
 		comb=combo(getTopX(), block.getX());
 		block.setY(getTopY()-getTop().getHeight());
 		block.setIsDroping(false);
-		
+
 		if(comb){
 			mult+=1;
 		}else{
 			mult=1;
 		}
 		if(World3.difficulty==0){
-			
+
 			World3.setScore(World3.getScore()+mult*100);
 		}else{
 			World3.setScore(World3.getScore()+mult*2*World3.difficulty*100);
 		}
 		World3.getPendulum().notifyStackedBlock();
-		
+
 		cpt=0;
 		System.out.println("top="+getTop().getX());
 		System.out.println("block="+block.getX());
@@ -138,5 +138,5 @@ public class Tower extends Rectangle{
 
 	}
 
-	
+
 }

@@ -30,19 +30,19 @@ public class World1 extends BasicGameState{
 	private ArrayList<Cell> cellTest;
 	private static int score;
 	private static StateBasedGame game;
-	
+
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		game=arg1;
 	}
-	
+
 	@Override
 	public void enter(GameContainer arg0, StateBasedGame arg1){
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 		labyrinth = new Labyrinth(10,15);
 		reset();
 	}
-	
+
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
@@ -75,18 +75,18 @@ public class World1 extends BasicGameState{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static Labyrinth getLabyrinth(){
 		return labyrinth;
 	}
-	
+
 	public void keyPressed(int key, char c) {
 		player.keyPressed(key, c);
 		if(key==Input.KEY_F1){
 			game.enterState(MainMenu.ID);
 		}
 	}
-	
+
 	public void keyReleased(int key, char c) {
 		player.keyReleased(key, c);
 	}
@@ -102,6 +102,6 @@ public class World1 extends BasicGameState{
 	public static void setScore(int score) {
 		World1.score = score;
 	}
-	
-	
+
+
 }

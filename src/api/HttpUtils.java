@@ -31,7 +31,7 @@ public class HttpUtils {
 					url = new URL(urlStr);
 					HttpURLConnection connexion=((HttpURLConnection)url.openConnection());
 					connexion.setRequestMethod("POST");
-					connexion.setRequestProperty("Content-Type","application/x-www-form-urlencoded"); 
+					connexion.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
 					connexion.setRequestProperty("charset", "UTF-8");
 					connexion.setDoOutput(true);
 					DataOutputStream dos=new DataOutputStream(connexion.getOutputStream());
@@ -39,7 +39,7 @@ public class HttpUtils {
 					dos.flush();
 					dos.close();
 					connexion.connect();
-					
+
 					parseReponseConnexion(connexion,listener);
 
 				} catch (MalformedURLException e) {
@@ -54,10 +54,10 @@ public class HttpUtils {
 				}catch (IOException e) {
 					listener.onError("ERREUR DE ENTREE/SORTIES PARAMS ?");
 					e.printStackTrace();
-				} 
-					
-				
-				
+				}
+
+
+
 			}}).start();
 	}
 	public static void getHttp(final String urlStr, final RequestEndedListener listener){
@@ -72,10 +72,10 @@ public class HttpUtils {
 					url = new URL(urlStr);
 					HttpURLConnection connexion=((HttpURLConnection)url.openConnection());
 					connexion.setRequestMethod("GET");
-					connexion.setRequestProperty("Content-Type","application/x-www-form-urlencoded"); 
+					connexion.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
 					connexion.setRequestProperty("charset", "UTF-8");
 					connexion.connect();
-					
+
 					parseReponseConnexion(connexion,listener);
 				} catch (MalformedURLException e) {
 					listener.onError("URL MAL FORME");
@@ -90,9 +90,9 @@ public class HttpUtils {
 					listener.onError("ERREUR DE ENTREE/SORTIES PARAMS ?");
 					e.printStackTrace();
 				}
-				
-				
-				
+
+
+
 			}}).start();
 	}
 	protected static void parseReponseConnexion(HttpURLConnection connexion, RequestEndedListener listener) throws IOException, JSONException {
@@ -102,11 +102,11 @@ public class HttpUtils {
 		}else{
 			BufferedReader reader=new BufferedReader(new InputStreamReader(connexion.getInputStream(),"UTF-8"));
 		    String ligne,chaine="";
-		   
+
 		    while((ligne=reader.readLine())!=null){
 		    	chaine+=ligne+"\n";
 		    }
-		   
+
 		    reader.close();
 		    if(LOG_ENABLED)System.out.println("HttpUtils >> parseReponseConnexion >> "+chaine);
 		    JSONObject obj=new JSONObject(chaine);
@@ -115,6 +115,6 @@ public class HttpUtils {
 		    }else{
 				listener.onError(obj.getString("reason"));
 		    }
-		}		
+		}
 	}
 }

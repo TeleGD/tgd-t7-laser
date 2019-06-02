@@ -13,8 +13,8 @@ public class Cell {
 	private Boolean contains,road;
 	private Image sprite;
 	private Cell next;
-	
-	
+
+
 	public Cell(int i, int j /* Boolean contains, Image sprite*/) {
 		this.i = i;
 		this.j = j;
@@ -22,7 +22,7 @@ public class Cell {
 		//this.sprite = sprite;
 		road=false;
 	}
-	
+
 	public void setNext(Cell nextCell){
 		this.next=nextCell;
 	}
@@ -66,7 +66,7 @@ public class Cell {
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		//TODO
 	}
-	
+
 	public boolean isRoad(){
 		return road;
 	}

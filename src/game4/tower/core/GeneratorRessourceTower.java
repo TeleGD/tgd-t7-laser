@@ -19,12 +19,12 @@ public abstract class GeneratorRessourceTower extends Tower{
 	public void setGiveRessource(int giveRessource) {
 		this.giveRessource = giveRessource;
 	}
-	
+
 	public void action(){
 		World4.setRessources(World4.getRessources()+this.giveRessource);
 	}
-	
-	
-	
-	
+
+
+
+
 }

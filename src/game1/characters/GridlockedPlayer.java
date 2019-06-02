@@ -18,7 +18,7 @@ public class GridlockedPlayer {
 	private boolean up,down,right,left,updown,rightLeft;
 	private int cellSize=64;
 	private Cell cell;
-	private int moveTimer = 250; 
+	private int moveTimer = 250;
 	private int moving; //0:no move,1:moving to right,2:moving down,3:moving to left,4:moving up
 	private Image img,right1,right2,left1,left2,up1,up2,down1,down2;
 
@@ -46,7 +46,7 @@ public class GridlockedPlayer {
 		} catch( Exception e){
 			System.out.println("image du player-labyrinth non chargée");
 		}
-		
+
 	}
 
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {

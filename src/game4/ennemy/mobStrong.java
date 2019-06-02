@@ -9,5 +9,5 @@ public class mobStrong extends Ennemy{
 		super(1, 250, cellule);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 }

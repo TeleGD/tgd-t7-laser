@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Person {
-	
+
 	private String name;
 	private HashMap<Integer, Integer> scores;
-	
+
 	public Person(String name){
 		this.name=name;
 		scores=new HashMap<Integer,Integer>();
 	}
-	
-	
-	
+
+
+
 	public String getName(){
 		return name;
 	}
@@ -27,8 +27,8 @@ public class Person {
 		if(scores.containsKey(indexGame))return scores.get(indexGame);
 		return 0;
 	}
-	
-	
+
+
 	@Override
 	public String toString(){
 		String s=name+": ";

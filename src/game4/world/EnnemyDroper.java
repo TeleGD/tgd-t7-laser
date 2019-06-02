@@ -20,6 +20,6 @@ public abstract class EnnemyDroper extends Ennemy {
 	}
 
 	//TODO a la mort, creer des mobs correspondant a la liste contains
-	
-	
+
+
 }
