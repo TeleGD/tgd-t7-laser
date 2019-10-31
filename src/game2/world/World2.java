@@ -16,7 +16,6 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import api.TGDApi;
-import game3.world.MainMenu3;
 import general.Main;
 import general.ui.Button;
 import general.ui.TGDComponent;
