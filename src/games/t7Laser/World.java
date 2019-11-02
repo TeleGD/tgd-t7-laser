@@ -1,11 +1,10 @@
-package game2.world;
+package games.t7Laser;
 
 import java.io.File;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
@@ -16,7 +15,6 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import api.TGDApi;
-import general.Main;
 import general.ui.Button;
 import general.ui.TGDComponent;
 import general.ui.TGDComponent.OnClickListener;
@@ -24,19 +22,19 @@ import general.ui.TextField;
 import general.ui.TextField.EnterActionListener;
 import menus.MainMenu;
 
-public class World2 extends BasicGameState implements EnterActionListener,OnClickListener{
+public class World extends BasicGameState implements EnterActionListener,OnClickListener{
 
 	public static int ID=2;
 
-	public final static String GAME_NAME="T7Laser";
+	public final static String GAME_NAME="T7 Laser";
 
-	public final static String GAME_FOLDER_NAME="T7Laser";
+	public final static String GAME_FOLDER_NAME="t7Laser";
 	public final static String DIRECTORY_SOUNDS="sounds"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
 
-	private static Player2 player;
-	private static Grid2 grid;
+	private static Player player;
+	private static Grid grid;
 	private static int score;
 	private Music music;
 	private Music end;
@@ -47,7 +45,7 @@ public class World2 extends BasicGameState implements EnterActionListener,OnClic
 	private boolean disp = false;
 	private static StateBasedGame game;
 
-	private static float renderScale = (float)1;
+	private static float renderScale = 1;
 
 	private TextField textField;
 	private Button button;
@@ -58,17 +56,18 @@ public class World2 extends BasicGameState implements EnterActionListener,OnClic
 
 	}
 
+	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 		music = new Music(DIRECTORY_MUSICS+"EpicSaxGuy.ogg");
 		end = new Music(DIRECTORY_MUSICS+"EndSong.ogg");
-		cat= new Sound(DIRECTORY_SOUNDS+"cat.ogg");
+		cat= new Sound(DIRECTORY_SOUNDS+"Cat.ogg");
 		music.loop();
-		grid =  new Grid2(4,4);
-		player = new Player2();
+		grid =  new Grid(4,4);
+		player = new Player();
 		setScore(0);
 		selec = 0;
-		renderScale = (float)1;
+		renderScale = 1;
 		start = false;
 
 		initPerduView(container);
@@ -97,6 +96,7 @@ public class World2 extends BasicGameState implements EnterActionListener,OnClic
 		button.setTextColor(Color.black);
 	}
 
+	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		//Affichage
 		g.setColor(Color.white);
@@ -126,6 +126,7 @@ public class World2 extends BasicGameState implements EnterActionListener,OnClic
 		}
 	}
 
+	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if (!start){
 			if (cpt > 60) {
@@ -172,22 +173,24 @@ public class World2 extends BasicGameState implements EnterActionListener,OnClic
 								new FadeInTransition());
 					} else {
 						music.loop();
-						grid =  new Grid2(4,4);
-						player = new Player2();
+						grid =  new Grid(4,4);
+						player = new Player();
 						setScore(0);
 						selec = 0;
-						renderScale = (float)1;
+						renderScale = 1;
 					}
 				}
 			}
 		}
 	}
 
+	@Override
 	public void keyReleased(int key, char c) {
 		player.keyReleased(key, c);
 	}
 
 
+	@Override
 	public void keyPressed(int key, char c) {
 		player.keyPressed(key, c);
 		if(key==Input.KEY_F1){
@@ -196,15 +199,16 @@ public class World2 extends BasicGameState implements EnterActionListener,OnClic
 		}
 	}
 
+	@Override
 	public int getID() {
 		return ID;
 	}
 
-	public static Grid2 getGrid(){
+	public static Grid getGrid(){
 		return grid;
 	}
 
-	public static Player2 getPlayer(){
+	public static Player getPlayer(){
 		return player;
 	}
 
@@ -225,7 +229,7 @@ public class World2 extends BasicGameState implements EnterActionListener,OnClic
 	}
 
 	public static void setScore(int score) {
-		World2.score = score;
+		World.score = score;
 	}
 
 

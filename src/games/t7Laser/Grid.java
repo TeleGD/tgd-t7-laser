@@ -1,4 +1,4 @@
-package game2.world;
+package games.t7Laser;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class Grid2 {
+public class Grid {
 	private int rows;
 	private int columns;
 	public Cell grid[][];
@@ -29,7 +29,7 @@ public class Grid2 {
 
 
 
-	public Grid2(int r, int c) throws SlickException{
+	public Grid(int r, int c) throws SlickException{
 		maxRows = 20;
 		maxCols = 20;
 		rows = r;
@@ -64,7 +64,7 @@ public class Grid2 {
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
 		for(int i = 0; i<this.rows; i++)//init row
 			for(int j=0;j<this.columns;j++) //init cologne
-				grid[i][j].getImage().draw(280+360-this.getColumns()*100*World2.getRenderScale()/2+i*100*World2.getRenderScale(),0+j*100*World2.getRenderScale()+360-this.getColumns()*100*World2.getRenderScale()/2,100*World2.getRenderScale(),100*World2.getRenderScale());
+				grid[i][j].getImage().draw(280+360-this.getColumns()*100*World.getRenderScale()/2+i*100*World.getRenderScale(),0+j*100*World.getRenderScale()+360-this.getColumns()*100*World.getRenderScale()/2,100*World.getRenderScale(),100*World.getRenderScale());
 
 		for(Laser l : laserList)
 			l.render(arg0, arg1, arg2);
@@ -135,7 +135,7 @@ public class Grid2 {
 					addBonus(rowB,columnB);
 
 			if(rows > 7)
-				World2.setRenderScale((float)720.0/(100*rows));
+				World.setRenderScale((float)720.0/(100*rows));
 		}
 	}
 
@@ -156,7 +156,7 @@ public class Grid2 {
 	}
 
 	//x y new position
-	public boolean MovePlayer(int x,int y, Player2 p){
+	public boolean MovePlayer(int x,int y, Player p){
 		if(x < rows && y < columns && x >= 0 && y >= 0){
 			//set new cell true
 			grid[x][y].setContains(true);

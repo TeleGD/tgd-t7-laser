@@ -10,7 +10,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import api.APIListener;
 import api.TGDApi;
 import db.Person;
-import game2.world.World2;
+import games.t7Laser.World;
 
 public class HighScorePlayerMenu extends Menu implements APIListener{
 
@@ -29,7 +29,7 @@ public class HighScorePlayerMenu extends Menu implements APIListener{
 		super.setTitreSecondaire(namePlayer);
 
 		super.removeAllItems();
-		super.addItem("Score "+World2.GAME_NAME +": "+player.getScoreAtGame(2));
+		super.addItem("Score "+World.GAME_NAME +": "+player.getScoreAtGame(2));
 
 		super.setEnableClignote(false);
 		super.setCouleurClignote(Color.red);
@@ -70,7 +70,7 @@ public class HighScorePlayerMenu extends Menu implements APIListener{
 			player=(Person)content;
 
 			super.removeAllItems();
-			super.addItem("Score "+World2.GAME_NAME +": "+player.getScoreAtGame(2));
+			super.addItem("Score "+World.GAME_NAME +": "+player.getScoreAtGame(2));
 		}
 	}
 

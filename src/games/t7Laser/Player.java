@@ -1,7 +1,6 @@
-package game2.world;
+package games.t7Laser;
 
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -9,7 +8,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class Player2{
+public class Player{
 
 	private int x = 0;
 	private int y = 0;
@@ -27,22 +26,22 @@ public class Player2{
 	private boolean moveLeft,moveRight,moveUp,moveDown  =false;
 	private boolean pressEnter = false;
 
-	public Player2() throws SlickException{
+	public Player() throws SlickException{
 		//position initiale
-		World2.getGrid().getCell(0, 0).setContains(true);
+		World.getGrid().getCell(0, 0).setContains(true);
 		this.x = 0;
 		this.y = 0;
-		this.setImage(new Image(World2.DIRECTORY_IMAGES+"Char_down.png"));
-		this.down= new Image(World2.DIRECTORY_IMAGES+"Char_down.png");
-		this.up=new Image(World2.DIRECTORY_IMAGES+"Char_up.png");
-		this.right=new Image(World2.DIRECTORY_IMAGES+"Char_right.png");
-		this.left=new Image(World2.DIRECTORY_IMAGES+"Char_left.png");
+		this.setImage(new Image(World.DIRECTORY_IMAGES+"Char_down.png"));
+		this.down= new Image(World.DIRECTORY_IMAGES+"Char_down.png");
+		this.up=new Image(World.DIRECTORY_IMAGES+"Char_up.png");
+		this.right=new Image(World.DIRECTORY_IMAGES+"Char_right.png");
+		this.left=new Image(World.DIRECTORY_IMAGES+"Char_left.png");
 	}
 
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		//Affichage
-		image.draw(280+(x*100*World2.getRenderScale())+360-World2.getGrid().getColumns()*100*World2.getRenderScale()/2,y*100*World2.getRenderScale()+360-World2.getGrid().getColumns()*100*World2.getRenderScale()/2,100*World2.getRenderScale(),100*World2.getRenderScale());
+		image.draw(280+(x*100*World.getRenderScale())+360-World.getGrid().getColumns()*100*World.getRenderScale()/2,y*100*World.getRenderScale()+360-World.getGrid().getColumns()*100*World.getRenderScale()/2,100*World.getRenderScale(),100*World.getRenderScale());
 
 	}
 
@@ -92,7 +91,7 @@ public class Player2{
 
 	public void move(int x,int y){
 
-		if(World2.getGrid().MovePlayer(x, y, this)){
+		if(World.getGrid().MovePlayer(x, y, this)){
 			//if move worked
 			this.x = x;
 			this.y =y;

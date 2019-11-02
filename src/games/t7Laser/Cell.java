@@ -1,4 +1,4 @@
-package game2.world;
+package games.t7Laser;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -37,9 +37,9 @@ public class Cell {
 
 
 		if(NORMAL==null){
-			NORMAL= new Image(World2.DIRECTORY_IMAGES+"Cell.png");
-			MINE=new Image(World2.DIRECTORY_IMAGES+"Mine.png");
-			BONUS=new Image(World2.DIRECTORY_IMAGES+"Bonus.png");
+			NORMAL= new Image(World.DIRECTORY_IMAGES+"Cell.png");
+			MINE=new Image(World.DIRECTORY_IMAGES+"Mine.png");
+			BONUS=new Image(World.DIRECTORY_IMAGES+"Bonus.png");
 		}
 	}
 
@@ -108,13 +108,13 @@ public class Cell {
 
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		if(deadly && contains)
-			World2.getPlayer().setLives(0);
+			World.getPlayer().setLives(0);
 
 		if(hasBonus && contains){
-			World2.setScore(World2.getScore()+77);
-			World2.getGrid().getCell(x, y).setHasBonus(false);
-			World2.getGrid().getCell(x,y).setImageType(NORMAL_TYPE);
-			World2.cat.play();
+			World.setScore(World.getScore()+77);
+			World.getGrid().getCell(x, y).setHasBonus(false);
+			World.getGrid().getCell(x,y).setImageType(NORMAL_TYPE);
+			World.cat.play();
 		}
 
 	}

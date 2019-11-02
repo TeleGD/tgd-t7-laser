@@ -1,4 +1,4 @@
-package game2.world;
+package games.t7Laser;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -52,7 +52,7 @@ public class Laser {
 	}
 
 	public void setDeadlyCells(boolean deadly){
-		Grid2 g = World2.getGrid();
+		Grid g = World.getGrid();
 		if(axe == 0) {
 			//horizontal
 			for(int i = 0;i<g.getColumns();i++){
@@ -71,17 +71,17 @@ public class Laser {
 
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
 		if(!shooting)
-			g.setColor(Color.orange);
+			g.setColor(new Color(255,128,0,204));
 		else
-			g.setColor(Color.red);
+			g.setColor(new Color(255,0,0,204));
 		//Affichage
 		if(axe == 0) {
 			//horizontal
-			g.fillRect((float)280+360-World2.getGrid().getColumns()*100*World2.getRenderScale()/2, (float)(pos*100+25)*World2.getRenderScale()+360-World2.getGrid().getColumns()*100*World2.getRenderScale()/2, (float)100*World2.getGrid().getRows()*World2.getRenderScale(), (float)50*World2.getRenderScale());
+			g.fillRect((float)280+360-World.getGrid().getColumns()*100*World.getRenderScale()/2, (pos*100+25)*World.getRenderScale()+360-World.getGrid().getColumns()*100*World.getRenderScale()/2, (float)100*World.getGrid().getRows()*World.getRenderScale(), 50*World.getRenderScale());
 		}
 		else {
 			//vertical
-			g.fillRect((float)(pos*100+25)*World2.getRenderScale()+280+360-World2.getGrid().getColumns()*100*World2.getRenderScale()/2, (float)+360-World2.getGrid().getColumns()*100*World2.getRenderScale()/2, (float)50*World2.getRenderScale(), (float)100*World2.getGrid().getColumns()*World2.getRenderScale());
+			g.fillRect((pos*100+25)*World.getRenderScale()+280+360-World.getGrid().getColumns()*100*World.getRenderScale()/2, +360-World.getGrid().getColumns()*100*World.getRenderScale()/2, 50*World.getRenderScale(), (float)100*World.getGrid().getColumns()*World.getRenderScale());
 		}
 
 	}
@@ -102,7 +102,7 @@ public class Laser {
 		}
 		//une fois que tout �a c'est fini
 		if(setupTime == 0 && shootingTime == 0)
-			World2.getGrid().removeLaser(this);
+			World.getGrid().removeLaser(this);
 	}
 
 }
