@@ -3,8 +3,9 @@ package games.t7Laser;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+
+import app.AppLoader;
 
 public class Cell {
 
@@ -12,11 +13,12 @@ public class Cell {
 	public static final int MINE_TYPE = 1 ;
 	public static final int BONUS_TYPE = 2 ;
 
-	protected static Image NORMAL;
-	protected static Image MINE;
-	protected static Image BONUS;
+	private Image NORMAL;
+	private Image MINE;
+	private Image BONUS;
 
 	//Variables
+	private World world;
 	private int x;
 	private int y;
 	private Boolean contains;
@@ -27,7 +29,8 @@ public class Cell {
 	private int imageType;
 
 	//Constructeur
-	public Cell(int x, int y, Boolean c, Boolean d) throws SlickException{
+	public Cell(World world, int x, int y, Boolean c, Boolean d) {
+		this.world = world;
 		this.x=x;
 		this.y=y;
 		this.contains=c;
@@ -35,42 +38,47 @@ public class Cell {
 		this.hasBonus=false;
 		this.hasEnnemy = false;
 
-
 		if(NORMAL==null){
-			NORMAL= new Image(World.DIRECTORY_IMAGES+"Cell.png");
-			MINE=new Image(World.DIRECTORY_IMAGES+"Mine.png");
-			BONUS=new Image(World.DIRECTORY_IMAGES+"Bonus.png");
+			NORMAL= AppLoader.loadPicture(World.DIRECTORY_IMAGES+"Cell.png");
+			MINE=AppLoader.loadPicture(World.DIRECTORY_IMAGES+"Mine.png");
+			BONUS=AppLoader.loadPicture(World.DIRECTORY_IMAGES+"Bonus.png");
 		}
 	}
-
 
 	//Getters et Setters
 	public int getX() {
 		return x;
 	}
+
 	public void setX(int x) {
 		this.x = x;
 	}
+
 	public int getY() {
 		return y;
 	}
+
 	public void setY(int y) {
 		this.y = y;
 	}
 	public Boolean getContains() {
 		return contains;
 	}
+
 	public void setContains(Boolean contains) {
 		this.contains = contains;
 	}
+
 	public Boolean getDeadly() {
 		return deadly;
 	}
+
 	public void setDeadly(Boolean deadly) {
 		this.deadly = deadly;
 		if(this.imageType == MINE_TYPE)
 			this.deadly = true;
 	}
+
 	public int getImageType() {
 		return imageType;
 	}
@@ -79,44 +87,45 @@ public class Cell {
 		this.imageType = imageType;
 	}
 
-    public Image getImage() {
-        if(imageType==MINE_TYPE)return MINE;
-        else if(imageType==NORMAL_TYPE)return NORMAL;
-        else if(imageType==BONUS_TYPE)return BONUS;
-        return NORMAL;
-    }
+	public Image getImage() {
+		if(imageType==MINE_TYPE)return MINE;
+		else if(imageType==NORMAL_TYPE)return NORMAL;
+		else if(imageType==BONUS_TYPE)return BONUS;
+		return NORMAL;
+	}
+
 	public boolean isHasEnnemy() {
 		return hasEnnemy;
 	}
+
 	public void setHasEnnemy(boolean hasEnnemy) {
 		this.hasEnnemy = hasEnnemy;
 	}
+
 	public Boolean getHasBonus() {
 		return hasBonus;
 	}
+
 	public void setHasBonus(Boolean hasBonus) {
 		this.hasBonus = hasBonus;
 	}
 
-
-
 	//render et update
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
+	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) {
 		//Affichage
 		arg2.drawImage(getImage(),0,0);
 	}
 
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
+	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) {
 		if(deadly && contains)
-			World.getPlayer().setLives(0);
+			world.getPlayer().setLives(0);
 
 		if(hasBonus && contains){
-			World.setScore(World.getScore()+77);
-			World.getGrid().getCell(x, y).setHasBonus(false);
-			World.getGrid().getCell(x,y).setImageType(NORMAL_TYPE);
-			World.cat.play();
+			world.setScore(world.getScore()+77);
+			world.getGrid().getCell(x, y).setHasBonus(false);
+			world.getGrid().getCell(x,y).setImageType(NORMAL_TYPE);
+			world.getCat().playAsSoundEffect(1, .3f, false);
 		}
-
 	}
 
 }

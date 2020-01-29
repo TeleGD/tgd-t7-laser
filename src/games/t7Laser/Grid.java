@@ -6,30 +6,27 @@ import java.util.Random;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Grid {
+
+	private World world;
 	private int rows;
 	private int columns;
-	public Cell grid[][];
+	private Cell grid[][];
 
 	private int maxRows; //limite horizontale
 	private int maxCols;
 
-	public List<Laser> laserList;
-	public List<Ennemy> ennemyList;
+	private List<Laser> laserList;
+	private List<Ennemy> ennemyList;
 	private int laserTimer;
 
 	private int waveTimer;
 	private int waveNumber;
 
-
-
-
-
-
-	public Grid(int r, int c) throws SlickException{
+	public Grid(World world, int r, int c) {
+		this.world = world;
 		maxRows = 20;
 		maxCols = 20;
 		rows = r;
@@ -37,7 +34,7 @@ public class Grid {
 		grid = new Cell[maxRows][maxRows];
 		for(int i = 0; i<maxRows; i++)//init row
 			for(int j=0;j<maxCols;j++) //init cologne
-				grid[i][j] = new Cell(i,j,false,false);
+				grid[i][j] = new Cell(world,i,j,false,false);
 
 		laserList = new LinkedList<Laser>();
 		laserTimer = 1;
@@ -45,9 +42,7 @@ public class Grid {
 		waveNumber = 0;
 
 		ennemyList = new LinkedList<Ennemy>();
-
 	}
-
 
 	public Cell[][] getGrid() {
 		return grid;
@@ -57,38 +52,33 @@ public class Grid {
 		this.grid = grid;
 	}
 
-	public Cell getCell(int x, int y){
+	public Cell getCell(int x, int y) {
 		return grid[x][y];
 	}
 
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
+	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) {
 		for(int i = 0; i<this.rows; i++)//init row
 			for(int j=0;j<this.columns;j++) //init cologne
-				grid[i][j].getImage().draw(280+360-this.getColumns()*100*World.getRenderScale()/2+i*100*World.getRenderScale(),0+j*100*World.getRenderScale()+360-this.getColumns()*100*World.getRenderScale()/2,100*World.getRenderScale(),100*World.getRenderScale());
+				grid[i][j].getImage().draw(280+360-this.getColumns()*100*world.getRenderScale()/2+i*100*world.getRenderScale(),0+j*100*world.getRenderScale()+360-this.getColumns()*100*world.getRenderScale()/2,100*world.getRenderScale(),100*world.getRenderScale());
 
 		for(Laser l : laserList)
 			l.render(arg0, arg1, arg2);
 
 		for(Ennemy e : ennemyList)
 			e.render(arg0, arg1, arg2);
-
 	}
 
 	public int getWaveNumber() {
 		return waveNumber;
 	}
 
-
 	public void setWaveNumber(int waveNumber) {
 		this.waveNumber = waveNumber;
 	}
 
-
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
+	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) {
 		if(waveNumber % 5 == 2 && waveTimer == 1)
 			addEnnemy();
-
-
 
 		laserTimer--;
 		if(laserTimer <= 0){
@@ -105,7 +95,6 @@ public class Grid {
 		catch(Exception e){
 			//System.out.println(e.getMessage());
 		}
-
 
 		for(int i = 0; i<this.rows; i++)//init row
 			for(int j=0;j<this.columns;j++) //init cologne
@@ -135,28 +124,28 @@ public class Grid {
 					addBonus(rowB,columnB);
 
 			if(rows > 7)
-				World.setRenderScale((float)720.0/(100*rows));
+				world.setRenderScale((float)720.0/(100*rows));
 		}
 	}
 
-	public int getRows(){
+	public int getRows() {
 		return rows;
 	}
 
-	public int getColumns(){
+	public int getColumns() {
 		return columns;
 	}
 
-	public int getMaxRows(){
+	public int getMaxRows() {
 		return maxRows;
 	}
 
-	public int getMaxColumns(){
+	public int getMaxColumns() {
 		return maxCols;
 	}
 
 	//x y new position
-	public boolean MovePlayer(int x,int y, Player p){
+	public boolean MovePlayer(int x, int y, Player p) {
 		if(x < rows && y < columns && x >= 0 && y >= 0){
 			//set new cell true
 			grid[x][y].setContains(true);
@@ -168,7 +157,7 @@ public class Grid {
 		return  false;
 	}
 
-	public boolean MoveEnnemy(int x,int y, Ennemy p){
+	public boolean MoveEnnemy(int x, int y, Ennemy p) {
 		if(x < rows && y < columns && x >= 0 && y >= 0 && !getCell(x, y).isHasEnnemy()){
 			//set new cell true
 			grid[x][y].setDeadly(true);
@@ -182,7 +171,7 @@ public class Grid {
 		return  false;
 	}
 
-	public void addEnnemy(){
+	public void addEnnemy() {
 		Random r = new Random();
 		int x = 0;
 		int y = 0;
@@ -192,25 +181,24 @@ public class Grid {
 		}
 		while(getCell(x, y).getDeadly() || getCell(x, y).getContains());
 
-		ennemyList.add(new Ennemy(x,y));
-
+		ennemyList.add(new Ennemy(this.world,x,y));
 	}
 
-	public void addLaser(){
+	public void addLaser() {
 		Random r = new Random();
 		boolean axe = r.nextBoolean();
 		if(axe) //horizontal
-			laserList.add(new Laser(0,r.nextInt(columns)));
+			laserList.add(new Laser(this.world,0,r.nextInt(columns)));
 		else //vertical
 
-			laserList.add(new Laser(1,r.nextInt(rows)));
+			laserList.add(new Laser(this.world,1,r.nextInt(rows)));
 	}
 
-	public void removeLaser(Laser l){
+	public void removeLaser(Laser l) {
 		laserList.remove(l);
 	}
 
-	public void addMine(){
+	public void addMine() {
 		Random r1 = new Random();
 		Random r2 = new Random();
 		int row = r1.nextInt(this.rows);
@@ -219,10 +207,9 @@ public class Grid {
 			this.grid[row][column].setDeadly(true);
 			this.grid[row][column].setImageType(Cell.MINE_TYPE);
 		}
-
 	}
 
-	public void addBonus(int row, int column){
+	public void addBonus(int row, int column) {
 		this.grid[row][column].setDeadly(false);
 		this.grid[row][column].setHasBonus(true);
 		this.grid[row][column].setImageType(Cell.BONUS_TYPE);

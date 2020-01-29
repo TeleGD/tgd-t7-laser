@@ -1,15 +1,16 @@
 package games.t7Laser;
 
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class Player{
+import app.AppLoader;
 
+public class Player {
+
+	private World world;
 	private int x = 0;
 	private int y = 0;
 	private float width = 100;
@@ -20,36 +21,34 @@ public class Player{
 	private Image left;
 	private Image right;
 
-
 	private int lives = 1;
 
 	private boolean moveLeft,moveRight,moveUp,moveDown  =false;
 	private boolean pressEnter = false;
 
-	public Player() throws SlickException{
+	public Player(World world) {
+		this.world = world;
 		//position initiale
-		World.getGrid().getCell(0, 0).setContains(true);
+		world.getGrid().getCell(0, 0).setContains(true);
 		this.x = 0;
 		this.y = 0;
-		this.setImage(new Image(World.DIRECTORY_IMAGES+"Char_down.png"));
-		this.down= new Image(World.DIRECTORY_IMAGES+"Char_down.png");
-		this.up=new Image(World.DIRECTORY_IMAGES+"Char_up.png");
-		this.right=new Image(World.DIRECTORY_IMAGES+"Char_right.png");
-		this.left=new Image(World.DIRECTORY_IMAGES+"Char_left.png");
+		this.setImage(AppLoader.loadPicture(World.DIRECTORY_IMAGES+"Char_down.png"));
+		this.down= AppLoader.loadPicture(World.DIRECTORY_IMAGES+"Char_down.png");
+		this.up=AppLoader.loadPicture(World.DIRECTORY_IMAGES+"Char_up.png");
+		this.right=AppLoader.loadPicture(World.DIRECTORY_IMAGES+"Char_right.png");
+		this.left=AppLoader.loadPicture(World.DIRECTORY_IMAGES+"Char_left.png");
 	}
 
-
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		//Affichage
-		image.draw(280+(x*100*World.getRenderScale())+360-World.getGrid().getColumns()*100*World.getRenderScale()/2,y*100*World.getRenderScale()+360-World.getGrid().getColumns()*100*World.getRenderScale()/2,100*World.getRenderScale(),100*World.getRenderScale());
-
+		image.draw(280+(x*100*world.getRenderScale())+360-world.getGrid().getColumns()*100*world.getRenderScale()/2,y*100*world.getRenderScale()+360-world.getGrid().getColumns()*100*world.getRenderScale()/2,100*world.getRenderScale(),100*world.getRenderScale());
 	}
 
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
+	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) {
 		callMove();
 	}
 
-	public void callMove() throws SlickException{
+	public void callMove() {
 		if(moveUp && !moveDown){ //haut
 			move(x,y-1);
 			this.setImage(up);
@@ -76,27 +75,24 @@ public class Player{
 		return moveUp;
 	}
 
-
 	public boolean isMoveDown() {
 		return moveDown;
 	}
 
-	public void setMoveUp(boolean b){
+	public void setMoveUp(boolean b) {
 		moveUp = b;
 	}
 
-	public void setMoveDown(boolean b){
+	public void setMoveDown(boolean b) {
 		moveDown = b;
 	}
 
-	public void move(int x,int y){
-
-		if(World.getGrid().MovePlayer(x, y, this)){
+	public void move(int x,int y) {
+		if(world.getGrid().MovePlayer(x, y, this)){
 			//if move worked
 			this.x = x;
 			this.y =y;
 		}
-
 	}
 
 	public void keyReleased(int key, char c) {
@@ -118,7 +114,6 @@ public class Player{
 				setPressEnter(false);
 				break;
 			}
-
 	}
 
 	public void keyPressed(int key,char c ) {
@@ -140,11 +135,9 @@ public class Player{
 			setPressEnter(true);
 			break;
 		}
-
 	}
 
-
-	public boolean isDead(){
+	public boolean isDead() {
 		return this.lives <= 0;
 	}
 
@@ -188,28 +181,20 @@ public class Player{
 		this.lives = lives;
 	}
 
-
 	public Image getImage() {
 		return image;
 	}
-
 
 	public void setImage(Image image) {
 		this.image = image;
 	}
 
-
 	public boolean isPressEnter() {
 		return pressEnter;
 	}
 
-
 	public void setPressEnter(boolean pressEnter) {
 		this.pressEnter = pressEnter;
 	}
-
-
-
-
 
 }
