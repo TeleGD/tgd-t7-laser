@@ -18,38 +18,14 @@ public class Laser {
 
 	public Laser(World world, int axe, int pos) {
 		this.world = world;
-		this.setAxe(axe);
-		this.setPos(pos);
+		this.axe = axe;
+		this.pos = pos;
 		this.shooting = false;
 		this.setupTime = 50;
 		this.shootingTime = 100;
 	}
 
-	public int getAxe() {
-		return axe;
-	}
-
-	public void setAxe(int axe) {
-		this.axe = axe;
-	}
-
-	public int getPos() {
-		return pos;
-	}
-
-	public void setPos(int pos) {
-		this.pos = pos;
-	}
-
-	public Boolean getShooting() {
-		return shooting;
-	}
-
-	public void setShooting(Boolean shooting) {
-		this.shooting = shooting;
-	}
-
-	public void setDeadlyCells(boolean deadly) {
+	private void setDeadlyCells(boolean deadly) {
 		Grid g = world.getGrid();
 		if(axe == 0) {
 			//horizontal

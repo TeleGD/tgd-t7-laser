@@ -13,8 +13,6 @@ public class Player {
 	private World world;
 	private int x = 0;
 	private int y = 0;
-	private float width = 100;
-	private float height = 100;
 	private Image image;
 	private Image down;
 	private Image up;
@@ -32,7 +30,7 @@ public class Player {
 		world.getGrid().getCell(0, 0).setContains(true);
 		this.x = 0;
 		this.y = 0;
-		this.setImage(AppLoader.loadPicture(World.DIRECTORY_IMAGES+"Char_down.png"));
+		this.image = AppLoader.loadPicture(World.DIRECTORY_IMAGES+"Char_down.png");
 		this.down= AppLoader.loadPicture(World.DIRECTORY_IMAGES+"Char_down.png");
 		this.up=AppLoader.loadPicture(World.DIRECTORY_IMAGES+"Char_up.png");
 		this.right=AppLoader.loadPicture(World.DIRECTORY_IMAGES+"Char_right.png");
@@ -48,25 +46,25 @@ public class Player {
 		callMove();
 	}
 
-	public void callMove() {
+	private void callMove() {
 		if(moveUp && !moveDown){ //haut
 			move(x,y-1);
-			this.setImage(up);
+			this.image = up;
 			moveUp = false;
 		}
 		if(moveDown && !moveUp){ //bas
 			move(x,y+1);
-			this.setImage(down);
+			this.image = down;
 			moveDown = false;
 		}
 		if(moveLeft && !moveRight){ //gauche
 			move(x-1,y);
-			this.setImage(left);
+			this.image = left;
 			moveLeft = false;
 		}
 		if(moveRight && !moveLeft){ //droite
 			move(x+1,y);
-			this.setImage(right);
+			this.image = right;
 			moveRight = false;
 		}
 	}
@@ -87,7 +85,7 @@ public class Player {
 		moveDown = b;
 	}
 
-	public void move(int x,int y) {
+	private void move(int x, int y) {
 		if(world.getGrid().MovePlayer(x, y, this)){
 			//if move worked
 			this.x = x;
@@ -111,12 +109,12 @@ public class Player {
 				moveRight = false;
 				break;
 			case Input.KEY_ENTER: //entrer
-				setPressEnter(false);
+				pressEnter = false;
 				break;
 			}
 	}
 
-	public void keyPressed(int key,char c ) {
+	public void keyPressed(int key, char c) {
 		switch (key) {
 		//mouvement
 		case Input.KEY_UP: //haut
@@ -132,7 +130,7 @@ public class Player {
 			moveRight = true;
 			break;
 		case Input.KEY_ENTER: //entrer
-			setPressEnter(true);
+			pressEnter = true;
 			break;
 		}
 	}
@@ -145,56 +143,16 @@ public class Player {
 		return x;
 	}
 
-	public void setX(int x) {
-		this.x = x;
-	}
-
 	public int getY() {
 		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public float getWidth() {
-		return width;
-	}
-
-	public void setWidth(float width) {
-		this.width = width;
-	}
-
-	public float getHeight() {
-		return height;
-	}
-
-	public void setHeight(float height) {
-		this.height = height;
-	}
-
-	public int getLives() {
-		return lives;
 	}
 
 	public void setLives(int lives) {
 		this.lives = lives;
 	}
 
-	public Image getImage() {
-		return image;
-	}
-
-	public void setImage(Image image) {
-		this.image = image;
-	}
-
 	public boolean isPressEnter() {
 		return pressEnter;
-	}
-
-	public void setPressEnter(boolean pressEnter) {
-		this.pressEnter = pressEnter;
 	}
 
 }

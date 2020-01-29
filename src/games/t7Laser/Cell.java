@@ -1,9 +1,6 @@
 package games.t7Laser;
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.state.StateBasedGame;
 
 import app.AppLoader;
 
@@ -18,9 +15,6 @@ public class Cell {
 	private Image BONUS;
 
 	//Variables
-	private World world;
-	private int x;
-	private int y;
 	private Boolean contains;
 	private Boolean deadly;
 	private Boolean hasBonus;
@@ -29,12 +23,9 @@ public class Cell {
 	private int imageType;
 
 	//Constructeur
-	public Cell(World world, int x, int y, Boolean c, Boolean d) {
-		this.world = world;
-		this.x=x;
-		this.y=y;
-		this.contains=c;
-		this.deadly=d;
+	public Cell() {
+		this.contains = false;
+		this.deadly = false;
 		this.hasBonus=false;
 		this.hasEnnemy = false;
 
@@ -46,21 +37,6 @@ public class Cell {
 	}
 
 	//Getters et Setters
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
 	public Boolean getContains() {
 		return contains;
 	}
@@ -108,24 +84,6 @@ public class Cell {
 
 	public void setHasBonus(Boolean hasBonus) {
 		this.hasBonus = hasBonus;
-	}
-
-	//render et update
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) {
-		//Affichage
-		arg2.drawImage(getImage(),0,0);
-	}
-
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) {
-		if(deadly && contains)
-			world.getPlayer().setLives(0);
-
-		if(hasBonus && contains){
-			world.setScore(world.getScore()+77);
-			world.getGrid().getCell(x, y).setHasBonus(false);
-			world.getGrid().getCell(x,y).setImageType(NORMAL_TYPE);
-			world.getCat().playAsSoundEffect(1, .3f, false);
-		}
 	}
 
 }

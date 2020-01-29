@@ -34,7 +34,7 @@ public class Grid {
 		grid = new Cell[maxRows][maxRows];
 		for(int i = 0; i<maxRows; i++)//init row
 			for(int j=0;j<maxCols;j++) //init cologne
-				grid[i][j] = new Cell(world,i,j,false,false);
+				grid[i][j] = new Cell();
 
 		laserList = new LinkedList<Laser>();
 		laserTimer = 1;
@@ -42,14 +42,6 @@ public class Grid {
 		waveNumber = 0;
 
 		ennemyList = new LinkedList<Ennemy>();
-	}
-
-	public Cell[][] getGrid() {
-		return grid;
-	}
-
-	public void setGrid(Cell[][] grid) {
-		this.grid = grid;
 	}
 
 	public Cell getCell(int x, int y) {
@@ -72,10 +64,6 @@ public class Grid {
 		return waveNumber;
 	}
 
-	public void setWaveNumber(int waveNumber) {
-		this.waveNumber = waveNumber;
-	}
-
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) {
 		if(waveNumber % 5 == 2 && waveTimer == 1)
 			addEnnemy();
@@ -96,9 +84,20 @@ public class Grid {
 			//System.out.println(e.getMessage());
 		}
 
-		for(int i = 0; i<this.rows; i++)//init row
-			for(int j=0;j<this.columns;j++) //init cologne
-				grid[i][j].update(arg0, arg1, arg2);
+		for(int i = 0; i<this.rows; i++) { //init row
+			for(int j=0;j<this.columns;j++) { //init cologne
+
+					if(grid[i][j].getDeadly() && grid[i][j].getContains())
+						world.getPlayer().setLives(0);
+
+					if(grid[i][j].getHasBonus() && grid[i][j].getContains()){
+						world.setScore(world.getScore()+77);
+						grid[i][j].setHasBonus(false);
+						grid[i][j].setImageType(Cell.NORMAL_TYPE);
+						world.getCat().playAsSoundEffect(1, .3f, false);
+					}
+			}
+		}
 
 		waveTimer--;
 		if(waveTimer == 0){
@@ -136,14 +135,6 @@ public class Grid {
 		return columns;
 	}
 
-	public int getMaxRows() {
-		return maxRows;
-	}
-
-	public int getMaxColumns() {
-		return maxCols;
-	}
-
 	//x y new position
 	public boolean MovePlayer(int x, int y, Player p) {
 		if(x < rows && y < columns && x >= 0 && y >= 0){
@@ -171,7 +162,7 @@ public class Grid {
 		return  false;
 	}
 
-	public void addEnnemy() {
+	private void addEnnemy() {
 		Random r = new Random();
 		int x = 0;
 		int y = 0;
@@ -184,7 +175,7 @@ public class Grid {
 		ennemyList.add(new Ennemy(this.world,x,y));
 	}
 
-	public void addLaser() {
+	private void addLaser() {
 		Random r = new Random();
 		boolean axe = r.nextBoolean();
 		if(axe) //horizontal
@@ -198,7 +189,7 @@ public class Grid {
 		laserList.remove(l);
 	}
 
-	public void addMine() {
+	private void addMine() {
 		Random r1 = new Random();
 		Random r2 = new Random();
 		int row = r1.nextInt(this.rows);
@@ -209,7 +200,7 @@ public class Grid {
 		}
 	}
 
-	public void addBonus(int row, int column) {
+	private void addBonus(int row, int column) {
 		this.grid[row][column].setDeadly(false);
 		this.grid[row][column].setHasBonus(true);
 		this.grid[row][column].setImageType(Cell.BONUS_TYPE);

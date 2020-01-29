@@ -257,11 +257,7 @@ public class World extends BasicGameState implements EnterActionListener, OnClic
 		return player;
 	}
 
-	public void reset() {
-		// TODO Auto-generated method stub
-	}
-
-	public float  getRenderScale() {
+	public float getRenderScale() {
 		return renderScale;
 	}
 
