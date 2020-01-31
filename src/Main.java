@@ -53,8 +53,7 @@ public final class Main {
 				this.addState(new pages.Choice(1));
 				this.addState(new pages.Pause(2));
 				this.addState(new games.t7Laser.World(3));
-				this.addState(new menus.ScoreMenu(4));
-				this.addState(new menus.HighScorePlayerMenu(5));
+				this.addState(new games.t7Laser.Leaderboard(4));
 			}
 
 		};

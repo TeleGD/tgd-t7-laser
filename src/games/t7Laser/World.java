@@ -1,6 +1,7 @@
 package games.t7Laser;
 
 import java.io.File;
+import java.util.List;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -12,16 +13,11 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import api.TGDApi;
-
 import app.AppLoader;
-import app.ui.Button;
 import app.ui.TGDComponent;
-import app.ui.TGDComponent.OnClickListener;
 import app.ui.TextField;
-import app.ui.TextField.EnterActionListener;
 
-public class World extends BasicGameState implements EnterActionListener, OnClickListener {
+public class World extends BasicGameState {
 
 	public final static String GAME_NAME="T7 Laser";
 
@@ -38,14 +34,10 @@ public class World extends BasicGameState implements EnterActionListener, OnClic
 	private Audio cat;
 	private float musicPos;
 	private int selec;
-	private int cpt;
-	private boolean start;
-	private boolean disp;
 
 	private float renderScale;
 
 	private TextField textField;
-	private Button button;
 
 	private int ID;
 	private int state;
@@ -66,6 +58,13 @@ public class World extends BasicGameState implements EnterActionListener, OnClic
 		music = AppLoader.loadAudio(DIRECTORY_MUSICS+"EpicSaxGuy.ogg");
 		end = AppLoader.loadAudio(DIRECTORY_SOUNDS+"EndSong.ogg");
 		cat= AppLoader.loadAudio(DIRECTORY_SOUNDS+"Cat.ogg");
+		textField=new TextField(container,60,200,150,TGDComponent.AUTOMATIC);
+		textField.setMaxNumberOfLetter(13);
+		textField.setUpperCaseLock(true);
+		textField.setBorderWidth(2);
+		textField.setBorderColor(Color.black);
+		textField.setTextColor(Color.black);
+		textField.setPlaceHolder("Entrez un pseudo");
 	}
 
 	@Override
@@ -97,54 +96,34 @@ public class World extends BasicGameState implements EnterActionListener, OnClic
 			this.setState(1);
 			game.enterState(2, new FadeOutTransition(), new FadeInTransition());
 		}
-		if (!start){
-			if (cpt > 60) {
-				cpt = 0;
-				disp = !disp;
-			}
-			cpt++;
-			if( player.isPressEnter()){
-				start = true;
-				cpt = 10;
+		if (!player.isDead()){
+			player.update(container,game,delta);
+			grid.update(container, game, delta);
+			setScore(getScore() + 1);
+			if (player.isDead()) {
+				music.stop();
+				end.playAsSoundEffect(1, .3f, false);
 			}
 		}
-		if (start){
-			if (!player.isDead()){
-				player.update(container,game,delta);
-				grid.update(container, game, delta);
-				setScore(getScore() + 1);
-				if (player.isDead()) {
-					music.stop();
-					end.playAsSoundEffect(1, .3f, false);
-				}
+		if(player.isDead()){
+			textField.update(container, game, delta);
+			textField.setHasFocus(true);
+			if ((player.isMoveUp() && selec == 0) || (player.isMoveDown() && selec == 0)){
+				selec = 1;
+				player.setMoveUp(false);
+				player.setMoveDown(false);
+			} else if ((player.isMoveUp() && selec == 1) || (player.isMoveDown() && selec == 1)){
+				selec = 0;
+				player.setMoveUp(false);
+				player.setMoveDown(false);
 			}
-
-			if(player.isDead()){
-				button.update(container, game, delta);
-				textField.update(container, game, delta);
-				textField.setHasFocus(true);
-
-				if ((player.isMoveUp() && selec == 0) || (player.isMoveDown() && selec == 0)){
-					selec = 1;
-					player.setMoveUp(false);
-					player.setMoveDown(false);
-				} else if ((player.isMoveUp() && selec == 1) || (player.isMoveDown() && selec == 1)){
-					selec = 0;
-					player.setMoveUp(false);
-					player.setMoveDown(false);
-				}
-				if (player.isPressEnter()){
-					if (selec == 1){
-						this.setState(3);
-						game.enterState(1, new FadeOutTransition(), new FadeInTransition());
-					} else {
-						music.playAsMusic(1, .3f, true);
-						grid =  new Grid(this,4,4);
-						player = new Player(this);
-						setScore(0);
-						selec = 0;
-						renderScale = 1;
-					}
+			if (player.isPressEnter()){
+				this.save();
+				this.setState(3);
+				if (selec == 1){
+					game.enterState(1, new FadeOutTransition(), new FadeInTransition());
+				} else {
+					game.enterState(this.getID());
 				}
 			}
 		}
@@ -154,28 +133,18 @@ public class World extends BasicGameState implements EnterActionListener, OnClic
 	public void render(GameContainer container, StateBasedGame game, Graphics context) {
 		/* Méthode exécutée environ 60 fois par seconde */
 		context.setColor(Color.white);
-
 		context.fillRect(0,0,1280,720);
-		if (!start){
+		grid.render(container,game,context);
+		player.render(container,game,context);
+		context.setColor(Color.black);
+		context.drawString("Score : "+getScore(), 88, 100);
+		context.drawString("Waves : "+grid.getWaveNumber(), 95, 150);
+		if (player.isDead()){
 			context.setColor(Color.black);
-			if (disp) context.drawString("Press Enter", 600, 355);
-		} else {
-			grid.render(container,game,context);
-			player.render(container,game,context);
-
-			context.setColor(Color.black);
-			context.drawString("Score : "+getScore(), 88, 100);
-			context.drawString("Waves : "+grid.getWaveNumber(), 95, 150);
-
-			if (player.isDead()){
-				context.setColor(Color.black);
-				context.drawString("Rejouer", 100,400);
-				context.drawString("Quitter", 100,450);
-				context.drawString(">>>", 50, 400+selec*50);
-
-				textField.render(container, game, context);
-				button.render(container, game, context);
-			}
+			context.drawString("Rejouer", 100,400);
+			context.drawString("Quitter", 100,450);
+			context.drawString(">>>", 50, 400+selec*50);
+			textField.render(container, game, context);
 		}
 	}
 
@@ -186,12 +155,7 @@ public class World extends BasicGameState implements EnterActionListener, OnClic
 		player = new Player(this);
 		setScore(0);
 		selec = 0;
-		cpt = -30;
-		start = false;
-		disp = false;
 		renderScale = 1;
-
-		initPerduView(container);
 	}
 
 	public void pause(GameContainer container, StateBasedGame game) {
@@ -229,24 +193,24 @@ public class World extends BasicGameState implements EnterActionListener, OnClic
 		player.keyPressed(key, c);
 	}
 
-	private void initPerduView(GameContainer container) {
-		textField=new TextField(container,60,200,150,TGDComponent.AUTOMATIC);
-		textField.setMaxNumberOfLetter(13);
-		textField.setUpperCaseLock(true);
-		textField.setBorderWidth(2);
-		textField.setBorderColor(Color.black);
-		textField.setTextColor(Color.black);
-		textField.setPlaceHolder("Entrez un pseudo");
-		textField.setEnterActionListener(this);
-
-		button=new Button("ENREGISTRER",container,textField.getX()+160,200,TGDComponent.AUTOMATIC,textField.getHeight());
-		button.setOnClickListener(this);
-		button.setPadding(10,15,10,15);
-		button.setBorderWidth(2);
-		button.setBorderColor(Color.black);
-		button.setBackgroundColorEntered(Color.black);
-		button.setTextColorEntered(Color.white);
-		button.setTextColor(Color.black);
+	private void save() {
+		String player = textField.getText();
+		if (player.length() == 0) {
+			return;
+		}
+		double count = this.score;
+		List<Score> scores = Loader.restoreScores();
+		int i = 0;
+		int li = scores.size();
+		while (i < li && scores.get(i).getCount() >= count) {
+			++i;
+		}
+		scores.add(i, new Score(player, count));
+		while (li >= 10) {
+			scores.remove(li);
+			--li;
+		}
+		Loader.saveScores(scores);
 	}
 
 	public Grid getGrid() {
@@ -275,16 +239,6 @@ public class World extends BasicGameState implements EnterActionListener, OnClic
 
 	public Audio getCat() {
 		return this.cat;
-	}
-
-	@Override
-	public void onClick(TGDComponent component) {
-		TGDApi.updateScoreForGame(textField.getText(), 2, score);
-	}
-
-	@Override
-	public void onEnterPressed() {
-		TGDApi.updateScoreForGame(textField.getText(), 2, score);
 	}
 
 }
