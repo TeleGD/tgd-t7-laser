@@ -1,6 +1,5 @@
 package games.t7Laser;
 
-import java.io.File;
 import java.util.List;
 
 import org.newdawn.slick.Color;
@@ -19,12 +18,9 @@ import app.ui.TextField;
 
 public class World extends BasicGameState {
 
-	public final static String GAME_NAME="T7 Laser";
-
-	public final static String GAME_FOLDER_NAME="t7Laser";
-	public final static String DIRECTORY_SOUNDS="/sounds"+File.separator+GAME_FOLDER_NAME+File.separator;
-	public final static String DIRECTORY_MUSICS="/musics"+File.separator+GAME_FOLDER_NAME+File.separator;
-	public final static String DIRECTORY_IMAGES="/images"+File.separator+GAME_FOLDER_NAME+File.separator;
+	public final static String DIRECTORY_SOUNDS="/sounds/t7Laser/";
+	public final static String DIRECTORY_MUSICS="/musics/t7Laser/";
+	public final static String DIRECTORY_IMAGES="/images/t7Laser/";
 
 	private Player player;
 	private Grid grid;
